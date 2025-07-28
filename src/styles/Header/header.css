@@ -1,0 +1,286 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 68px;
+  background-color: rgba(223, 223, 223, 0.42);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  width: 100%;
+  padding: 0px 40px 0px 0px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: white;
+}
+
+.logo img {
+    height: 72px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.nav-links {
+  display: flex;
+  font-size: 20px;
+}
+
+.nav-links a {
+  color: white;
+  margin-left: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.nav-links a:hover {
+  text-decoration: none; /* désactive soulignement au survol */
+}
+
+.nav-links a:visited {
+  color: white; /* garde blanc après clic */
+}
+/* ===== BURGER MENU ===== */
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.burger span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.category-products {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+
+.category-products a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.category-products a:hover {
+  background-color: rgba(236, 208, 160, 0.42);
+  color: #000;
+}
+
+
+/* ===== MENU MOBILE FULLSCREEN ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(30, 30, 30, 0.95);
+  color: white;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  font-size: 24px;
+}
+
+.mobile-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mobile-menu a:hover {
+  text-decoration: none;
+}
+
+.mobile-menu a:visited {
+  color: white;
+}
+
+.mobile-link {
+  all: unset;
+  color: white;
+  font-size: 25px;
+  font-weight: 550;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 40px;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+}
+
+.link-button {
+  all: unset; /* reset complet */
+  color: white;
+  margin-left: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+}
+
+.link-button:visited,
+.link-button:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* === Side Menu === */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 100vh;
+  background-color: rgba(236, 208, 160, 0.7); /* #ECD0A0 avec 70% opacité */
+  color: black;
+  z-index: 1001;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(8px); /* pour un effet flou élégant */
+  transition: all 0.3s ease;
+}
+
+
+.side-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.side-menu-content {
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.side-menu-content button {
+  background: none;
+  border: none;
+  font-size: 25px;
+  margin: 15px 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-weight: 550;
+}
+
+.side-menu-content button,
+.category-products a {
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.mobile-menu .close-btn {
+  color: white;
+}
+
+.side-menu .close-btn {
+  color: black;
+}
+
+.category-products p {
+  margin: 10px 0;
+}
+
+.back-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+@media (max-width: 968px) {
+
+.header{
+  height: 64px;
+}
+
+.logo img {
+    height: 58px;
+}
+
+.nav-links {
+    font-size: 18px;
+}
+
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+      .logo img {
+        padding-top: 10px;
+        height: 44px;
+    }
+
+  .side-menu {
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 0px;
+  }
+  .side-menu .close-btn {
+    color: white;
+}
+  .nav-links {
+    display: none;
+  }
+
+  .category-list{
+    margin-top: 100px;
+  }
+
+  .category-list button {
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+  .burger {
+    display: flex;
+  }
+  .back-btn {
+    color: white;
+    padding: 20px;
+  }
+  .header {
+    height: 54px;
+  }
+}

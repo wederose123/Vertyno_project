@@ -1,0 +1,364 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  color: white;
+}
+
+.hero-title-ourson {
+  font-family: 'Confiteria Script', cursive;
+  font-size: 85px;
+  font-weight: bold;
+  margin-top: 90px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #EAD9CE;
+}
+
+.hero-button-ourson {
+  padding: 8px;
+  margin-bottom: 135px;
+  font-size: 28px;
+  width: 260px;
+  font-weight: 300;
+  border: 3.5px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.hero-button-ourson:hover {
+  background: white;
+  color: #333;
+}
+
+.ourson-table-section {
+  width: 100%;
+}
+
+.ourson-table-content {
+  display: flex;
+}
+
+.ourson-table-img {
+  width: 100%;
+}
+
+.presentation-section-ourson {
+  background-color: #EAD9CE;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.vertyno-logo {
+  margin-bottom: 20px;
+}
+
+.presentation-title-ourson {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.presentation-text-area-ourson {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.presentation-text-ourson {
+  max-width: 865px;
+  font-size: 21px;
+  font-weight: 550;
+  line-height: 1.6;
+}
+
+.confourson {
+  font-family: 'Confiteria Script', cursive;
+}
+
+.ourson-doudou-img {
+  bottom: -20px;
+}
+
+.image-logo-and-patte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.widthimage {
+  width: 100%;
+  display: flex;
+}
+
+.advantages-and-order {
+  background-color: #EAD9CE;
+  color: white;
+  padding: 60px 20px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.ourson-new-info {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  background-color: #EAD9CE;
+}
+
+.ourson-title {
+  font-size: 50px;
+  font-weight: bold;
+  letter-spacing: 6px;
+}
+
+.ourson-subtitle {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 0px;
+  letter-spacing: 2.53px;
+}
+
+.ourson-description {
+  font-size: 25px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 2.53px;
+}
+
+.order-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.order-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-content h3 {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.order-content h2 {
+  font-family: 'Confiteria Script', cursive;
+  font-size: 40px;
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+
+.order-content p {
+  font-size: 21px;
+  font-weight: 550;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  max-width: 400px;
+}
+
+.order-content label,
+.order-content input {
+  font-size: 21px;
+  margin-bottom: 20px;
+}
+
+.order-content input {
+  width: 100%;
+  max-width: 220px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #EAD9CE;
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.order-content input::placeholder {
+  color: white;
+  opacity: 0.9;
+  padding-left: 10px;
+  font-weight: 550;
+}
+
+.order-content button {
+  padding: 10px 20px;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-width: 220px;
+}
+
+.order-content button:hover {
+  background-color: white;
+  color: #333;
+}
+
+.ourson-magie-text {
+  background-color: #EAD9CE;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.ourson-title-text-part {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.ourson-magie-text p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 550;
+}
+
+.ourson-section-quatreimg {
+  width: 100%;
+}
+
+.ourson-caracteristiques-v2 {
+  background-color: #EAD9CE;
+  padding: 100px 20px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.ourson-caracteristiques-v2 h2 {
+  font-size: 30px;
+  margin-bottom: 50px;
+  margin-left: 170px;
+  font-weight: bold;
+}
+
+.ourson-icon-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 100px;
+}
+
+.big-contenaire-three,
+.small-contenaire-two {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.ourson-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+}
+
+.ourson-icon-item img {
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.ourson-icon-item p {
+  font-size: 20px;
+  font-weight: 550;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.ourson-entretien h3 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  margin-left: 170px;
+}
+
+.ourson-entretien p {
+  font-size: 18px;
+  max-width: 800px;
+  margin-left: 170px;
+  line-height: 1.6;
+  font-weight: 550;
+}
+
+.ourson-packaging {
+  position: relative;
+  width: 100%;
+  background: #EAD9CE;
+}
+
+.packaging-box-img {
+  display: block;
+  width: 100%;
+}
+
+.packaging-btns {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  width: 800px;
+  justify-content: space-around;
+}
+
+.white-outline-btn {
+  width: 250px;
+  height: 50px;
+  font-size: 28px;
+  font-weight: 500;
+  border: 3px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.white-outline-btn:hover {
+  background-color: white;
+  color: #333;
+}

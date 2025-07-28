@@ -1,0 +1,54 @@
+.engagements-section {
+  padding: 50px 20px;
+  text-align: center;
+  background-color: #fffaf5; /* couleur douce similaire à ta maquette */
+}
+
+.engagements-titre {
+  font-size: 35px;
+  font-weight: 400;
+  margin-bottom: 80px;
+  font-family: 'Georgia', serif; /* adapte si besoin */
+}
+
+.engagements-liste {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.engagement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 180px;
+}
+
+.engagement-icon {
+  font-size: 60px;
+  color: #1d2e2b; /* vert foncé/gris foncé comme dans l’image */
+  margin-bottom: 10px;
+}
+
+.engagement-texte {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #1d2e2b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .engagements-liste {
+    gap: 30px;
+  }
+
+  .engagement {
+    max-width: 100%;
+  }
+
+  .engagements-titre {
+    font-size: 28px;
+  }
+}

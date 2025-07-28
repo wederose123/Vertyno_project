@@ -1,0 +1,374 @@
+/* dino.css */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  color: white;
+}
+
+.hero-title {
+  font-family: 'Confiteria Script', cursive;
+  font-size: 85px;
+  font-weight: bold;
+  margin-top: 90px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.hero-button-dino {
+  padding: 8px;
+  margin-bottom: 135px;
+  font-size: 28px;
+  width: 260px;
+  font-weight: 300;
+  border: 3.5px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.hero-button-dino:hover {
+  background: white;
+  color: #333;
+}
+
+.dino-table-section {
+  width: 100%;
+}
+
+.dino-table-content {
+  display: flex;
+}
+
+.dino-table-img {
+  width: 100%;
+}
+
+.presentation-section-dino {
+  background-color: #C2E3DA;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.vertyno-logo {
+  margin-bottom: 20px;
+}
+
+.presentation-title-dino {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.presentation-text-area-dino {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.presentation-text-dino {
+  max-width: 800px;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.confdino {
+  font-family: 'Confiteria Script', cursive;
+}
+
+.dino-doudou-img {
+  bottom: -20px;
+  width: 180px;
+}
+
+.image-logo-and-patte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.widthimage {
+  width: 100%;
+  display: flex;
+}
+
+.advantages-and-order-dino {
+  background-color: #C2E3DA;
+  color: white;
+  padding: 60px 20px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.advantages-section {
+  margin-bottom: 60px;
+}
+
+.advantages-title {
+  font-family: 'Confiteria Script', cursive;
+  font-size: 36px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.advantages-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.advantage-item {
+  max-width: 260px;
+}
+
+.advantage-item h3 {
+  font-size: 30px;
+  margin-top: 15px;
+  font-weight: bolder;
+}
+
+.advantage-item p {
+  font-size: 21px;
+}
+
+.advantage-bar {
+  width: 90%;
+  height: 3px;
+  background-color: white;
+  opacity: 0.8;
+  transition: all 0.4s ease;
+}
+
+.advantage-bar.active {
+  height: 5px;
+  opacity: 1;
+}
+
+.order-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.order-content-dino {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-content-dino h3 {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.order-content-dino h2 {
+  font-family: 'Confiteria Script', cursive;
+  font-size: 40px;
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+
+.order-content-dino p {
+  font-size: 21px;
+  font-weight: 550;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  max-width: 400px;
+}
+
+.order-content-dino label,
+.order-content-dino input {
+  font-size: 21px;
+}
+
+.order-content-dino input {
+  width: 100%;
+  max-width: 220px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #C2E3DA;
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.order-content-dino input::placeholder {
+  color: white;
+  opacity: 0.9;
+  padding-left: 10px;
+  font-weight: 550;
+}
+
+.order-content-dino button {
+  padding: 10px 20px;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-width: 220px;
+}
+
+.order-content-dino button:hover {
+  background-color: white;
+  color: #333;
+}
+
+.dino-magie-text {
+  background-color: #C2E3DA;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.dino-magie-text h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dino-magie-text p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 550;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.dino-caracteristiques {
+  background-color: #C2E3DA;
+  padding: 80px 150px;
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+.dino-caracteristiques h2 {
+  font-size: 40px;
+  margin-bottom: 100px;
+}
+
+.caracteristiques-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 40px;
+  column-gap: 20px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.carac-item {
+  text-align: left;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.carac-item.unique {
+  grid-column: span 3;
+}
+
+.caracteristiques-divider {
+  grid-column: span 3;
+  height: 2px;
+  background-color: white;
+  opacity: 0.7;
+}
+
+.guide-utilisation {
+  margin: 60px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.guide-utilisation h3 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.guide-utilisation p {
+  max-width: 800px;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.reglage {
+  font-size: 29px;
+}
+
+.dino-packaging {
+  position: relative;
+  width: 100%;
+}
+
+.packaging-box-img {
+  display: block;
+  width: 100%;
+}
+
+.packaging-btns {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  width: 800px;
+  justify-content: space-around;
+}
+
+.white-outline-btn {
+  width: 250px;
+  height: 50px;
+  font-size: 28px;
+  font-weight: 500;
+  border: 3px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.white-outline-btn:hover {
+  background-color: white;
+  color: #333;
+}
