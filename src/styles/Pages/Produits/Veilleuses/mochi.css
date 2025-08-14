@@ -45,7 +45,6 @@
   margin-bottom: 135px;
   font-size: 28px;
   width: 260px;
-  font-weight: 300;
   border: 3.5px solid white;
   background: transparent;
   color: white;
@@ -53,6 +52,7 @@
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .hero-button-mochi:hover {
@@ -257,9 +257,17 @@
 
 .order-content-mochi button:hover {
   background-color: white;
-  color: #333;
+  color: black;
 }
 
+.order-content-mochi a {
+  text-decoration: none;
+  color: white;
+}
+
+.order-content-mochi a:hover {
+  color: black;
+}
 
 
 .mochi-description-text {
@@ -418,6 +426,16 @@
   backdrop-filter: blur(4px);
 }
 
+.white-outline-btn a{
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+.white-outline-btn a:hover{
+  color: black;
+}
+
 .white-outline-btn:hover {
   background-color: white;
   color: #333;
@@ -437,6 +455,9 @@
   margin-bottom: 25px;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
+.imgCent{
+  width: 100%;
+}
 
 .mochi-magie-text p {
   font-size: 18px;
@@ -450,4 +471,603 @@
 .mochi-magie-text .confiteria {
   font-family: 'Confiteria Script', cursive;
 }
+
+
+/* =========================
+   Responsive Laptop ≤ 1024px
+   ========================= */
+@media (max-width: 1024px) {
+  /* Hero */
+  .hero-title {
+    font-size: 65px;
+  }
+  .hero-button-mochi {
+    font-size: 22px;
+    width: 200px;
+    margin-bottom: 55px;
+  }
+
+  /* Présentation */
+  .presentation-title-mochi {
+    font-size: 32px;
+  }
+  .presentation-text-mochi {
+    font-size: 18px;
+  }
+  .mochi-doudou-img {
+    width: 160px;
+    bottom: -10px;
+  }
+
+  /* Avantages + Commander */
+  .advantages-title {
+    font-size: 30px;
+  }
+  .advantage-item h3 {
+    font-size: 24px;
+  }
+  .advantage-item p {
+    font-size: 18px;
+  }
+
+  .order-content-mochi h3 {
+    font-size: 32px;
+  }
+  .order-content-mochi h2 {
+    font-size: 34px;
+  }
+  .order-content-mochi p,
+  .order-content-mochi label {
+    font-size: 18px;
+  }
+  .order-image {
+    width: 400px;
+  }
+
+  /* Bloc “magie” */
+  .mochi-magie-text h2 {
+    font-size: 24px;
+  }
+  .mochi-magie-text p {
+    font-size: 16px;
+  }
+
+  /* Caractéristiques */
+  .mochi-caracteristiques {
+    padding: 60px 40px;
+  }
+  .mochi-caracteristiques h2 {
+    font-size: 32px;
+    margin-bottom: 60px;
+  }
+  .carac-item {
+    font-size: 15px;
+  }
+  .reglage {
+    font-size: 24px;
+  }
+
+  /* Guide d’utilisation */
+  .guide-utilisation h3 {
+    font-size: 30px;
+  }
+  .guide-utilisation p {
+    font-size: 18px;
+  }
+
+  /* Packaging */
+  .white-outline-btn {
+    width: 220px;
+    font-size: 22px;
+  }
+  .packaging-btns {
+    width: 90%;
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mochi-page .hero-title {
+    font-size: 50px;
+  }
+
+  .mochi-page .hero-button-mochi {
+    font-size: 20px;
+    width: 180px;
+    margin-bottom: 40px;
+  }
+
+  .mochi-page .presentation-title-mochi {
+    font-size: 28px;
+  }
+
+  /* Texte principal comme Lili (16px) */
+  .mochi-page .presentation-text-mochi {
+    font-size: 16px;
+  }
+
+  /* La zone texte + image passe en colonne */
+  .mochi-page .presentation-text-area-mochi {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* SECTION Commander : même logique que Lili */
+  .mochi-page .order-section {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .mochi-page .order-image {
+    width: 300px;
+  }
+
+  .mochi-page .order-content-mochi h3 {
+    font-size: 28px;
+  }
+
+  .mochi-page .order-content-mochi h2 {
+    font-size: 30px;
+  }
+
+  .mochi-page .order-content-mochi p {
+    max-width: 300px;
+  }
+
+  .mochi-page .order-content-mochi p,
+  .mochi-page .order-content-mochi label {
+    font-size: 16px;
+  }
+
+  /* Avantages (sizes identiques à Lili) */
+  .mochi-page .advantages-title {
+    font-size: 26px;
+  }
+
+  .mochi-page .advantage-item {
+    max-width: 195px;
+  }
+
+  .mochi-page .advantage-item h3 {
+    font-size: 22px;
+  }
+
+  .mochi-page .advantage-item p {
+    font-size: 16px;
+  }
+
+  /* Bloc texte entre sections (équivalent lili-description-text) */
+  .mochi-page .mochi-magie-text h2 {
+    font-size: 22px;
+  }
+  .mochi-page .mochi-magie-text p {
+    font-size: 15px;
+  }
+
+  /* Guide d’utilisation */
+  .mochi-page .guide-utilisation {
+    margin: 80px auto 0;
+  }
+  .mochi-page .guide-utilisation h3 {
+    font-size: 26px;
+  }
+  .mochi-page .guide-utilisation p {
+    font-size: 17px;
+  }
+
+  /* Valeurs “reglage” */
+  .mochi-page .reglage {
+    font-size: 17px;
+  }
+
+  /* Boutons packaging */
+  .mochi-page .white-outline-btn {
+    width: 200px;
+    font-size: 20px;
+  }
+  .mochi-page .packaging-btns {
+    width: 100%;
+    gap: 15px;
+    bottom: 30px;
+  }
+
+  /* Caractéristiques */
+  .mochi-page .mochi-caracteristiques {
+    padding: 50px 30px;
+  }
+  .mochi-page .mochi-caracteristiques h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+  .mochi-page .caracteristiques-grid {
+    gap: 30px; /* même réduction que Lili */
+  }
+  .mochi-page .carac-item {
+    font-size: 15px;
+    text-align: center;
+  }
+  .mochi-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .mochi-page .hero-title {
+    font-size: 28px;
+    margin-top: 65px;
+  }
+
+  .mochi-page .hero-button-mochi {
+    font-size: 13px;
+    width: 104px;
+    margin-bottom: 5px;
+    padding: 6px;
+  }
+
+  .mochi-page .presentation-title-mochi {
+    font-size: 24px;
+  }
+
+  .mochi-page .presentation-text-mochi {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .mochi-page .presentation-text-area-mochi {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mochi-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .mochi-page .order-image {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .mochi-page .order-content-mochi h3 {
+    font-size: 24px;
+  }
+
+  .mochi-page .order-content-mochi h2 {
+    font-size: 26px;
+  }
+
+  .mochi-page .order-content-mochi p {
+    max-width: 280px;
+    font-size: 15px;
+  }
+
+  .mochi-page .order-content-mochi label {
+    font-size: 15px;
+  }
+
+  .mochi-page .advantages-title {
+    font-size: 22px;
+  }
+
+  .mochi-page .advantage-item h3 {
+    font-size: 20px;
+  }
+
+  .mochi-page .advantage-item p {
+    font-size: 15px;
+  }
+
+  .mochi-page .mochi-magie-text h2 {
+    font-size: 20px;
+  }
+
+  .mochi-page .mochi-magie-text p {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .mochi-page .guide-utilisation {
+    margin: 50px auto 0;
+    padding: 0 10px;
+  }
+
+  .mochi-page .guide-utilisation h3 {
+    font-size: 22px;
+  }
+
+  .mochi-page .guide-utilisation p {
+    font-size: 15px;
+  }
+
+  .mochi-page .reglage {
+    font-size: 15px;
+  }
+
+  .mochi-page .white-outline-btn {
+    width: 160px;
+    font-size: 16px;
+    height: 35px;
+  }
+
+  .mochi-page .packaging-btns {
+    width: 100%;
+    bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .mochi-page .mochi-caracteristiques {
+    padding: 40px 20px;
+  }
+
+  .mochi-page .mochi-caracteristiques h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .mochi-page .caracteristiques-grid {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .mochi-page .carac-item {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .mochi-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 400px) {
+  .mochi-page .hero-title {
+    font-size: 18px;
+    margin-top: 60px;
+  }
+
+  .mochi-page .hero-button-mochi {
+    font-size: 12px;
+    width: 95px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  .mochi-page .presentation-title-mochi {
+    font-size: 22px;
+  }
+
+  .mochi-page .presentation-text-mochi {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  .mochi-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .mochi-page .order-image {
+    max-width: 260px;
+    width: 100%;
+  }
+
+  .mochi-page .order-content-mochi h3 {
+    font-size: 22px;
+  }
+
+  .mochi-page .order-content-mochi h2 {
+    font-size: 24px;
+  }
+
+  .mochi-page .order-content-mochi p,
+  .mochi-page .order-content-mochi label {
+    font-size: 14px;
+    max-width: 260px;
+  }
+
+  .mochi-page .advantages-title {
+    font-size: 20px;
+  }
+
+  .mochi-page .advantage-item h3 {
+    font-size: 18px;
+  }
+
+  .mochi-page .advantage-item p {
+    font-size: 14px;
+  }
+
+  .mochi-page .mochi-magie-text h2 {
+    font-size: 18px;
+  }
+
+  .mochi-page .mochi-magie-text p {
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .mochi-page .guide-utilisation {
+    margin-top: 40px;
+    padding: 0 8px;
+  }
+
+  .mochi-page .guide-utilisation h3 {
+    font-size: 20px;
+  }
+
+  .mochi-page .guide-utilisation p {
+    font-size: 14px;
+  }
+
+  .mochi-page .reglage {
+    font-size: 14px;
+  }
+
+  .mochi-page .white-outline-btn {
+    width: 150px;
+    font-size: 15px;
+    height: 34px;
+  }
+
+  .mochi-page .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 12px;
+    bottom: 15px;
+    align-items: center;
+  }
+
+  .mochi-page .mochi-caracteristiques {
+    padding: 30px 16px;
+  }
+
+  .mochi-page .mochi-caracteristiques h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .mochi-page .caracteristiques-grid {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .mochi-page .carac-item {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .mochi-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+
+@media (max-width: 320px) {
+  .mochi-page .hero-title {
+    font-size: 16px;
+    margin-top: 55px;
+  }
+
+  .mochi-page .hero-button-mochi {
+    font-size: 11px;
+    width: 90px;
+    margin-bottom: 5px;
+    padding: 4px;
+  }
+
+  .mochi-page .presentation-title-mochi {
+    font-size: 20px;
+  }
+
+  .mochi-page .presentation-text-mochi {
+    font-size: 13px;
+    padding: 0 6px;
+  }
+
+  .mochi-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .mochi-page .order-image {
+    max-width: 240px;
+    width: 100%;
+  }
+
+  .mochi-page .order-content-mochi h3 {
+    font-size: 20px;
+  }
+
+  .mochi-page .order-content-mochi h2 {
+    font-size: 22px;
+  }
+
+  .mochi-page .order-content-mochi p,
+  .mochi-page .order-content-mochi label {
+    font-size: 13px;
+    max-width: 240px;
+  }
+
+  .mochi-page .advantages-title {
+    font-size: 18px;
+  }
+
+  .mochi-page .advantage-item h3 {
+    font-size: 16px;
+  }
+
+  .mochi-page .advantage-item p {
+    font-size: 13px;
+  }
+
+  .mochi-page .mochi-magie-text h2 {
+    font-size: 16px;
+  }
+
+  .mochi-page .mochi-magie-text p {
+    font-size: 12px;
+    padding: 0 6px;
+  }
+
+  .mochi-page .guide-utilisation {
+    margin-top: 35px;
+    padding: 0 6px;
+  }
+
+  .mochi-page .guide-utilisation h3 {
+    font-size: 18px;
+  }
+
+  .mochi-page .guide-utilisation p {
+    font-size: 13px;
+  }
+
+  .mochi-page .reglage {
+    font-size: 13px;
+  }
+
+  .mochi-page .white-outline-btn {
+    width: 135px;
+    font-size: 14px;
+    height: 32px;
+  }
+
+  .mochi-page .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    bottom: 12px;
+    align-items: center;
+  }
+
+  .mochi-page .mochi-caracteristiques {
+    padding: 25px 14px;
+  }
+
+  .mochi-page .mochi-caracteristiques h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .mochi-page .caracteristiques-grid {
+    gap: 15px;
+    grid-template-columns: 1fr;
+  }
+
+  .mochi-page .carac-item {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .mochi-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
 

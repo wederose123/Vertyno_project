@@ -18,7 +18,7 @@ import iconSuction from "../../../assets/Pages/Produits/Assiettes/Monpetitourson
 export default function Monpetitourson() {
   return (
     <>
-      <div>
+      <div className="ourson-page">
         <div className="hero-section">
           <img src={FirstOurson} alt="Assiette Mon petit ourson" className="hero-img" />
           <div className="hero-content">
@@ -36,7 +36,7 @@ export default function Monpetitourson() {
         <section className="ourson-text-section">
           <section className="presentation-section-ourson">
             <div className="image-logo-and-patte">
-              <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " />
+              <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo ver-log " />
             </div>
             <h2 className="presentation-title-ourson">Un repas tout en douceur </h2>
             <article className="presentation-text-area-ourson">
@@ -47,7 +47,7 @@ export default function Monpetitourson() {
                 doux et arrondis encouragent l’autonomie des tout-petits. Une approche ludique et 
                 bienveillante inspirée de la méthode Montessori.
               </p>
-              <img src={oursonBack} alt="Mon petit ourson lumineux" className="ourson-doudou-img" />
+              <img src={oursonBack} alt="Mon petit ourson lumineux" className="ourson-doudou-img ver-log" />
             </article>
           </section>
         </section>
@@ -61,7 +61,7 @@ export default function Monpetitourson() {
 
         <section className="advantages-and-order">
           <div className="ourson-new-info">
-            <div className="ourson-title"><img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " /></div>
+            <div className="ourson-title"><img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo ver-log " /></div>
             <h3 className="ourson-subtitle"><strong className="confourson">mon petit ourson</strong> une tendresse responsable </h3>
             <p className="ourson-description">
               Fabriqué en bambou issu de forêts gérées durablement, sans plastique ni BPA,

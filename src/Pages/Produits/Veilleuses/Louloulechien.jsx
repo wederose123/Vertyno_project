@@ -32,12 +32,12 @@ const [activeIndex, setActiveIndex] = useState(0);
   return (
 
     <>
-    <div>
+    <div className="loulou-page">
 <div className="hero-section">
   <img src={FirstLoulou} alt="Veilleuse Loulou le chien" className="hero-img" />
   <div className="hero-content">
     <h1 className="hero-title">Loulou le chien</h1>
-    <button className="hero-button-loulou">Commander</button>
+    <a href={"https://www.etsy.com/fr/listing/4346166365/loulou-le-chien-veilleuse-bebe-tactile?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-4&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253A991ab0a1dd2638422376f1b8edd41695ef2f3c59&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3A991ab0a1dd2638422376f1b8edd41695ef2f3c59 "} className="hero-button-loulou">Commander</a>
   </div>
 </div>
 
@@ -50,7 +50,7 @@ const [activeIndex, setActiveIndex] = useState(0);
 <section className="loulou-text-section">
   <section className="presentation-section-loulou">
         <div className="image-logo-and-patte">
-      <img src={patte} alt="Arc-en-ciel Vertyno" className="" />
+      <img src={patte} alt="Arc-en-ciel Vertyno" className="rainbow" />
     <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " />
         </div>
     <h2 className="presentation-title-loulou">Loulou, le compagnon lumineux des nuits sereines</h2>
@@ -174,8 +174,8 @@ const [activeIndex, setActiveIndex] = useState(0);
     className="packaging-box-img widthimage"
   />
   <div className="packaging-btns">
-    <button className="white-outline-btn">Commander</button>
-    <button className="white-outline-btn">Contact</button>
+    <button className="white-outline-btn"><a href={"https://www.etsy.com/fr/listing/4346166365/loulou-le-chien-veilleuse-bebe-tactile?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-4&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253A991ab0a1dd2638422376f1b8edd41695ef2f3c59&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3A991ab0a1dd2638422376f1b8edd41695ef2f3c59"}>Commander</a></button>
+    <button className="white-outline-btn"><a href={"Contact"}>Contact</a></button>
   </div>
 </section>
 

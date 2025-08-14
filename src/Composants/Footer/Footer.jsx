@@ -4,11 +4,10 @@ import axios from "axios";
 import { db } from "../../Firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import {
-  FaFacebookF,
   FaTiktok,
   FaLinkedinIn,
   FaInstagram,
-  FaSnapchatGhost,
+  FaPinterestP
 } from "react-icons/fa";
 
 // 🔹 Ajout à Brevo
@@ -151,12 +150,19 @@ export default function Footer() {
           </div>
 
           <div className="footer-socials">
-            <FaFacebookF />
-            <FaTiktok />
-            <FaLinkedinIn />
-            <FaInstagram />
-            <FaSnapchatGhost />
-          </div>
+  <a href={"https://www.tiktok.com/@vertyno_home"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+    <FaTiktok />
+  </a>
+  <a href={"https://www.linkedin.com/in/tonprofil"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+    <FaLinkedinIn />
+  </a>
+  <a href={"https://www.instagram.com/vertyno_home/"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+    <FaInstagram />
+  </a>
+  <a href={"https://www.pinterest.fr/vertyno_home/"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+    <FaPinterestP />
+  </a>
+</div>
         </footer>
       </div>
     </>

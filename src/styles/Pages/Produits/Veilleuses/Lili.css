@@ -47,7 +47,7 @@
     margin-bottom: 135px;
     font-size: 28px;
     width: 260px;
-    font-weight: 300;
+    
     border: 3.5px solid white;
     background: transparent;
     color: white;
@@ -55,6 +55,11 @@
     cursor: pointer;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.hero-button a {
+font-weight: 400;
 }
 
 .hero-button:hover {
@@ -432,4 +437,629 @@ justify-content: center;
   color: #333;
 }
 
+.white-outline-btn a{
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+.white-outline-btn a:hover{
+  color: black;
+}
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 65px;
+  }
+
+  .hero-button {
+    font-size: 22px;
+    width: 200px;
+    margin-bottom: 55px;
+  }
+
+  .presentation-title {
+    font-size: 32px;
+  }
+
+  .presentation-text-one,
+  .presentation-text-two {
+    font-size: 18px;
+  }
+
+  .order-content-lili h3 {
+    font-size: 32px;
+  }
+
+  .order-content-lili h2 {
+    font-size: 34px;
+  }
+
+  .order-content-lili p,
+  .order-content-lili label {
+    font-size: 18px;
+  }
+
+  .order-image{
+    width: 400px;
+  }
+
+  .advantages-title {
+    font-size: 30px;
+  }
+
+  .advantage-item h3 {
+    font-size: 24px;
+  }
+
+  .advantage-item p {
+    font-size: 18px;
+  }
+
+  .lili-description-text h2 {
+    font-size: 24px;
+  }
+
+  .lili-description-text p {
+    font-size: 16px;
+  }
+
+  .guide-utilisation h3 {
+    font-size: 30px;
+  }
+
+  .guide-utilisation p {
+    font-size: 18px;
+  }
+
+  .reglage {
+    font-size: 24px;
+  }
+
+  .white-outline-btn {
+    width: 220px;
+    font-size: 22px;
+  }
+
+  .packaging-btns {
+    width: 90%;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .lili-caracteristiques {
+    padding: 60px 40px;
+  }
+
+  .lili-caracteristiques h2 {
+    font-size: 32px;
+    margin-bottom: 60px;
+  }
+
+  .carac-item {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-lili .hero-title {
+    font-size: 50px;
+  }
+
+  .page-lili .hero-button {
+    font-size: 20px;
+    width: 180px;
+    margin-bottom: 40px;
+  }
+
+  .page-lili .presentation-title {
+    font-size: 28px;
+  }
+
+  .page-lili .presentation-text-one,
+  .presentation-text-two {
+    font-size: 16px;
+  }
+
+  .page-lili .presentation-text-big-two {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-lili .order-section {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .page-lili .order-image {
+    width: 300px;
+  }
+
+  .page-lili .order-content-lili h3 {
+    font-size: 28px;
+  }
+
+  .page-lili .order-content-lili h2 {
+    font-size: 30px;
+  }
+
+  .page-lili .order-content-lili p{
+    max-width: 300px;
+  }
+
+  .page-lili .order-content-lili p,
+  .order-content-lili label {
+    font-size: 16px;
+    
+  }
+
+  .page-lili .advantages-title {
+    font-size: 26px;
+  }
+
+  .page-lili .advantage-item {
+    max-width: 195px;
+}
+
+  .page-lili .advantage-item h3 {
+    font-size: 22px;
+  }
+
+  .page-lili .advantage-item p {
+    font-size: 16px;
+  }
+
+  .page-lili .lili-description-text h2 {
+    font-size: 22px;
+  }
+
+  .page-lili .liliback {
+    position: relative;
+    bottom: 25px;
+  }
+
+  .page-lili .lili-description-text p {
+    font-size: 15px;
+  }
+
+  .page-lili .guide-utilisation {
+    margin: 80px auto 0;
+  }
+
+  .page-lili .guide-utilisation h3 {
+    font-size: 26px;
+  }
+
+  .page-lili .guide-utilisation p {
+    font-size: 17px;
+  }
+
+  .page-lili .reglage {
+    font-size: 17px;
+  }
+
+  .page-lili .white-outline-btn {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  .page-lili .packaging-btns {
+    width: 100%;
+    gap: 15px;
+    bottom: 30px;
+  }
+
+  .page-lili .lili-caracteristiques {
+    padding: 50px 30px;
+  }
+
+  .page-lili .lili-caracteristiques h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .page-lili .caracteristiques-grid {
+    gap: 30px;
+  }
+
+  .page-lili .carac-item {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .page-lili .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .page-lili .hero-title {
+    font-size: 28px;
+    margin-top: 65px;
+  }
+
+  .page-lili .hero-button {
+        font-size: 13px;
+        width: 104px;
+        margin-bottom: 5px;
+        padding: 6px;
+    }
+
+  .page-lili .presentation-title {
+    font-size: 24px;
+  }
+
+  .page-lili .presentation-text-one,
+  .page-lili .presentation-text-two {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .page-lili .presentation-text-big-two {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-lili .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .page-lili .order-image {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .page-lili .order-content-lili h3 {
+    font-size: 24px;
+  }
+
+  .page-lili .order-content-lili h2 {
+    font-size: 26px;
+  }
+
+  .page-lili .order-content-lili p {
+    max-width: 280px;
+    font-size: 15px;
+  }
+
+  .page-lili .order-content-lili label {
+    font-size: 15px;
+  }
+
+  .page-lili .advantages-title {
+    font-size: 22px;
+  }
+
+  .page-lili .advantage-item h3 {
+    font-size: 20px;
+  }
+
+  .page-lili .advantage-item p {
+    font-size: 15px;
+  }
+
+  .page-lili .lili-description-text h2 {
+    font-size: 20px;
+  }
+
+  .page-lili .liliback {
+    bottom: 15px;
+  }
+
+  .page-lili .lili-description-text p {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .page-lili .guide-utilisation {
+    margin: 50px auto 0;
+    padding: 0 10px;
+  }
+
+  .page-lili .guide-utilisation h3 {
+    font-size: 22px;
+  }
+
+  .page-lili .guide-utilisation p {
+    font-size: 15px;
+  }
+
+  .page-lili .reglage {
+    font-size: 15px;
+  }
+
+  .page-lili .white-outline-btn {
+    width: 160px;
+    font-size: 16px;
+    height: 35px;
+  }
+
+  .page-lili .packaging-btns {
+    width: 100%;
+    bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .page-lili .lili-caracteristiques {
+    padding: 40px 20px;
+  }
+
+  .page-lili .lili-caracteristiques h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .page-lili .caracteristiques-grid {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .page-lili .carac-item {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .page-lili .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .page-lili .hero-title {
+    font-size: 18px;
+    margin-top: 60px;
+  }
+
+  .page-lili .hero-button {
+    font-size: 12px;
+    width: 95px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  .page-lili .presentation-title {
+    font-size: 22px;
+  }
+
+  .page-lili .presentation-text-one,
+  .page-lili .presentation-text-two {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  .page-lili .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .page-lili .order-image {
+    max-width: 260px;
+    width: 100%;
+  }
+
+  .page-lili .order-content-lili h3 {
+    font-size: 22px;
+  }
+
+  .page-lili .order-content-lili h2 {
+    font-size: 24px;
+  }
+
+  .page-lili .order-content-lili p,
+  .page-lili .order-content-lili label {
+    font-size: 14px;
+    max-width: 260px;
+  }
+
+  .page-lili .advantages-title {
+    font-size: 20px;
+  }
+
+  .page-lili .advantage-item h3 {
+    font-size: 18px;
+  }
+
+  .page-lili .advantage-item p {
+    font-size: 14px;
+  }
+
+  .page-lili .lili-description-text h2 {
+    font-size: 18px;
+  }
+
+  .rainbow{
+    width: 100%;
+  }
+
+  .page-lili .lili-description-text p {
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .page-lili .guide-utilisation {
+    margin-top: 40px;
+    padding: 0 8px;
+  }
+
+  .page-lili .guide-utilisation h3 {
+    font-size: 20px;
+  }
+
+  .page-lili .guide-utilisation p {
+    font-size: 14px;
+  }
+
+  .page-lili .reglage {
+    font-size: 14px;
+  }
+
+  .page-lili .white-outline-btn {
+    width: 150px;
+    font-size: 15px;
+    height: 34px;
+  }
+
+  .page-lili .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 12px;
+    bottom: 15px;
+    align-items: center;
+  }
+
+  .page-lili .lili-caracteristiques {
+    padding: 30px 16px;
+  }
+
+  .page-lili .lili-caracteristiques h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .page-lili .caracteristiques-grid {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .page-lili .carac-item {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .page-lili .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+
+@media (max-width: 320px) {
+  .page-lili .hero-title {
+    font-size: 16px;
+    margin-top: 55px;
+  }
+
+  .page-lili .hero-button {
+    font-size: 11px;
+    width: 90px;
+    margin-bottom: 5px;
+    padding: 4px;
+  }
+
+  .page-lili .presentation-title {
+    font-size: 20px;
+  }
+
+  .page-lili .presentation-text-one,
+  .page-lili .presentation-text-two {
+    font-size: 13px;
+    padding: 0 6px;
+  }
+
+  .page-lili .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .page-lili .order-image {
+    max-width: 240px;
+    width: 100%;
+  }
+
+  .page-lili .order-content-lili h3 {
+    font-size: 20px;
+  }
+
+  .page-lili .order-content-lili h2 {
+    font-size: 22px;
+  }
+
+  .page-lili .order-content-lili p,
+  .page-lili .order-content-lili label {
+    font-size: 13px;
+    max-width: 240px;
+  }
+
+  .page-lili .advantages-title {
+    font-size: 18px;
+  }
+
+  .page-lili .advantage-item h3 {
+    font-size: 16px;
+  }
+
+  .page-lili .advantage-item p {
+    font-size: 13px;
+  }
+
+  .page-lili .lili-description-text h2 {
+    font-size: 16px;
+  }
+
+  .page-lili .lili-description-text p {
+    font-size: 12px;
+    padding: 0 6px;
+  }
+
+  .page-lili .guide-utilisation {
+    margin-top: 35px;
+    padding: 0 6px;
+  }
+
+  .page-lili .guide-utilisation h3 {
+    font-size: 18px;
+  }
+
+  .page-lili .guide-utilisation p {
+    font-size: 13px;
+  }
+
+  .page-lili .reglage {
+    font-size: 13px;
+  }
+
+  .page-lili .white-outline-btn {
+    width: 135px;
+    font-size: 14px;
+    height: 32px;
+  }
+
+  .page-lili .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    bottom: 12px;
+    align-items: center;
+  }
+
+  .page-lili .lili-caracteristiques {
+    padding: 25px 14px;
+  }
+
+  .page-lili .lili-caracteristiques h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .page-lili .caracteristiques-grid {
+    gap: 15px;
+    grid-template-columns: 1fr;
+  }
+
+  .page-lili .carac-item {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .page-lili .carac-item.unique {
+    grid-column: span 1;
+  }
+}
 

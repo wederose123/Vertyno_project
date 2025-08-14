@@ -45,7 +45,6 @@
     margin-bottom: 135px;
     font-size: 28px;
     width: 260px;
-    font-weight: 300;
     border: 3.5px solid white;
     background: transparent;
     color: white;
@@ -53,6 +52,7 @@
     cursor: pointer;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .hero-button-loulou:hover {
@@ -415,5 +415,630 @@ justify-content: center;
 .white-outline-btn:hover {
   background-color: white;
   color: #333;
+}
+
+.white-outline-btn a{
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+.white-outline-btn a:hover{
+  color: black;
+}
+
+/* Laptop L / Tablet paysage ≤ 1024px */
+@media (max-width: 1024px) {
+  .loulou-page .hero-title {
+    font-size: 65px;
+  }
+
+  .loulou-page .hero-button-loulou {
+    font-size: 22px;
+    width: 200px;
+    margin-bottom: 55px;
+  }
+
+  .loulou-page .presentation-title-loulou {
+    font-size: 32px;
+  }
+
+  .loulou-page .presentation-text-loulou {
+    font-size: 18px;
+  }
+
+  .loulou-page .order-content-loulou h3 {
+    font-size: 32px;
+  }
+
+  .loulou-page .order-content-loulou h2 {
+    font-size: 34px;
+  }
+
+  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou label {
+    font-size: 18px;
+  }
+
+  .loulou-page .order-image {
+    width: 400px; /* image à droite de la section Commander */
+  }
+
+  .loulou-page .advantages-title {
+    font-size: 30px;
+  }
+
+  .loulou-page .advantage-item h3 {
+    font-size: 24px;
+  }
+
+  .loulou-page .advantage-item p {
+    font-size: 18px;
+  }
+
+  .loulou-page .loulou-description-text h2 {
+    font-size: 24px;
+  }
+
+  .loulou-page .loulou-description-text p {
+    font-size: 16px;
+  }
+
+  .loulou-page .guide-utilisation h3 {
+    font-size: 30px;
+  }
+
+  .loulou-page .guide-utilisation p {
+    font-size: 18px;
+  }
+
+  .loulou-page .reglage {
+    font-size: 24px;
+  }
+
+  .loulou-page .white-outline-btn {
+    width: 220px;
+    font-size: 22px;
+  }
+
+  .loulou-page .packaging-btns {
+    width: 90%;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .loulou-page .loulou-caracteristiques {
+    padding: 60px 40px;
+  }
+
+  .loulou-page .loulou-caracteristiques h2 {
+    font-size: 32px;
+    margin-bottom: 60px;
+  }
+
+  .loulou-page .carac-item {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .loulou-page .hero-title {
+    font-size: 50px;
+  }
+
+  .loulou-page .hero-button-loulou {
+    font-size: 20px;
+    width: 180px;
+    margin-bottom: 40px;
+  }
+
+  .loulou-page .presentation-title-loulou {
+    font-size: 28px;
+  }
+
+  .loulou-page .presentation-text-loulou {
+    font-size: 16px;
+  }
+
+  .loulou-page .presentation-text-big-two {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loulou-page .order-section {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .loulou-page .order-image {
+    width: 300px;
+  }
+
+  .loulou-page .order-content-loulou h3 {
+    font-size: 28px;
+  }
+
+  .loulou-page .order-content-loulou h2 {
+    font-size: 30px;
+  }
+
+  .loulou-page .order-content-loulou p {
+    max-width: 300px;
+  }
+
+  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou label {
+    font-size: 16px;
+  }
+
+  .loulou-page .advantages-title {
+    font-size: 26px;
+  }
+
+  .loulou-page .advantage-item {
+    max-width: 195px;
+  }
+
+  .loulou-page .advantage-item h3 {
+    font-size: 22px;
+  }
+
+  .loulou-page .advantage-item p {
+    font-size: 16px;
+  }
+
+  .loulou-page .loulou-description-text h2 {
+    font-size: 22px;
+  }
+
+  .loulou-page .loulouback {
+    position: relative;
+    bottom: 25px;
+  }
+
+  .loulou-page .loulou-description-text p {
+    font-size: 15px;
+  }
+
+  .loulou-page .guide-utilisation {
+    margin: 80px auto 0;
+  }
+
+  .loulou-page .guide-utilisation h3 {
+    font-size: 26px;
+  }
+
+  .loulou-page .guide-utilisation p {
+    font-size: 17px;
+  }
+
+  .loulou-page .reglage {
+    font-size: 17px;
+  }
+
+  .loulou-page .white-outline-btn {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  .loulou-page .packaging-btns {
+    width: 100%;
+    gap: 15px;
+    bottom: 30px;
+  }
+
+  .loulou-page .loulou-caracteristiques {
+    padding: 50px 30px;
+  }
+
+  .loulou-page .loulou-caracteristiques h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .loulou-page .caracteristiques-grid {
+    gap: 30px;
+  }
+
+  .loulou-page .carac-item {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .loulou-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .loulou-page .hero-title {
+    font-size: 28px;
+    margin-top: 65px;
+  }
+
+  .loulou-page .hero-button-loulou {
+    font-size: 13px;
+    width: 104px;
+    margin-bottom: 5px;
+    padding: 6px;
+  }
+
+  .loulou-page .presentation-title-loulou {
+    font-size: 24px;
+  }
+
+  .loulou-page .presentation-text-loulou {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .loulou-page .presentation-text-area-loulou {
+    display: flex;
+    flex-direction: column;
+}
+
+  .loulou-page .presentation-text-big-two {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loulou-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .loulou-page .order-image {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .loulou-page .order-content-loulou h3 {
+    font-size: 24px;
+  }
+
+  .loulou-page .order-content-loulou h2 {
+    font-size: 26px;
+  }
+
+  .loulou-page .order-content-loulou p {
+    max-width: 280px;
+    font-size: 15px;
+  }
+
+  .loulou-page .order-content-loulou label {
+    font-size: 15px;
+  }
+
+  .loulou-page .advantages-title {
+    font-size: 22px;
+  }
+
+  .loulou-page .advantage-item h3 {
+    font-size: 20px;
+  }
+
+  .loulou-page .advantage-item p {
+    font-size: 15px;
+  }
+
+  .loulou-page .loulou-description-text h2 {
+    font-size: 20px;
+  }
+
+  .loulou-page .loulouback {
+    bottom: 15px;
+  }
+
+  .loulou-page .loulou-description-text p {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .loulou-page .guide-utilisation {
+    margin: 50px auto 0;
+    padding: 0 10px;
+  }
+
+  .loulou-page .guide-utilisation h3 {
+    font-size: 22px;
+  }
+
+  .loulou-page .guide-utilisation p {
+    font-size: 15px;
+  }
+
+  .loulou-page .reglage {
+    font-size: 15px;
+  }
+
+  .loulou-page .white-outline-btn {
+    width: 160px;
+    font-size: 16px;
+    height: 35px;
+  }
+
+  .loulou-page .packaging-btns {
+    width: 100%;
+    bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .loulou-page .loulou-caracteristiques {
+    padding: 40px 20px;
+  }
+
+  .loulou-page .loulou-caracteristiques h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .loulou-page .caracteristiques-grid {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .loulou-page .carac-item {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .loulou-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+
+@media (max-width: 425px) {
+  .loulou-page .hero-title {
+    font-size: 18px;
+    margin-top: 60px;
+  }
+
+  .loulou-page .hero-button-loulou {
+    font-size: 12px;
+    width: 95px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  .loulou-page .presentation-title-loulou {
+    font-size: 22px;
+  }
+
+  .loulou-page .presentation-text-loulou {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  .loulou-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .loulou-page .order-image {
+    max-width: 260px;
+    width: 100%;
+  }
+
+  .loulou-page .order-content-loulou h3 {
+    font-size: 22px;
+  }
+
+  .loulou-page .order-content-loulou h2 {
+    font-size: 24px;
+  }
+
+  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou label {
+    font-size: 14px;
+    max-width: 260px;
+  }
+
+  .loulou-page .advantages-title {
+    font-size: 20px;
+  }
+
+  .loulou-page .advantage-item h3 {
+    font-size: 18px;
+  }
+
+  .loulou-page .advantage-item p {
+    font-size: 14px;
+  }
+
+  .loulou-page .loulou-description-text h2 {
+    font-size: 18px;
+  }
+
+  .loulou-page .rainbow {
+    width: 100%;
+  }
+
+  .loulou-page .loulou-description-text p {
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .loulou-page .guide-utilisation {
+    margin-top: 40px;
+    padding: 0 8px;
+  }
+
+  .loulou-page .guide-utilisation h3 {
+    font-size: 20px;
+  }
+
+  .loulou-page .guide-utilisation p {
+    font-size: 14px;
+  }
+
+  .loulou-page .reglage {
+    font-size: 14px;
+  }
+
+  .loulou-page .white-outline-btn {
+    width: 150px;
+    font-size: 15px;
+    height: 34px;
+  }
+
+  .loulou-page .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 12px;
+    bottom: 15px;
+    align-items: center;
+  }
+
+  .loulou-page .loulou-caracteristiques {
+    padding: 30px 16px;
+  }
+
+  .loulou-page .loulou-caracteristiques h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .loulou-page .caracteristiques-grid {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .loulou-page .carac-item {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .loulou-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 325px) {
+  .loulou-page .hero-title {
+    font-size: 16px;
+    margin-top: 55px;
+  }
+
+  .loulou-page .hero-button-loulou {
+    font-size: 11px;
+    width: 90px;
+    margin-bottom: 5px;
+    padding: 4px;
+  }
+
+  .loulou-page .presentation-title-loulou {
+    font-size: 20px;
+  }
+
+  .loulou-page .presentation-text-loulou {
+    font-size: 13px;
+    padding: 0 6px;
+  }
+
+  .loulou-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .loulou-page .order-image {
+    max-width: 240px;
+    width: 100%;
+  }
+
+  .loulou-page .order-content-loulou h3 {
+    font-size: 20px;
+  }
+
+  .loulou-page .order-content-loulou h2 {
+    font-size: 22px;
+  }
+
+  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou label {
+    font-size: 13px;
+    max-width: 240px;
+  }
+
+  .loulou-page .advantages-title {
+    font-size: 18px;
+  }
+
+  .loulou-page .advantage-item h3 {
+    font-size: 16px;
+  }
+
+  .loulou-page .advantage-item p {
+    font-size: 13px;
+  }
+
+  .loulou-page .loulou-description-text h2 {
+    font-size: 16px;
+  }
+
+  .loulou-page .loulou-description-text p {
+    font-size: 12px;
+    padding: 0 6px;
+  }
+
+  .loulou-page .guide-utilisation {
+    margin-top: 35px;
+    padding: 0 6px;
+  }
+
+  .loulou-page .guide-utilisation h3 {
+    font-size: 18px;
+  }
+
+  .loulou-page .guide-utilisation p {
+    font-size: 13px;
+  }
+
+  .loulou-page .reglage {
+    font-size: 13px;
+  }
+
+  .loulou-page .white-outline-btn {
+    width: 135px;
+    font-size: 14px;
+    height: 32px;
+  }
+
+  .loulou-page .packaging-btns {
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    bottom: 12px;
+    align-items: center;
+  }
+
+  .loulou-page .loulou-caracteristiques {
+    padding: 25px 14px;
+  }
+
+  .loulou-page .loulou-caracteristiques h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .loulou-page .caracteristiques-grid {
+    gap: 15px;
+    grid-template-columns: 1fr;
+  }
+
+  .loulou-page .carac-item {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .loulou-page .carac-item.unique {
+    grid-column: span 1;
+  }
 }
 

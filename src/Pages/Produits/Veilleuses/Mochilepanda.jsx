@@ -25,12 +25,12 @@ export default function MochiLePanda () {
 
   return (
     <>
-      <div>
+      <div className="mochi-page">
         <div className="hero-section">
           <img src={FirstMochi} alt="Veilleuse Mochi le panda" className="hero-img" />
           <div className="hero-content">
             <h1 className="hero-title">Mochi le panda</h1>
-            <button className="hero-button-mochi">Commander</button>
+            <a href={"https://www.etsy.com/fr/listing/4346170757/mochi-le-panda-veilleuse-bebe-silicone-o?ref=related-1&logging_key=e8cfb9fd8ad2d4fb72e2157124888a0d60a415fa%3A4346170757 "} className="hero-button-mochi">Commander</a>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ export default function MochiLePanda () {
         <section className="mochi-text-section">
           <section className="presentation-section-mochi">
             <div className="image-logo-and-patte">
-              <img src={yeuxmochi} alt="Icône" className="" />
+              <img src={yeuxmochi} alt="Icône" className="imgCent rainbow" />
               <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " />
             </div>
             <h2 className="presentation-title-mochi">Mochi, le compagnon des nuits sereines </h2>
@@ -99,7 +99,7 @@ export default function MochiLePanda () {
               </p>
               <label htmlFor="email">adresse email :</label>
               <input type="email" id="email" placeholder="saisir" />
-              <button>Commander</button>
+              <button> <a href={"https://www.etsy.com/fr/listing/4346170757/mochi-le-panda-veilleuse-bebe-silicone-o?ref=related-1&logging_key=e8cfb9fd8ad2d4fb72e2157124888a0d60a415fa%3A4346170757 "}>Commander</a></button>
             </div>
             <img src={mochiGround} alt="Veilleuse Mochi" className="order-image" />
           </div>
@@ -171,8 +171,8 @@ export default function MochiLePanda () {
             className="packaging-box-img widthimage"
           />
           <div className="packaging-btns">
-            <button className="white-outline-btn">Commander</button>
-            <button className="white-outline-btn">Contact</button>
+            <button className="white-outline-btn"> <a href={"https://www.etsy.com/fr/listing/4346170757/mochi-le-panda-veilleuse-bebe-silicone-o?ref=related-1&logging_key=e8cfb9fd8ad2d4fb72e2157124888a0d60a415fa%3A4346170757 "}>Commander</a></button>
+            <button className="white-outline-btn"><a href={"/Contact"}>Contact</a></button>
           </div>
         </section>
       </div>

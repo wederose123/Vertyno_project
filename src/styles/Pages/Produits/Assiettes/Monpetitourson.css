@@ -362,3 +362,541 @@
   background-color: white;
   color: #333;
 }
+
+
+@media screen and (max-width: 1024px) {
+  .ourson-page .hero-title-ourson {
+    font-size: 65px;
+    margin-top: 70px;
+  }
+
+  .ourson-page .hero-button-ourson {
+    font-size: 22px;
+    width: 200px;
+    margin-bottom: 50px;
+  }
+
+  .ourson-page .presentation-title-ourson {
+    font-size: 32px;
+  }
+
+  .ourson-page .presentation-text-ourson {
+    font-size: 18px;
+    max-width: 650px;
+  }
+
+  .ourson-page .ourson-subtitle {
+    font-size: 32px;
+  }
+
+  .ourson-page .ourson-description {
+    font-size: 20px;
+    max-width: 650px;
+  }
+
+  .ourson-page .order-content h3 {
+    font-size: 32px;
+  }
+
+  .ourson-page .order-content h2 {
+    font-size: 32px;
+  }
+
+  .ourson-page .order-content p {
+    font-size: 18px;
+    max-width: 350px;
+  }
+
+  .ourson-page .order-section {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .ourson-page .order-content input {
+    max-width: 200px;
+  }
+
+  .ourson-page .ourson-title-text-part {
+    font-size: 24px;
+  }
+
+  .ourson-page .ourson-magie-text p {
+    font-size: 16px;
+    max-width: 650px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 h2 {
+    margin-left: 50px;
+    font-size: 26px;
+  }
+
+  .ourson-page .ourson-entretien h3 {
+    font-size: 32px;
+    margin-left: 50px;
+  }
+
+  .ourson-page .ourson-entretien p {
+    font-size: 16px;
+    margin-left: 50px;
+    max-width: 650px;
+  }
+
+  .ourson-page .packaging-btns {
+    width: 600px;
+  }
+
+  .ourson-page .white-outline-btn {
+    width: 200px;
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ourson-page .hero-title-ourson {
+    font-size: 50px;
+    margin-top: 50px;
+  }
+
+  .ourson-page .hero-button-ourson {
+    font-size: 20px;
+    width: 180px;
+    margin-bottom: 40px;
+  }
+
+  .ourson-page .presentation-section-ourson {
+    padding: 60px 15px;
+  }
+
+  .ourson-page .presentation-title-ourson {
+    font-size: 28px;
+  }
+
+  .ourson-page .presentation-text-ourson {
+    font-size: 16px;
+    max-width: 550px;
+  }
+
+  .ourson-page .ourson-subtitle {
+    font-size: 28px;
+  }
+
+  .ourson-page .ourson-description {
+    font-size: 18px;
+    max-width: 550px;
+  }
+
+  .ourson-page .order-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    gap: 20px;
+  }
+
+  .ourson-page .order-content {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .ourson-page .order-content h3 {
+    font-size: 28px;
+  }
+
+  .ourson-page .order-content h2 {
+    font-size: 28px;
+  }
+
+  .ourson-page .order-content p {
+    font-size: 16px;
+    max-width: 300px;
+  }
+
+  .ourson-page .order-content input {
+    max-width: 180px;
+  }
+
+  .ourson-page .order-image {
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .ourson-icon-item img {
+    width: 100%;
+}
+
+  .ourson-page .ourson-title-text-part {
+    font-size: 22px;
+  }
+
+  .ourson-page .ourson-magie-text p {
+    font-size: 15px;
+    max-width: 550px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 {
+    padding: 60px 15px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 h2 {
+    margin-left: 20px;
+    font-size: 24px;
+  }
+
+  .ourson-page .ourson-entretien h3 {
+    font-size: 28px;
+    margin-left: 20px;
+  }
+
+  .ourson-page .ourson-entretien p {
+    font-size: 15px;
+    margin-left: 20px;
+    max-width: 550px;
+  }
+
+  .ourson-page .packaging-btns {
+    flex-direction: row;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .ourson-page .white-outline-btn {
+    width: 180px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .img-wi {
+    width: 100%;
+  }
+
+  .ourson-page .hero-title-ourson {
+    font-size: 38px;
+    margin-top: 60px;
+  }
+
+  .ourson-page .hero-button-ourson {
+    font-size: 18px;
+    width: 160px;
+    margin-bottom: 30px;
+  }
+
+  .ourson-page .presentation-section-ourson {
+    padding: 50px 12px;
+  }
+
+  .ourson-page .presentation-title-ourson {
+    font-size: 24px;
+  }
+
+  .ourson-page .presentation-text-ourson {
+    font-size: 15px;
+    max-width: 90%;
+  }
+
+  .ourson-page .ourson-subtitle {
+    font-size: 24px;
+  }
+
+  .ourson-page .ourson-description {
+    font-size: 16px;
+    max-width: 90%;
+  }
+
+  .ourson-page .order-section {
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .ourson-page .order-content h3 {
+    font-size: 24px;
+  }
+
+  .ourson-page .order-content h2 {
+    font-size: 26px;
+  }
+
+  .ourson-page .order-content p {
+    font-size: 15px;
+    max-width: 260px;
+  }
+
+  .ourson-page .order-content input {
+    max-width: 160px;
+  }
+
+  .ourson-page .order-image {
+    max-width: 260px;
+    width: 100%;
+  }
+
+  .ourson-page .ourson-title-text-part {
+    font-size: 20px;
+  }
+
+  .ourson-page .ourson-magie-text p {
+    font-size: 14px;
+    max-width: 90%;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 {
+    padding: 40px 12px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 h2 {
+    margin-left: 0;
+    text-align: center;
+    font-size: 22px;
+  }
+
+  .ourson-page .ourson-entretien h3 {
+    font-size: 24px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .ourson-page .ourson-entretien p {
+    font-size: 14px;
+    margin-left: 0;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .ourson-page .packaging-btns {
+    flex-direction: row;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .ourson-page .white-outline-btn {
+    width: 190px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 455px) {
+  .ourson-page .hero-title-ourson {
+    font-size: 22px;
+    margin-top: 65px;
+  }
+
+  .ourson-page .hero-button-ourson {
+    font-size: 12px;
+    width: 145px;
+    height: 33px;
+    margin-bottom: 10px;
+  }
+
+  .ourson-page .presentation-section-ourson {
+    padding: 40px 10px;
+  }
+
+  .ourson-page .presentation-title-ourson {
+    font-size: 22px;
+  }
+
+  .ourson-page .presentation-text-ourson {
+    font-size: 14px;
+    max-width: 95%;
+  }
+
+  .ourson-page .ourson-subtitle {
+    font-size: 22px;
+  }
+
+  .ourson-page .ourson-description {
+    font-size: 15px;
+    max-width: 95%;
+  }
+
+  .ourson-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .ourson-page .order-content h3 {
+    font-size: 22px;
+  }
+
+  .ourson-page .order-content h2 {
+    font-size: 24px;
+  }
+
+  .ourson-page .order-content p {
+    font-size: 14px;
+    max-width: 240px;
+  }
+
+  .ourson-page .order-content input {
+    max-width: 150px;
+  }
+
+  .ourson-page .order-image {
+    max-width: 220px;
+    width: 100%;
+  }
+
+  .ourson-page .ourson-title-text-part {
+    font-size: 18px;
+  }
+
+  .ourson-page .ourson-magie-text p {
+    font-size: 13px;
+    max-width: 95%;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 {
+    padding: 30px 10px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 h2 {
+    font-size: 20px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .ourson-page .ourson-entretien h3 {
+    font-size: 22px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .ourson-page .ourson-entretien p {
+    font-size: 13px;
+    text-align: center;
+    margin-left: 0;
+    max-width: 95%;
+  }
+
+  .ourson-page .packaging-btns {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+  }
+
+  .ourson-page .white-outline-btn {
+    width: 160px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .ver-log {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .ourson-page .hero-title-ourson {
+    font-size: 20px;
+    margin-top: 55px;
+  }
+
+  .ourson-page .hero-button-ourson {
+    font-size: 11px;
+    width: 130px;
+    height: 30px;
+    margin-bottom: 20px;
+  }
+
+  .ourson-page .presentation-section-ourson {
+    padding: 35px 8px;
+  }
+
+  .ourson-page .presentation-title-ourson {
+    font-size: 20px;
+  }
+
+  .ourson-page .presentation-text-ourson {
+    font-size: 13px;
+    max-width: 95%;
+  }
+
+  .ourson-page .ourson-subtitle {
+    font-size: 20px;
+  }
+
+  .ourson-page .ourson-description {
+    font-size: 14px;
+    max-width: 95%;
+  }
+
+  .ourson-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .ourson-page .order-content h3 {
+    font-size: 20px;
+  }
+
+  .ourson-page .order-content h2 {
+    font-size: 22px;
+  }
+
+  .ourson-page .order-content p {
+    font-size: 13px;
+    max-width: 220px;
+  }
+
+  .ourson-page .order-content input {
+    max-width: 140px;
+  }
+
+  .ourson-page .order-image {
+    max-width: 200px;
+    width: 100%;
+  }
+
+  .ourson-page .ourson-title-text-part {
+    font-size: 16px;
+  }
+
+  .ourson-page .ourson-magie-text p {
+    font-size: 12px;
+    max-width: 95%;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 {
+    padding: 25px 8px;
+  }
+
+  .ourson-page .ourson-caracteristiques-v2 h2 {
+    font-size: 18px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .ourson-page .ourson-entretien h3 {
+    font-size: 20px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .ourson-page .ourson-entretien p {
+    font-size: 12px;
+    text-align: center;
+    margin-left: 0;
+    max-width: 95%;
+  }
+
+  .ourson-page .packaging-btns {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+  }
+
+  .ourson-page .white-outline-btn {
+    width: 140px;
+    height: 34px;
+    font-size: 14px;
+  }
+}
+
+

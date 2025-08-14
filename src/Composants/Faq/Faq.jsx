@@ -72,8 +72,8 @@ export default function FAQSlider() {
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import "../../styles/Faq/Faq.css";
-import img1 from "../../assets/home-page/QuatreVeilleuse.png";
-import img2 from "../../assets/home-page/QuatreVeilleuse.png";
+import faq from "../../assets/home-page/Faq/faq.jpg"; 
+
 
 // Composant principal
 export default function Faq() {
@@ -85,17 +85,17 @@ export default function Faq() {
       question: "Vos produits sont-ils sans danger pour les enfants ?",
       answer:
         "Oui, nos produits respectent les normes CE et sont fabriqués avec des matériaux sans danger.",
-      image: img1,
+      image: faq,
+    },
+    {
+      question: "**Comment entretenir les assiettes en bambou ?",
+      answer: "Nous utilisons du silicone alimentaire et du bois naturel.",
+      image: faq,
     },
     {
       question: "Quels matériaux utilisez-vous ?",
       answer: "Nous utilisons du silicone alimentaire et du bois naturel.",
-      image: img2,
-    },
-    {
-      question: "Quels matériaux utilisez-vous ?",
-      answer: "Nous utilisons du silicone alimentaire et du bois naturel.",
-      image: img2,
+      image: faq,
     },
     // Ajoute d'autres slides ici
   ];

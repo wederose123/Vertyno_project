@@ -26,15 +26,16 @@ export default function LiliLlaLicorne () {
     return () => clearInterval(interval);
   }, []);
 
+ 
 
   return (
     <>
-    <div>
+    <div className="page-lili">
        <div className="hero-section">
   <img src={FirstLili} alt="Veilleuse Lili la licorne" className="hero-img" />
   <div className="hero-content">
     <h1 className="hero-title">Lili la licorne</h1>
-    <button className="hero-button">Commander</button>
+    <a href={" https://www.etsy.com/fr/listing/4346151114/lili-la-licorne-veilleuse-enfant?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-1&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253Ae2510d67a2070dcaab67729ab1afbf97bc1567a3&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3Ae2510d67a2070dcaab67729ab1afbf97bc1567a3 "} className="hero-button"> Commander</a>
   </div>
 </div>
 
@@ -176,8 +177,8 @@ export default function LiliLlaLicorne () {
     className="packaging-box-img widthimage"
   />
   <div className="packaging-btns">
-    <button className="white-outline-btn">Commander</button>
-    <button className="white-outline-btn">Contact</button>
+    <button className="white-outline-btn"> <a href={"https://www.etsy.com/fr/listing/4346151114/lili-la-licorne-veilleuse-enfant?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-1&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253Ae2510d67a2070dcaab67729ab1afbf97bc1567a3&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3Ae2510d67a2070dcaab67729ab1afbf97bc1567a3"}>Commander</a></button>
+    <button className="white-outline-btn"> <a href={"/Contact"}>Contact</a></button>
   </div>
 </section>
 

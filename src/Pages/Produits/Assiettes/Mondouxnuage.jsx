@@ -20,7 +20,7 @@ export default function Mondouxnuage() {
 
   return (
     <>
-      <div>
+      <div className="nuage-page">
         <div className="hero-section">
           <img src={FirstNuage} alt="Veilleuse Mon doux nuage" className="hero-img" />
           <div className="hero-content">
@@ -38,7 +38,7 @@ export default function Mondouxnuage() {
         <section className="nuage-text-section">
           <section className="presentation-section-nuage">
             <div className="image-logo-and-patte">
-              <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " />
+              <img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo ver-log " />
             </div>
             <h2 className="presentation-title-nuage">Un repas tout en douceur </h2>
             <article className="presentation-text-area-nuage">
@@ -51,7 +51,7 @@ export default function Mondouxnuage() {
                 leur cuillère adaptée facilitent la prise en main en encouragent l’indépendance, 
                 pour transformer chaque repas en une nouvelle aventure ! 
               </p>
-              <img src={nuageBack} alt="Mon doux nuage lumineux" className="nuage-doudou-img" />
+              <img src={nuageBack} alt="Mon doux nuage lumineux" className="nuage-doudou-img ver-log" />
             </article>
           </section>
         </section>
@@ -65,7 +65,7 @@ export default function Mondouxnuage() {
 
         <section className="advantages-and-order-nuage">
           <div className="nuage-new-info">
-  <div className="nuage-title"><img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo " /></div>
+  <div className="nuage-title"><img src={vertynoLogo} alt="Logo Vertyno" className="vertyno-logo ver-log " /></div>
   <h3 className="nuage-subtitle"><strong className="confnuage">mon doux nuage</strong> une tendresse responsable </h3>
   <p className="nuage-description">
     Conçue en bambou certifié FSC et silicone alimentaire, 
@@ -77,7 +77,7 @@ export default function Mondouxnuage() {
 </div>
 
 
-          <div className="order-section">
+          <div className="order-section-nuage">
             <div className="order-content-nuage">
               <h3>Commander</h3>
               <h2 className="confiteria">Mon doux nuage</h2>

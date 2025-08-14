@@ -40,15 +40,56 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .engagements-liste {
-    gap: 30px;
-  }
-
-  .engagement {
-    max-width: 100%;
+  .engagements-section {
+    padding: 40px 15px;
   }
 
   .engagements-titre {
     font-size: 28px;
+    margin-bottom: 50px;
+  }
+
+  .engagements-liste {
+    gap: 30px;
+    justify-content: center;
+  }
+
+ 
+
+  .engagement-icon {
+    font-size: 45px;
+    margin-bottom: 8px;
+  }
+
+  .engagement-texte {
+    font-size: 15px;
   }
 }
+
+@media (max-width: 425px) {
+  .engagements-section {
+    padding: 35px 10px;
+  }
+
+  .engagements-titre {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+  .engagements-liste {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .engagement-icon {
+    font-size: 42px;
+    margin-bottom: 6px;
+  }
+
+  .engagement-texte {
+    font-size: 14px;
+    max-width: 280px;
+  }
+}
+

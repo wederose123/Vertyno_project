@@ -88,12 +88,12 @@ export default function DinoLedinosaure() {
 
   return (
     <>
-      <div>
+      <div className="dino-page">
         <div className="hero-section">
           <img src={FirstDino} alt="Veilleuse Dino le dinosaure" className="hero-img" />
           <div className="hero-content">
             <h1 className="hero-title">Dino le dinosaure</h1>
-            <button className="hero-button-dino">Commander</button>
+            <a href={" https://www.etsy.com/fr/listing/4346184411/dino-le-dinosaure-veilleuse-bebe?ref=related-3&logging_key=5bb21c3362d4de0790dd0d62b2222587ecfc3fc5%3A4346184411 "} className="hero-button-dino">Commander</a>
           </div>
         </div>
 
@@ -228,8 +228,8 @@ export default function DinoLedinosaure() {
         <section className="dino-packaging">
           <img src={dinoFive} alt="Boîte Dino le dinosaure" className="packaging-box-img widthimage" />
           <div className="packaging-btns">
-            <button className="white-outline-btn">Commander</button>
-            <button className="white-outline-btn">Contact</button>
+            <button className="white-outline-btn"> <a href={"https://www.etsy.com/fr/listing/4346184411/dino-le-dinosaure-veilleuse-bebe?ref=related-3&logging_key=5bb21c3362d4de0790dd0d62b2222587ecfc3fc5%3A4346184411"}>Commander</a> </button>
+            <button className="white-outline-btn"><a href={"/Contact"}>Contact</a></button>
           </div>
         </section>
       </div>

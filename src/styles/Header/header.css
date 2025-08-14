@@ -232,6 +232,7 @@
 
 .header{
   height: 64px;
+  
 }
 
 .logo img {
@@ -253,7 +254,7 @@
 
   .side-menu {
     width: 100%;
-    background-color: rgba(30, 30, 30, 0.95);
+   background-color: rgba(223, 223, 223, 0.42);
     padding: 0px;
   }
   .side-menu .close-btn {
@@ -273,6 +274,10 @@
     padding: 20px;
 }
 
+.category-products a {
+  color: white;
+}
+
   .burger {
     display: flex;
   }
@@ -282,5 +287,10 @@
   }
   .header {
     height: 54px;
+     background-color: (223, 223, 223, 0.42);
   }
+
+  .category-products {
+    align-items: center;
+}
 }

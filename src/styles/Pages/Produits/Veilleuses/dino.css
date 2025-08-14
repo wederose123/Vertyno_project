@@ -1,5 +1,3 @@
-/* dino.css */
-
 .hero-section {
   position: relative;
   width: 100%;
@@ -39,7 +37,6 @@
   margin-bottom: 135px;
   font-size: 28px;
   width: 260px;
-  font-weight: 300;
   border: 3.5px solid white;
   background: transparent;
   color: white;
@@ -47,6 +44,7 @@
   cursor: pointer;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .hero-button-dino:hover {
@@ -213,6 +211,11 @@
 }
 
 .order-content-dino input {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-content-dino input {
   width: 100%;
   max-width: 220px;
   padding: 10px;
@@ -372,3 +375,623 @@
   background-color: white;
   color: #333;
 }
+
+.white-outline-btn a{
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+.white-outline-btn a:hover{
+  color: black;
+}
+
+@media (max-width: 1024px) {
+  .dino-page .hero-title {
+    font-size: 65px;
+  }
+
+  .dino-page .hero-button-dino {
+    font-size: 22px;
+    width: 200px;
+    margin-bottom: 55px;
+  }
+
+  .dino-page .presentation-title-dino {
+    font-size: 32px;
+  }
+
+  .dino-page .presentation-text-dino {
+    font-size: 18px;
+  }
+
+  .dino-page .order-content-dino h3 {
+    font-size: 32px;
+  }
+
+  .dino-page .order-content-dino h2 {
+    font-size: 34px;
+  }
+
+  .dino-page .order-content-dino p,
+  .dino-page .order-content-dino label {
+    font-size: 18px;
+  }
+
+  .dino-page .order-image {
+    width: 400px;
+  }
+
+  .dino-page .advantages-title {
+    font-size: 30px;
+  }
+
+  .dino-page .advantage-item h3 {
+    font-size: 24px;
+  }
+
+  .dino-page .advantage-item p {
+    font-size: 18px;
+  }
+
+  .dino-page .dino-magie-text h2 {
+    font-size: 24px;
+  }
+
+  .dino-page .dino-magie-text p {
+    font-size: 16px;
+  }
+
+  .dino-page .guide-utilisation h3 {
+    font-size: 30px;
+  }
+
+  .dino-page .guide-utilisation p {
+    font-size: 18px;
+  }
+
+  .dino-page .reglage {
+    font-size: 24px;
+  }
+
+  .dino-page .white-outline-btn {
+    width: 220px;
+    font-size: 22px;
+  }
+
+  .dino-page .packaging-btns {
+    width: 90%;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .dino-page .dino-caracteristiques {
+    padding: 60px 40px;
+  }
+
+  .dino-page .dino-caracteristiques h2 {
+    font-size: 32px;
+    margin-bottom: 60px;
+  }
+
+  .dino-page .carac-item {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dino-page .hero-title {
+    font-size: 50px;
+  }
+
+  .dino-page .hero-button-dino {
+    font-size: 20px;
+    width: 180px;
+    margin-bottom: 40px;
+  }
+
+  .dino-page .presentation-title-dino {
+    font-size: 28px;
+  }
+
+  .dino-page .presentation-text-dino {
+    font-size: 16px;
+  }
+
+  .dino-page .presentation-text-area-dino {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dino-page .order-section {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  .dino-page .order-image {
+    width: 300px;
+  }
+
+  .dino-page .order-content-dino h3 {
+    font-size: 28px;
+  }
+
+  .dino-page .order-content-dino h2 {
+    font-size: 30px;
+  }
+
+  .dino-page .order-content-dino p {
+    max-width: 300px;
+  }
+
+  .dino-page .order-content-dino p,
+  .dino-page .order-content-dino label {
+    font-size: 16px;
+  }
+
+  .dino-page .advantages-title {
+    font-size: 26px;
+  }
+
+  .dino-page .advantage-item {
+    max-width: 195px;
+  }
+
+  .dino-page .advantage-item h3 {
+    font-size: 22px;
+  }
+
+  .dino-page .advantage-item p {
+    font-size: 16px;
+  }
+
+  .dino-page .dino-magie-text h2 {
+    font-size: 22px;
+  }
+
+  .dino-page .dino-magie-text p {
+    font-size: 15px;
+  }
+
+  .dino-page .guide-utilisation {
+    margin: 80px auto 0;
+  }
+
+  .dino-page .guide-utilisation h3 {
+    font-size: 26px;
+  }
+
+  .dino-page .guide-utilisation p {
+    font-size: 17px;
+  }
+
+  .dino-page .reglage {
+    font-size: 17px;
+  }
+
+  .dino-page .white-outline-btn {
+    width: 200px;
+    font-size: 20px;
+  }
+
+  .dino-page .packaging-btns {
+    width: 100%;
+    gap: 15px;
+    bottom: 30px;
+  }
+
+  .dino-page .dino-caracteristiques {
+    padding: 50px 30px;
+  }
+
+  .dino-page .dino-caracteristiques h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .dino-page .caracteristiques-grid {
+    gap: 30px;
+  }
+
+  .dino-page .carac-item {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .dino-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .dino-page .hero-title {
+    font-size: 28px;
+    margin-top: 65px;
+  }
+
+  .dino-page .hero-button-dino {
+    font-size: 13px;
+    width: 104px;
+    margin-bottom: 5px;
+    padding: 6px;
+  }
+
+  .dino-page .presentation-title-dino {
+    font-size: 24px;
+  }
+
+  .dino-page .presentation-text-dino {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .dino-page .presentation-text-area-dino {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dino-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .dino-page .order-image {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .dino-page .order-content-dino h3 {
+    font-size: 24px;
+  }
+
+  .dino-page .order-content-dino h2 {
+    font-size: 26px;
+  }
+
+  .dino-page .order-content-dino p {
+    max-width: 280px;
+    font-size: 15px;
+  }
+
+  .dino-page .order-content-dino label {
+    font-size: 15px;
+  }
+
+  .dino-page .advantages-title {
+    font-size: 22px;
+  }
+
+  .dino-page .advantage-item h3 {
+    font-size: 20px;
+  }
+
+  .dino-page .advantage-item p {
+    font-size: 15px;
+  }
+
+  .dino-page .dino-magie-text h2 {
+    font-size: 20px;
+  }
+
+  .dino-page .dino-magie-text p {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .dino-page .guide-utilisation {
+    margin: 50px auto 0;
+    padding: 0 10px;
+  }
+
+  .dino-page .guide-utilisation h3 {
+    font-size: 22px;
+  }
+
+  .dino-page .guide-utilisation p {
+    font-size: 15px;
+  }
+
+  .dino-page .reglage {
+    font-size: 15px;
+  }
+
+  .dino-page .white-outline-btn {
+    width: 160px;
+    font-size: 16px;
+    height: 35px;
+  }
+
+  .dino-page .packaging-btns {
+    width: 100%;
+    bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .dino-page .dino-caracteristiques {
+    padding: 40px 20px;
+  }
+
+  .dino-page .dino-caracteristiques h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .dino-page .caracteristiques-grid {
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .dino-page .carac-item {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .dino-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 375px) {
+  .dino-page .hero-title {
+    font-size: 24px;
+    margin-top: 60px;
+  }
+
+  .dino-page .hero-button-dino {
+    font-size: 12px;
+    width: 95px;
+    margin-bottom: 5px;
+    padding: 6px;
+  }
+
+  .dino-page .presentation-title-dino {
+    font-size: 22px;
+  }
+
+  .dino-page .presentation-text-dino {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  .dino-page .presentation-text-area-dino {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dino-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .dino-page .order-image {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .dino-page .order-content-dino h3 {
+    font-size: 22px;
+  }
+
+  .dino-page .order-content-dino h2 {
+    font-size: 24px;
+  }
+
+  .dino-page .order-content-dino p {
+    max-width: 260px;
+    font-size: 14px;
+  }
+
+  .dino-page .order-content-dino label {
+    font-size: 14px;
+  }
+
+  .dino-page .advantages-title {
+    font-size: 20px;
+  }
+
+  .dino-page .advantage-item h3 {
+    font-size: 18px;
+  }
+
+  .dino-page .advantage-item p {
+    font-size: 14px;
+  }
+
+  .dino-page .dino-magie-text h2 {
+    font-size: 18px;
+  }
+
+  .dino-page .dino-magie-text p {
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .dino-page .guide-utilisation {
+    margin: 40px auto 0;
+    padding: 0 8px;
+  }
+
+  .dino-page .guide-utilisation h3 {
+    font-size: 20px;
+  }
+
+  .dino-page .guide-utilisation p {
+    font-size: 14px;
+  }
+
+  .dino-page .reglage {
+    font-size: 14px;
+  }
+
+  .dino-page .white-outline-btn {
+    width: 150px;
+    font-size: 15px;
+    height: 33px;
+  }
+
+  .dino-page .packaging-btns {
+    width: 100%;
+    bottom: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dino-page .dino-caracteristiques {
+    padding: 35px 15px;
+  }
+
+  .dino-page .dino-caracteristiques h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .dino-page .caracteristiques-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .dino-page .carac-item {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .dino-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 320px) {
+  .dino-page .hero-title {
+    font-size: 20px;
+    margin-top: 55px;
+  }
+
+  .dino-page .hero-button-dino {
+    font-size: 11px;
+    width: 90px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  .dino-page .presentation-title-dino {
+    font-size: 20px;
+  }
+
+  .dino-page .presentation-text-dino {
+    font-size: 13px;
+    padding: 0 6px;
+  }
+
+  .dino-page .presentation-text-area-dino {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dino-page .order-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .dino-page .order-image {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .dino-page .order-content-dino h3 {
+    font-size: 20px;
+  }
+
+  .dino-page .order-content-dino h2 {
+    font-size: 22px;
+  }
+
+  .dino-page .order-content-dino p {
+    max-width: 240px;
+    font-size: 13px;
+  }
+
+  .dino-page .order-content-dino label {
+    font-size: 13px;
+  }
+
+  .dino-page .advantages-title {
+    font-size: 18px;
+  }
+
+  .dino-page .advantage-item h3 {
+    font-size: 16px;
+  }
+
+  .dino-page .advantage-item p {
+    font-size: 13px;
+  }
+
+  .dino-page .dino-magie-text h2 {
+    font-size: 17px;
+  }
+
+  .dino-page .dino-magie-text p {
+    font-size: 13px;
+    padding: 0 6px;
+  }
+
+  .dino-page .guide-utilisation {
+    margin: 30px auto 0;
+    padding: 0 6px;
+  }
+
+  .dino-page .guide-utilisation h3 {
+    font-size: 18px;
+  }
+
+  .dino-page .guide-utilisation p {
+    font-size: 13px;
+  }
+
+  .dino-page .reglage {
+    font-size: 13px;
+  }
+
+  .dino-page .white-outline-btn {
+    width: 140px;
+    font-size: 14px;
+    height: 30px;
+  }
+
+  .dino-page .packaging-btns {
+    width: 100%;
+    bottom: 15px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dino-page .dino-caracteristiques {
+    padding: 30px 10px;
+  }
+
+  .dino-page .dino-caracteristiques h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .dino-page .caracteristiques-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dino-page .carac-item {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .dino-page .carac-item.unique {
+    grid-column: span 1;
+  }
+}
+
+
