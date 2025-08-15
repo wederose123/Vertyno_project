@@ -88,13 +88,23 @@ export default function Faq() {
       image: faq,
     },
     {
-      question: "**Comment entretenir les assiettes en bambou ?",
-      answer: "Nous utilisons du silicone alimentaire et du bois naturel.",
+      question: "Comment entretenir les assiettes en bambou ?",
+      answer: "Lavez-les à la main avec de l’eau tiède et du savon doux. Évitez le lave-vaisselle pour préserver leur durabilité.",
       image: faq,
     },
     {
-      question: "Quels matériaux utilisez-vous ?",
-      answer: "Nous utilisons du silicone alimentaire et du bois naturel.",
+      question: "Les lampes en silicone sont-elles rechargeables ?",
+      answer: "Oui, elles fonctionnent avec une batterie rechargeable incluse et offrent une longue autonomie.",
+      image: faq,
+    },
+    {
+      question: "Expédiez-vous en dehors de la France ?",
+      answer: "Actuellement, nous vendons principalement via Amazon, qui propose des livraisons dans plusieurs pays européens.",
+      image: faq,
+    },
+    {
+      question: "Comment contacter le service client",
+      answer: "Vous pouvez nous joindre via la page contact, nous vous répondrons dans les plus brefs délais.",
       image: faq,
     },
     // Ajoute d'autres slides ici

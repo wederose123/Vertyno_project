@@ -1,0 +1,110 @@
+.privacy-page {
+  --text: #333;
+  --muted: #666;
+  --accent: #8BC7D2;   /* cohérent avec ta charte */
+  --bg-soft: #f7f9fb;
+  color: var(--text);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* Hero */
+.privacy-hero {
+  padding: 48px 20px 24px;
+  text-align: center;
+  background: var(--bg-soft);
+}
+.privacy-hero h1 {
+  margin: 30px 0 8px;
+  font-size: 36px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.privacy-update {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Sommaire */
+.privacy-toc {
+  max-width: 960px;
+  margin: 24px auto 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 10px;
+}
+.privacy-toc ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.privacy-toc a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+.privacy-toc a:hover { text-decoration: underline; }
+
+/* Contenu */
+.privacy-content {
+  max-width: 960px;
+  margin: 16px auto 60px;
+  padding: 0 20px;
+}
+.privacy-block {
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 12px;
+  padding: 22px;
+  margin: 16px 0;
+}
+.privacy-block h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+.privacy-block p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 16px;
+}
+.privacy-list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.65;
+  font-size: 16px;
+}
+.privacy-list li { margin: 6px 0; }
+
+.privacy-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.privacy-link:hover { text-decoration: underline; }
+
+.privacy-contact-inline { margin-top: 8px; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .privacy-hero h1 { font-size: 32px; }
+}
+@media (max-width: 768px) {
+  .privacy-hero { padding: 40px 16px 20px; }
+  .privacy-toc { padding: 10px 14px; }
+  .privacy-block { padding: 18px; }
+}
+@media (max-width: 600px) {
+  .privacy-hero h1 { font-size: 28px; }
+  .privacy-toc ul { gap: 8px 14px; }
+  .privacy-block h2 { font-size: 20px; }
+  .privacy-block p, .privacy-list { font-size: 15px; }
+}
+@media (max-width: 400px) {
+  .privacy-hero h1 { font-size: 24px; }
+  .privacy-update { font-size: 13px; }
+  .privacy-block { padding: 16px; }
+}

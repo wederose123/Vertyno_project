@@ -7,6 +7,9 @@ import Dinoledinosaure from './Pages/Produits/Veilleuses/Dinoledinosaure';
 import Mondouxnuage from './Pages/Produits/Assiettes/Mondouxnuage';
 import Monpetitourson from './Pages/Produits/Assiettes/Monpetitourson';
 import Contact from './Pages/Contact/Contact';
+import MentionLegal from "./Pages/Conforamaliter/MentionLegal";
+import CGV from "./Pages/Conforamaliter/CGV";
+import PolitiqueConfidentialite from "./Pages/Conforamaliter/PolitiqueConfidentialite";
 import './App.css';
 import Header from "./Composants/Header/Header";
 import Footer from "./Composants/Footer/Footer";
@@ -25,6 +28,9 @@ function App() {
          <Route path="/Contact" element={<Contact />} />
          <Route path="/Mondouxnuage" element={<Mondouxnuage />} />
          <Route path="/Monpetitourson" element={<Monpetitourson />} />
+          <Route path="/CGV" element={<CGV />} />
+          <Route path="/MentionLegal" element={<MentionLegal />} />
+          <Route path="/PolitiqueConfidentialite" element={<PolitiqueConfidentialite />} />
       </Routes>
       <Footer/>
     </div>

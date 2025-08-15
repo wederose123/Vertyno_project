@@ -1,0 +1,113 @@
+.cgv-page {
+  --text: #333;
+  --muted: #666;
+  --accent: #92C2E6; /* tu peux adapter pour matcher ta charte */
+  --bg-soft: #f7f9fb;
+  color: var(--text);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.cgv-hero {
+  padding: 48px 20px 24px;
+  text-align: center;
+  background: var(--bg-soft);
+}
+
+.cgv-hero h1 {
+  margin: 30px 0 8px;
+  font-size: 36px;
+  letter-spacing: 0.3px;
+}
+
+.cgv-update {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.cgv-toc {
+  max-width: 960px;
+  margin: 24px auto 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 10px;
+}
+
+.cgv-toc ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cgv-toc a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.cgv-toc a:hover {
+  text-decoration: underline;
+}
+
+.cgv-content {
+  max-width: 960px;
+  margin: 16px auto 60px;
+  padding: 0 20px;
+}
+
+.cgv-block {
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 12px;
+  padding: 22px 22px;
+  margin: 16px 0;
+}
+
+.cgv-block h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.cgv-block p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+.cgv-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cgv-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cgv-hero h1 { font-size: 32px; }
+}
+
+@media (max-width: 768px) {
+  .cgv-hero { padding: 40px 16px 20px; }
+  .cgv-toc { padding: 10px 14px; }
+  .cgv-block { padding: 18px; }
+}
+
+@media (max-width: 600px) {
+  .cgv-hero h1 { font-size: 28px; }
+  .cgv-toc ul { gap: 8px 14px; }
+  .cgv-block h2 { font-size: 20px; }
+  .cgv-block p { font-size: 15px; }
+}
+
+@media (max-width: 400px) {
+  .cgv-hero h1 { font-size: 24px; }
+  .cgv-update { font-size: 13px; }
+  .cgv-block { padding: 16px; }
+}

@@ -121,9 +121,9 @@ export default function Footer() {
             <div className="footer-column">
               <h4>Information Légales</h4>
               <ul>
-                <li className="li-footer">Mention Légales</li>
-                <li className="li-footer">Condition Générales De Vente</li>
-                <li className="li-footer">Politique De Confidentialité</li>
+                <li className="li-footer"> <a href={"/MentionLegal"}>Mention Légales</a></li>
+                <li className="li-footer"><a href={"/CGV"}>Condition Générales De Vente</a></li>
+                <li className="li-footer"><a href={"/PolitiqueConfidentialite"}>Politique De Confidentialité</a></li>
               </ul>
             </div>
           </div>
