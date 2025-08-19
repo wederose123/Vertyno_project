@@ -99,7 +99,7 @@ export default function Faq() {
     },
     {
       question: "Expédiez-vous en dehors de la France ?",
-      answer: "Actuellement, nous vendons principalement via Amazon, qui propose des livraisons dans plusieurs pays européens.",
+      answer: "Actuellement, nous vendons principalement via Etsy, qui propose des livraisons dans plusieurs pays européens.",
       image: faq,
     },
     {

@@ -250,6 +250,7 @@
 
   .newsletter-input {
     width: 100%;
+    margin-left : 50px;
   }
 
   .newsletter-input input {

@@ -81,7 +81,7 @@ const Header = () => {
           >
             PRODUITS
           </button>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>CONTACT</a>
+          <a href="/Contact" onClick={() => setMenuOpen(false)}>CONTACT</a>
         </div>
       )}
 

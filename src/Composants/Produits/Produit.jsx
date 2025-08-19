@@ -3,7 +3,8 @@ import Just from "../../assets/Produits/lili-produits.jpg";
 import loulou from "../../assets/Produits/loulou-produits.jpg";
 import mochi from "../../assets/Produits/mochi-produits.jpg";
 import dino from "../../assets/Produits/dino-produits.jpg";
-import oursson from "../../assets/Produits/oursson-produits.jpg"; 
+import oursson from "../../assets/Produits/oursson-produits.png"; 
+import nuage from "../../assets/Produits/nuage-produits.png"; 
 
 
 // Composant pour afficher un seul produit
@@ -25,7 +26,7 @@ export default function ListeProduits() {
     { image: mochi, nom: "Mochi le panda", lien: "/Mochilepanda" },
     { image: dino, nom: "Dino le dinosaure", lien: "/Dinoledinosaure" },
     { image: oursson, nom: "Mon petit ourson", lien: "/produits/assiette" },
-    { image: oursson, nom: "Mon doux petit nuage", lien: "/produits/assiette" },
+    { image: nuage, nom: "Mon doux petit nuage", lien: "/produits/assiette" },
   ];
 
   return (

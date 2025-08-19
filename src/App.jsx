@@ -10,6 +10,7 @@ import Contact from './Pages/Contact/Contact';
 import MentionLegal from "./Pages/Conforamaliter/MentionLegal";
 import CGV from "./Pages/Conforamaliter/CGV";
 import PolitiqueConfidentialite from "./Pages/Conforamaliter/PolitiqueConfidentialite";
+import RetourRemboursement from "./Pages/Service_Client/RetourRemboursement";
 import './App.css';
 import Header from "./Composants/Header/Header";
 import Footer from "./Composants/Footer/Footer";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/CGV" element={<CGV />} />
           <Route path="/MentionLegal" element={<MentionLegal />} />
           <Route path="/PolitiqueConfidentialite" element={<PolitiqueConfidentialite />} />
+          <Route path="/RetourRemboursement" element={<RetourRemboursement />} />
       </Routes>
       <Footer/>
     </div>

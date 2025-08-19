@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { db } from "../../Firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
+
+
 import {
   FaTiktok,
   FaLinkedinIn,
@@ -114,7 +116,8 @@ export default function Footer() {
               <ul>
                 <li className="li-footer"><a href={"/Contact"}>Contact</a></li>
                 <li className="li-footer">FAQ</li>
-                <li className="li-footer">Retours Et Remboursements</li>
+                <li className="li-footer"><a href={"/RetourRemboursement"}>Retours & remboursements</a></li>
+                <li className="li-footer"><a href={"https://www.etsy.com/fr/shop/VERTYNO?ref=profile_header"}>Etsy</a></li>
               </ul>
             </div>
 
