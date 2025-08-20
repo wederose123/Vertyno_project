@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Confiteria Script';
+  src: url('../../assets/Font/ConfiteriaScript-Light.otf') format('opentype');
+  font-weight: 300; /* Light */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Confiteria Script';
+  src: url('../../assets/Font/ConfiteriaScript-Regular.otf') format('opentype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Confiteria Script';
+  src: url('../../assets/Font/ConfiteriaScript-Medium.otf') format('opentype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-display: swap;
+}
+
+
 .produit-card {
   display: flex;
   flex-direction: column;
@@ -14,6 +39,7 @@
 .produit-nom {
     font-size: 30px;
     font-weight: 300;
+    font-family: 'Confiteria Script', cursive;
 }
 
 .produit-btn {
