@@ -26,7 +26,7 @@ export default function Home()   {
     C’est pourquoi nous créons des produits pensés pour simplifier la vie des familles, tout en éveillant la curiosité et l’imaginaire des enfants.
   </p>
 
-  <p className="about-author"><strong>Abesse B.</strong></p>
+  <p className="about-author"><strong>A.B</strong></p>
 </section>
     <section className="produits-section">
       <h2 className="tittle-two">Nos produits phares</h2>

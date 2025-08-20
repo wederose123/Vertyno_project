@@ -26,7 +26,7 @@ export default function ListeProduits() {
     { image: mochi, nom: "Mochi le panda", lien: "/Mochilepanda" },
     { image: dino, nom: "Dino le dinosaure", lien: "/Dinoledinosaure" },
     { image: oursson, nom: "Mon petit ourson", lien: "/produits/assiette" },
-    { image: nuage, nom: "Mon doux petit nuage", lien: "/produits/assiette" },
+    { image: nuage, nom: "Mon doux nuage", lien: "/produits/assiette" },
   ];
 
   return (

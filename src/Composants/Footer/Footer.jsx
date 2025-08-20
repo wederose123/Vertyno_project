@@ -107,7 +107,7 @@ export default function Footer() {
                 <li className="li-footer"><a href={"/Louloulechien"}>Loulou le chien</a></li>
                 <li className="li-footer"> <a href={"/Dinoledinosaure"}>Dino le Dinosaure</a></li>
                 <li className="li-footer"><a href={"/Mondouxnuage"}>Mon doux nuage</a></li>
-                <li className="li-footer"><a href={"/Monpetitourson"}>Mon petit oursson</a></li>
+                <li className="li-footer"><a href={"/Monpetitourson"}>Mon petit ourson</a></li>
               </ul>
             </div>
 

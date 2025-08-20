@@ -32,7 +32,7 @@ const Header = () => {
     return (
       <div className="category-products">
         <a href={"/Mondouxnuage"}>Mon doux nuage</a>
-        <a href={"/Monpetitourson"}>Mon petit oursson</a>
+        <a href={"/Monpetitourson"}>Mon petit ourson</a>
       </div>
     );
   } else {
