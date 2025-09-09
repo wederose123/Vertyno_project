@@ -21,10 +21,9 @@ export default function Home()   {
   <h2 className="about-quote">“La simplicité de<br />l’histoire de VERTYNO“</h2>
 
   <p className="about-text">
-    VERTYNO est né d’une idée simple : proposer des objets ludiques et pratiques, conçus par des parents qui comprennent les besoins des enfants.
-    Nous savons que le quotidien avec un tout-petit est une aventure pleine de découvertes… et parfois de défis !
-    C’est pourquoi nous créons des produits pensés pour simplifier la vie des familles, tout en éveillant la curiosité et l’imaginaire des enfants.
-  </p>
+   VERTYNO est né d’une idée simple : créer des objets ludiques, pratiques et réconfortants, pensés pour accompagner les enfants comme les plus grands.
+  Imaginés par des parents qui comprennent les besoins du quotidien, nos produits trouvent leur place à chaque étape de la vie familiale : apaiser un enfant au moment du coucher, rassurer dans la nuit, ou encore apporter une touche de douceur et de design à la maison.
+  <br/><br/>Parce que le quotidien est une aventure faite de découvertes, de rires et parfois de défis, VERTYNO conçoit des créations qui facilitent la vie, éveillent l’imaginaire et apportent du bien-être à toute la famille.</p>
 
   <p className="about-author"><strong>A.B</strong></p>
 </section>
