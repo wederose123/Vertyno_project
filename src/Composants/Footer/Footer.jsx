@@ -156,10 +156,10 @@ export default function Footer() {
   <a href={"https://www.tiktok.com/@vertyno_home"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
     <FaTiktok />
   </a>
-  <a href={"https://www.linkedin.com/in/tonprofil"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+  <a href={"https://www.linkedin.com/company/vertyno"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
     <FaLinkedinIn />
   </a>
-  <a href={"https://www.instagram.com/vertyno_home/"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
+  <a href={"https://www.instagram.com/vertyno_baby/"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
     <FaInstagram />
   </a>
   <a href={"https://www.pinterest.fr/vertyno_home/"} target="_blank" rel="noopener noreferrer" className="col-socials"> 
