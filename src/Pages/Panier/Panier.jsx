@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
-import { collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc, setDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useSearchParams } from "react-router-dom";
 import "../../styles/Pages/Panier/Panier.css";
@@ -124,7 +124,7 @@ export default function Panier() {
 
       // Création de l'instance de carte Boxtal
       const mapInstance =
-        new window.BoxtalParcelPointMap.BoxtalParcelPointMap({ 
+        new window.BoxtalParcelPointMap.BoxtalParcelPointMap({
           domToLoadMap: "#parcel-point-map",
           accessToken: accessToken,
           config: {
@@ -191,19 +191,18 @@ export default function Panier() {
         if (!parcelPoint) return;
 
         // On stocke les infos importantes dans notre state
-        // Utilisation de ?? null pour éviter les valeurs undefined (Firestore ne les accepte pas)
         setRelayPoint({
-          id: parcelPoint.id ?? null,
-          name: parcelPoint.name ?? null,
+          id: parcelPoint.id,
+          name: parcelPoint.name,
           street:
-            parcelPoint.address?.street ??
-            parcelPoint.street ??
-            parcelPoint.addressLine1 ??
-            null,
-          postal_code: parcelPoint.address?.zipCode ?? parcelPoint.zipCode ?? null,
-          city: parcelPoint.address?.city ?? parcelPoint.city ?? null,
-          network: parcelPoint.networkCode ?? parcelPoint.network ?? null,
-          // Note: on ne stocke plus raw dans le state pour éviter les nested undefined
+            parcelPoint.address?.street ||
+            parcelPoint.street ||
+            parcelPoint.addressLine1 ||
+            "",
+          postal_code: parcelPoint.address?.zipCode || parcelPoint.zipCode || "",
+          city: parcelPoint.address?.city || parcelPoint.city || "",
+          network: parcelPoint.networkCode || parcelPoint.network || "",
+          raw: parcelPoint, // on garde l'objet brut si besoin
         });
       });
     } catch (err) {
@@ -407,10 +406,9 @@ export default function Panier() {
       return;
     }
 
-    // Vérification stricte qu'un point relais est sélectionné si mode relay
-    // On vérifie que relayPoint existe ET que relayPoint.id existe (pas undefined)
-    if (shippingMethod === "relay" && (!relayPoint || relayPoint.id === undefined)) {
-      setError("Veuillez sélectionner un point relais avant de payer.");
+    // Vérification qu'un point relais est sélectionné si mode relay
+    if (shippingMethod === "relay" && !relayPoint) {
+      setError("Veuillez choisir un point relais pour la livraison.");
       return;
     }
 
@@ -501,20 +499,6 @@ export default function Panier() {
 
       let checkoutSessionId;
 
-      // Nettoyage de relayPoint pour éviter les valeurs undefined dans Firestore
-      // On crée un objet sanitizedRelayPoint qui remplace tous les undefined par null
-      const sanitizedRelayPoint = 
-        shippingMethod !== "relay" || !relayPoint
-          ? null
-          : {
-              id: relayPoint.id ?? null,
-              name: relayPoint.name ?? null,
-              street: relayPoint.street ?? null,
-              postal_code: relayPoint.postal_code ?? null,
-              city: relayPoint.city ?? null,
-              network: relayPoint.network ?? null,
-            };
-
       // Préparation des données de la session
       const checkoutSessionData = {
         // 🔗 Lien vers le document client
@@ -547,7 +531,7 @@ export default function Panier() {
         shippingMethod: shippingMethod, // "relay" ou "home"
         shippingPrice: shippingPrice, // Frais de livraison
         shippingLabel: shippingLabel, // Libellé de la livraison
-        relayPoint: sanitizedRelayPoint, // Point relais sélectionné (nettoyé, sans undefined)
+        relayPoint: shippingMethod === "relay" ? relayPoint : null, // Point relais sélectionné (si mode relay)
         status: "pending", // En attente de paiement
         paymentMethod: paymentMethod,
         updatedAt: serverTimestamp(),
@@ -557,21 +541,17 @@ export default function Panier() {
         // Session existante trouvée : on la met à jour
         const existingDoc = existingSessions.docs[0];
         checkoutSessionId = existingDoc.id;
-      } else {
-        // Aucune session existante : génération d'un ID pour la nouvelle session
-        checkoutSessionId = doc(checkoutSessionsRef).id;
-      }
+        const checkoutSessionRef = doc(db, "checkout_sessions", checkoutSessionId);
 
-      // Utilisation de setDoc avec merge pour créer ou mettre à jour de manière robuste
-      const checkoutSessionRef = doc(db, "checkout_sessions", checkoutSessionId);
-      
-      // Si c'est une nouvelle session, on ajoute createdAt
-      if (existingSessions.empty) {
+        await updateDoc(checkoutSessionRef, checkoutSessionData);
+        console.log("Session checkout_sessions mise à jour :", checkoutSessionId);
+      } else {
+        // Aucune session existante : création d'une nouvelle session
         checkoutSessionData.createdAt = serverTimestamp();
+        const checkoutSessionRef = await addDoc(checkoutSessionsRef, checkoutSessionData);
+        checkoutSessionId = checkoutSessionRef.id;
+        console.log("Nouvelle session checkout_sessions créée :", checkoutSessionId);
       }
-      
-      await setDoc(checkoutSessionRef, checkoutSessionData, { merge: true });
-      console.log("Session checkout_sessions créée/mise à jour :", checkoutSessionId);
 
       // ===== ÉTAPE 3 : Préparation des données pour Stripe =====
       const stripeItems = selectedItems.map((item) => ({

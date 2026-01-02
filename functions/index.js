@@ -56,8 +56,7 @@ function getBrevoTransactionalApi() {
 }
 
 // Template HTML - Email de confirmation de commande
-// MODIFIÉ : Ajout des paramètres relayPoint et boxtal pour afficher les infos de livraison
-function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUrl, relayPoint, boxtal }) {
+function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUrl }) {
   const firstName = client.prenom || client.nom || "client";
   const safeBaseUrl = baseUrl || "https://vertyno.com";
   
@@ -191,40 +190,9 @@ function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUr
       <tr>
         <td style="padding:0 24px 24px 24px;">
           <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🚚 Livraison & suivi</h2>
-          
-          ${relayPoint ? `
-          <!-- Point relais sélectionné -->
-          <div style="background:#fdf7f3;border-radius:12px;padding:16px;border:1px solid #f0e0d8;margin-bottom:16px;">
-            <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              <strong style="color:#4b3b36;">📍 Point relais :</strong> ${relayPoint.name || "Point relais"}
-            </p>
-            <p style="margin:0 0 4px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              ${relayPoint.street || ""}
-            </p>
-            <p style="margin:0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              ${relayPoint.postal_code || ""} ${relayPoint.city || ""}
-            </p>
-          </div>
-          ` : ""}
-          
-          ${boxtal && boxtal.trackingNumber ? `
-          <!-- Numéro de suivi -->
-          <div style="background:#e8f5e9;border-radius:12px;padding:16px;border:1px solid #c8e6c9;margin-bottom:16px;">
-            <p style="margin:0 0 8px 0;font-size:14px;color:#2e7d32;line-height:1.6;">
-              <strong style="color:#1b5e20;">📦 Numéro de suivi :</strong> ${boxtal.trackingNumber}
-            </p>
-            ${boxtal.labelUrl ? `
-            <p style="margin:8px 0 0 0;font-size:14px;color:#2e7d32;line-height:1.6;">
-              <a href="${boxtal.labelUrl}" target="_blank" style="color:#1b5e20;text-decoration:underline;font-weight:600;">Télécharger votre étiquette de suivi</a>
-            </p>
-            ` : ""}
-          </div>
-          ` : ""}
-          
           <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;line-height:1.6;font-weight:400;">
             Votre colis sera expédié sous 24 h ouvrées.
           </p>
-          ${!boxtal || !boxtal.trackingNumber ? `
           <p style="font-size:15px;color:#6d5a52;margin:0;line-height:1.6;font-weight:400;">
             Dès qu'il sera remis au transporteur, vous recevrez automatiquement :
           </p>
@@ -233,7 +201,6 @@ function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUr
             <li>votre numéro de suivi</li>
             <li>un lien pour suivre votre veilleuse en temps réel ✨</li>
           </ul>
-          ` : ""}
         </td>
       </tr>
       
@@ -395,8 +362,7 @@ function buildThankYouEmailHtml({ client, baseUrl }) {
 }
 
 // Envoi de l'email de confirmation de commande
-// MODIFIÉ : Ajout des paramètres relayPoint et boxtal pour afficher les infos de livraison
-async function sendOrderConfirmationEmail({ client, items, total, orderId, baseUrl, relayPoint, boxtal }) {
+async function sendOrderConfirmationEmail({ client, items, total, orderId, baseUrl }) {
   const transactionalApi = getBrevoTransactionalApi();
   const htmlContent = buildOrderConfirmationEmailHtml({
     client,
@@ -404,8 +370,6 @@ async function sendOrderConfirmationEmail({ client, items, total, orderId, baseU
     total,
     orderId,
     baseUrl,
-    relayPoint,
-    boxtal,
   });
 
   await transactionalApi.sendTransacEmail({
@@ -444,171 +408,6 @@ async function sendThankYouEmail({ client, baseUrl }) {
       },
     ],
     subject: "Merci pour votre achat 🧡",
-    htmlContent,
-  });
-}
-
-// NOUVEAU : Template HTML - Email de notification ADMIN
-function buildAdminOrderEmailHtml({ client, items, total, orderId, relayPoint, boxtal, baseUrl }) {
-  const safeBaseUrl = baseUrl || "https://vertyno.com";
-  
-  // Construction de l'adresse complète
-  const adresseRue = (client.adresse || "").trim();
-  const adresseCodePostal = (client.codePostal || "").trim();
-  const adresseVille = (client.ville || "").trim();
-  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille].filter(Boolean).join(", ") || "Non renseignée";
-  
-  // Liste des articles
-  const itemsHtml = (items || [])
-    .map((item) => {
-      const linePrice = (item.price * item.quantity).toFixed(2);
-      return `
-        <tr>
-          <td style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
-            <strong>${item.name || 'Produit'}</strong> × ${item.quantity || 1} - ${linePrice}€
-          </td>
-        </tr>
-      `;
-    })
-    .join("");
-
-  return `
-  <div style="background-color:#f5f5f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif;">
-    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-      <!-- Header -->
-      <tr>
-        <td style="background:#4b3b36;padding:24px;text-align:center;">
-          <h1 style="margin:0;font-size:24px;color:#ffffff;font-weight:700;">📦 Nouvelle commande VERTYNO</h1>
-          <p style="margin:8px 0 0 0;font-size:16px;color:#f0e0d8;">Commande #${orderId}</p>
-        </td>
-      </tr>
-      
-      <!-- Informations client -->
-      <tr>
-        <td style="padding:24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 16px 0;font-weight:600;">👤 Informations client</h2>
-          <div style="background:#f9f9f9;border-radius:8px;padding:16px;border:1px solid #e0e0e0;">
-            <p style="margin:0 0 8px 0;font-size:14px;color:#333;line-height:1.6;">
-              <strong>Nom :</strong> ${client.prenom || ""} ${client.nom || ""}
-            </p>
-            <p style="margin:0 0 8px 0;font-size:14px;color:#333;line-height:1.6;">
-              <strong>Email :</strong> <a href="mailto:${client.email}" style="color:#4b3b36;">${client.email}</a>
-            </p>
-            <p style="margin:0 0 8px 0;font-size:14px;color:#333;line-height:1.6;">
-              <strong>Téléphone :</strong> ${client.telephone || "Non renseigné"}
-            </p>
-            <p style="margin:0;font-size:14px;color:#333;line-height:1.6;">
-              <strong>Adresse :</strong> ${adresseComplete}
-            </p>
-          </div>
-        </td>
-      </tr>
-      
-      ${relayPoint ? `
-      <!-- Point relais -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 16px 0;font-weight:600;">📍 Point relais</h2>
-          <div style="background:#fff3e0;border-radius:8px;padding:16px;border:1px solid #ffcc80;">
-            <p style="margin:0 0 8px 0;font-size:14px;color:#333;line-height:1.6;">
-              <strong>${relayPoint.name || "Point relais"}</strong>
-            </p>
-            <p style="margin:0 0 4px 0;font-size:14px;color:#333;line-height:1.6;">
-              ${relayPoint.street || ""}
-            </p>
-            <p style="margin:0;font-size:14px;color:#333;line-height:1.6;">
-              ${relayPoint.postal_code || ""} ${relayPoint.city || ""}
-            </p>
-            ${relayPoint.id ? `<p style="margin:8px 0 0 0;font-size:12px;color:#666;">ID relais : ${relayPoint.id}</p>` : ""}
-          </div>
-        </td>
-      </tr>
-      ` : ""}
-      
-      <!-- Articles commandés -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 16px 0;font-weight:600;">🛍️ Articles commandés</h2>
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            ${itemsHtml}
-            <tr>
-              <td style="padding:16px 0 0 0;border-top:2px solid #e0e0e0;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td style="font-size:18px;font-weight:700;color:#4b3b36;">Total :</td>
-                    <td style="text-align:right;font-size:18px;font-weight:700;color:#4b3b36;">${Number(total || 0).toFixed(2)}€</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      
-      ${boxtal && (boxtal.trackingNumber || boxtal.labelUrl) ? `
-      <!-- Informations Boxtal -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 16px 0;font-weight:600;">📦 Informations de livraison</h2>
-          <div style="background:#e8f5e9;border-radius:8px;padding:16px;border:1px solid #c8e6c9;">
-            ${boxtal.trackingNumber ? `
-            <p style="margin:0 0 8px 0;font-size:14px;color:#2e7d32;line-height:1.6;">
-              <strong>Numéro de suivi :</strong> ${boxtal.trackingNumber}
-            </p>
-            ` : ""}
-            ${boxtal.labelUrl ? `
-            <p style="margin:${boxtal.trackingNumber ? "8px" : "0"} 0 0 0;font-size:14px;color:#2e7d32;line-height:1.6;">
-              <strong>Étiquette :</strong> <a href="${boxtal.labelUrl}" target="_blank" style="color:#1b5e20;text-decoration:underline;font-weight:600;">Télécharger l'étiquette</a>
-            </p>
-            ` : ""}
-            ${boxtal.boxtalOrderId ? `
-            <p style="margin:8px 0 0 0;font-size:12px;color:#666;">
-              ID commande Boxtal : ${boxtal.boxtalOrderId}
-            </p>
-            ` : ""}
-          </div>
-        </td>
-      </tr>
-      ` : ""}
-      
-      <!-- Footer -->
-      <tr>
-        <td style="background:#f5f5f5;padding:16px 24px;text-align:center;border-top:1px solid #e0e0e0;">
-          <p style="margin:0;font-size:12px;color:#666;">
-            Cette notification a été envoyée automatiquement depuis le système de commande Vertyno.
-          </p>
-        </td>
-      </tr>
-    </table>
-  </div>
-  `;
-}
-
-// NOUVEAU : Envoi de l'email de notification ADMIN
-async function sendAdminOrderNotification({ client, items, total, orderId, relayPoint, boxtal, baseUrl, adminEmail }) {
-  const transactionalApi = getBrevoTransactionalApi();
-  const htmlContent = buildAdminOrderEmailHtml({
-    client,
-    items,
-    total,
-    orderId,
-    relayPoint,
-    boxtal,
-    baseUrl,
-  });
-
-  await transactionalApi.sendTransacEmail({
-    sender: {
-      name: "Vertyno",
-      email: "no-reply@vertyno.com",
-    },
-    to: [
-      {
-        email: adminEmail || "contact@vertyno.com",
-        name: "Équipe Vertyno",
-      },
-    ],
-    subject: `📦 Nouvelle commande #${orderId} - ${client.prenom || ""} ${client.nom || ""}`,
     htmlContent,
   });
 }
@@ -1187,10 +986,8 @@ exports.stripeWebhook = onRequest(
 
         // ===== ÉTAPE 1.5 : Création du colis Boxtal =====
         // On crée le colis Boxtal après la création de la commande
-        // MODIFIÉ : On récupère le résultat pour l'utiliser dans les emails
-        let shipmentInfo = null;
         try {
-          shipmentInfo = await createBoxtalShipmentForOrder(commandeId, commandeData);
+          await createBoxtalShipmentForOrder(commandeId, commandeData);
         } catch (boxtalError) {
           // On log l'erreur mais on ne bloque pas le processus de paiement
           logger.error("Erreur lors de la création du colis Boxtal (non bloquant)", {
@@ -1349,26 +1146,19 @@ exports.stripeWebhook = onRequest(
           const commandeSnapshot = await commandeRef.get();
           const commandeDataExisting = commandeSnapshot.data() || {};
 
-          // MODIFIÉ : Récupération des infos de livraison (relayPoint et boxtal) depuis la commande
-          const relayPoint = commandeDataExisting.relayPoint || null;
-          // On utilise shipmentInfo si disponible, sinon on prend boxtal depuis la commande
-          const boxtalInfo = shipmentInfo || commandeDataExisting.boxtal || null;
-
           if (commandeDataExisting.emailConfirmationSent || commandeDataExisting.emailThankYouSent) {
             logger.info("Emails post-achat déjà envoyés, on ne renvoie pas", {
               commandeId: commandeRef.id,
               clientEmail: clientInfo.email,
             });
           } else {
-            // Email 1 : Confirmation de commande (MODIFIÉ : avec relayPoint et boxtal)
+            // Email 1 : Confirmation de commande
             await sendOrderConfirmationEmail({
               client: clientInfo,
               items,
               total,
               orderId: commandeRef.id,
               baseUrl,
-              relayPoint,
-              boxtal: boxtalInfo,
             });
 
             // Email 2 : Remerciement / fidélisation
@@ -1377,34 +1167,10 @@ exports.stripeWebhook = onRequest(
               baseUrl,
             });
 
-            // NOUVEAU : Email 3 : Notification ADMIN
-            try {
-              await sendAdminOrderNotification({
-                client: clientInfo,
-                items,
-                total,
-                orderId: commandeRef.id,
-                relayPoint,
-                boxtal: boxtalInfo,
-                baseUrl,
-                adminEmail: "contact@vertyno.com", // Adresse email admin
-              });
-              logger.info("Email admin envoyé avec succès", {
-                commandeId: commandeRef.id,
-              });
-            } catch (adminEmailError) {
-              // On log l'erreur mais on ne bloque pas le processus
-              logger.error("Erreur lors de l'envoi de l'email admin", {
-                error: adminEmailError.message,
-                commandeId: commandeRef.id,
-              });
-            }
-
             // Mise à jour de la commande pour tracer les emails envoyés
             await commandeRef.update({
               emailConfirmationSent: true,
               emailThankYouSent: true,
-              adminNotificationSent: true,
             });
 
             logger.info("Emails post-achat envoyés avec succès via Brevo", {
