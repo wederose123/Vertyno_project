@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Homes from './Pages/Homes';
 import LiliLlaLicorne from './Pages/Produits/Veilleuses/LiliLlaLicorne';
+import LiliLlaLicorneExemple from './Pages/Produits/Veilleuses/LiliLlaLicorneExemple';
 import Louloulechien from './Pages/Produits/Veilleuses/Louloulechien';
 import Mochilepanda from './Pages/Produits/Veilleuses/Mochilepanda';
 import Dinoledinosaure from './Pages/Produits/Veilleuses/Dinoledinosaure';
@@ -11,18 +12,22 @@ import MentionLegal from "./Pages/Conforamaliter/MentionLegal";
 import CGV from "./Pages/Conforamaliter/CGV";
 import PolitiqueConfidentialite from "./Pages/Conforamaliter/PolitiqueConfidentialite";
 import RetourRemboursement from "./Pages/Service_Client/RetourRemboursement";
+import Panier from "./Pages/Panier/Panier";
 import './App.css';
 import Header from "./Composants/Header/Header";
 import Footer from "./Composants/Footer/Footer";
+import { CartProvider } from "./context/CartContext";
 
 
 function App() {
   return (
+    <CartProvider>
      <div>
       <Header />
       <Routes>
         <Route path="/" element={<Homes />} />
         <Route path="/LiliLlaLicorne" element={<LiliLlaLicorne />} />
+        <Route path="/LiliLlaLicorneExemple" element={<LiliLlaLicorneExemple />} />
          <Route path="/Louloulechien" element={<Louloulechien />} />
          <Route path="/Mochilepanda" element={<Mochilepanda />} />
          <Route path="/Dinoledinosaure" element={<Dinoledinosaure />} />
@@ -33,9 +38,11 @@ function App() {
           <Route path="/MentionLegal" element={<MentionLegal />} />
           <Route path="/PolitiqueConfidentialite" element={<PolitiqueConfidentialite />} />
           <Route path="/RetourRemboursement" element={<RetourRemboursement />} />
+          <Route path="/Panier" element={<Panier />} />
       </Routes>
       <Footer/>
     </div>
+    </CartProvider>
   );
 }
 

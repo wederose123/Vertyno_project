@@ -25,7 +25,7 @@ export default function Home()   {
   Imaginés par des parents qui comprennent les besoins du quotidien, nos produits trouvent leur place à chaque étape de la vie familiale : apaiser un enfant au moment du coucher, rassurer dans la nuit, ou encore apporter une touche de douceur et de design à la maison.
   <br/><br/>Parce que le quotidien est une aventure faite de découvertes, de rires et parfois de défis, VERTYNO conçoit des créations qui facilitent la vie, éveillent l’imaginaire et apportent du bien-être à toute la famille.</p>
 
-  <p className="about-author"><strong>A.B</strong></p>
+  <p className="about-author"><strong>Team VERTYNO</strong></p>
 </section>
     <section className="produits-section">
       <h2 className="tittle-two">Nos produits phares</h2>

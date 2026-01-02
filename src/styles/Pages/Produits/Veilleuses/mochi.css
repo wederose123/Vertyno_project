@@ -77,7 +77,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   position: relative;
 }
 
@@ -130,7 +130,7 @@
   background-color: #B0B7C1;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -219,8 +219,8 @@
 .order-content-mochi label {
   display: block;
   margin-bottom: 20px;
-  font-size: 21px;
-  font-weight: 100;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .order-content-mochi input {
@@ -275,7 +275,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .mochi-description-text h2 {
@@ -299,7 +299,7 @@
 .mochi-caracteristiques {
   background-color: #B0B7C1;
   padding: 80px 150px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   color: white;
 }
 
@@ -343,7 +343,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .mochi-description-text h2 {
@@ -385,7 +385,7 @@
 }
 
 .reglage {
-  font-size: 29px;
+  font-size: 23px;
 }
 
 .confmochi {
@@ -446,7 +446,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .mochi-magie-text h2 {
@@ -455,9 +455,7 @@
   margin-bottom: 25px;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
-.imgCent{
-  width: 100%;
-}
+
 
 .mochi-magie-text p {
   font-size: 18px;
@@ -516,9 +514,12 @@
   .order-content-mochi h2 {
     font-size: 34px;
   }
-  .order-content-mochi p,
+  .order-content-mochi p {
+    font-size: 18px;
+  }
   .order-content-mochi label {
     font-size: 18px;
+    font-weight: 400;
   }
   .order-image {
     width: 400px;
@@ -544,7 +545,7 @@
     font-size: 15px;
   }
   .reglage {
-    font-size: 24px;
+    font-size: 19px;
   }
 
   /* Guide d’utilisation */
@@ -615,9 +616,12 @@
     max-width: 300px;
   }
 
-  .mochi-page .order-content-mochi p,
+  .mochi-page .order-content-mochi p {
+    font-size: 16px;
+  }
   .mochi-page .order-content-mochi label {
     font-size: 16px;
+    font-weight: 400;
   }
 
   /* Avantages (sizes identiques à Lili) */
@@ -656,9 +660,9 @@
     font-size: 17px;
   }
 
-  /* Valeurs “reglage” */
+  /* Valeurs "reglage" */
   .mochi-page .reglage {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   /* Boutons packaging */
@@ -714,6 +718,10 @@
     padding: 0 10px;
   }
 
+  .imgCent{
+    width: 100%;
+  }
+
   .mochi-page .presentation-text-area-mochi {
     flex-direction: column;
     align-items: center;
@@ -745,6 +753,7 @@
 
   .mochi-page .order-content-mochi label {
     font-size: 15px;
+    font-weight: 400;
   }
 
   .mochi-page .advantages-title {
@@ -782,7 +791,7 @@
   }
 
   .mochi-page .reglage {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .mochi-page .white-outline-btn {
@@ -867,6 +876,7 @@
   .mochi-page .order-content-mochi p,
   .mochi-page .order-content-mochi label {
     font-size: 14px;
+    font-weight: 400;
     max-width: 260px;
   }
 
@@ -905,7 +915,7 @@
   }
 
   .mochi-page .reglage {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .mochi-page .white-outline-btn {
@@ -991,6 +1001,7 @@
   .mochi-page .order-content-mochi p,
   .mochi-page .order-content-mochi label {
     font-size: 13px;
+    font-weight: 400;
     max-width: 240px;
   }
 
@@ -1029,7 +1040,7 @@
   }
 
   .mochi-page .reglage {
-    font-size: 13px;
+    font-size: 9px;
   }
 
   .mochi-page .white-outline-btn {

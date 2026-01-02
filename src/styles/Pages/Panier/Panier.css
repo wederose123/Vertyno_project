@@ -1,0 +1,318 @@
+.panier-page {
+  min-height: 100vh;
+  padding: 4rem 1.5rem;
+  background-color: #FFF8F5; /* Rose saumon très léger, tirant vers le blanc */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panier-header {
+  text-align: center;
+}
+
+.panier-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.panier-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.panier-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.panier-left,
+.panier-right {
+  background: #FFFFFF; /* Blanc pur pour les cartes */
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 60px rgba(255, 182, 193, 0.15); /* Ombre rose douce */
+  padding: 2rem;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: auto 96px minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #FFE5E8; /* Bordure rose très léger */
+  border-radius: 1rem;
+  align-items: center;
+  background: #FFFEFE; /* Fond blanc avec une très légère teinte rose */
+}
+
+.cart-checkbox {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-checkbox input {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #FFB6C1; /* Bordure rose saumon */
+  transition: all 0.2s ease;
+}
+
+.cart-checkbox input:checked + .custom-checkbox {
+  background: #FFB6C1; /* Fond rose saumon quand coché */
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+.cart-item-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #222;
+}
+
+.cart-item-info p {
+  margin: 0.25rem 0 0;
+  color: #8b8b8b;
+  font-size: 0.9rem;
+}
+
+.cart-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  gap: 1rem;
+}
+
+.quantity-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #FFB6C1; /* Bordure rose saumon */
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.quantity-controls button {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  color: #FF8FA3; /* Rose saumon pour les boutons + et - */
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.quantity-controls button:hover {
+  background: #FFF0F2; /* Rose très léger au survol */
+}
+
+.quantity-controls span {
+  padding: 0 1rem;
+  font-weight: 600;
+}
+
+.cart-delete {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.cart-summary {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #FFE5E8; /* Bordure rose très léger */
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.summary-row.total {
+  font-size: 1.2rem;
+}
+
+.summary-muted {
+  color: #8b8b8b;
+}
+
+.panier-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.payment-methods button {
+  border: 1px solid #FFB6C1; /* Bordure rose saumon */
+  background: transparent;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.payment-methods button:hover {
+  background: #FFF0F2; /* Rose très léger au survol */
+  border-color: #FFA8B8;
+}
+
+.payment-methods button.active {
+  background: #FFB6C1; /* Rose saumon pour le bouton actif */
+  color: #fff;
+  border-color: #FFB6C1;
+}
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.card-form input {
+  border: 1px solid #e6e6e6;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.card-form input:focus {
+  outline: none;
+  border-color: #FFB6C1; /* Bordure rose saumon au focus */
+  box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.2);
+}
+
+.card-form-inline {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.save-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.pay-btn,
+.panier-btn {
+  border: none;
+  border-radius: 999px;
+  background: #FFB6C1; /* Rose saumon léger */
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.85rem 2.25rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  width: 100%;
+  font-weight: 600;
+}
+
+.pay-btn:hover,
+.panier-btn:hover {
+  transform: translateY(-2px);
+  background: #FFA8B8; /* Rose saumon un peu plus foncé au survol */
+  box-shadow: 0 12px 24px rgba(255, 182, 193, 0.35);
+}
+
+.pay-btn:disabled {
+  background: #FFD6DD; /* Rose très pâle quand désactivé */
+  cursor: not-allowed;
+  transform: none;
+}
+
+.paypal-placeholder {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panier-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 1024px) {
+  .panier-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .cart-item {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  .cart-item-image {
+    grid-column: 1 / -1;
+  }
+
+  .cart-item-info {
+    grid-column: 1 / -1;
+  }
+
+  .cart-delete {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .card-form-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .panier-page {
+    padding: 2.5rem 1rem;
+  }
+}
+

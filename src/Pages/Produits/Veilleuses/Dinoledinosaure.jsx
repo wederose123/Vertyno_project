@@ -1,8 +1,10 @@
 import "../../../styles/Pages/Produits/Veilleuses/dino.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { db } from "../../../Firebase/firebase-config";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import axios from "axios";
+import ProductComponent from "../../../Composants/Product/ProductComponent";
+import { useFlyToCart } from "../../../hooks/useFlyToCart";
 import FirstDino from "../../../assets/Pages/Produits/Veilleuses/Dino/FirstDino.png";
 import DinoGirl from "../../../assets/Pages/Produits/Veilleuses/Dino/DinoGirl.png";
 import vertynoLogo from "../../../assets/Pages/Produits/Veilleuses/Dino/vertynoLogo.png";
@@ -15,11 +17,75 @@ import dinoThree from "../../../assets/Pages/Produits/Veilleuses/Dino/dinoThree.
 import dinoQuatre from "../../../assets/Pages/Produits/Veilleuses/Dino/dinoQuatre.png";
 import dinoFive from "../../../assets/Pages/Produits/Veilleuses/Dino/dinoFive.png";
 
+// 🔹 Fonction pour ajouter l'email à Brevo
+async function addEmailToBrevo(email) {
+  try {
+    await axios.post(
+      "https://api.brevo.com/v3/contacts",
+      {
+        email: email,
+        updateEnabled: true,
+      },
+      {
+        headers: {
+          "api-key": process.env.REACT_APP_BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Email ajouté à Brevo !");
+  } catch (error) {
+    console.error("Erreur ajout Brevo :", error.response?.data || error);
+    throw error;
+  }
+}
+
 export default function DinoLedinosaure() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  
+  // Refs pour les boutons "Commander" (pour l'animation)
+  const heroButtonRef = useRef(null);
+  const orderButtonRef = useRef(null);
+  const packagingButtonRef = useRef(null);
+  
+  // Hook pour l'animation de vol vers le panier
+  const flyToCart = useFlyToCart();
+
+  const handleAddToCart = async (buttonRef) => {
+    if (!selectedProduct) {
+      console.warn("Aucun produit sélectionné");
+      return;
+    }
+
+    // Récupération du bouton panier dans le Header (via son ID)
+    const panierButton = document.getElementById("panier-button");
+    
+    // Déclenchement de l'animation si les deux boutons sont trouvés
+    if (buttonRef?.current && panierButton) {
+      flyToCart(buttonRef.current, panierButton);
+    }
+
+    // Ajout du produit dans Firestore (l'animation se joue en parallèle)
+    try {
+      await addDoc(collection(db, "panier"), {
+        id: selectedProduct.id,
+        slug: selectedProduct.slug,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: selectedProduct.price,
+        image: selectedProduct.image,
+        stripePriceId: selectedProduct.stripePriceId, // Price ID Stripe pour le checkout
+        createdAt: serverTimestamp()
+      });
+      console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout dans Firestore :", error);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,60 +94,71 @@ export default function DinoLedinosaure() {
     return () => clearInterval(interval);
   }, []);
 
+  /**
+   * Fonction spécifique pour la section "order-section"
+   * Combine : ajout au panier + enregistrement email dans newsletter + Brevo + redirection
+   */
   const handleOrder = async (e) => {
     e.preventDefault();
     setSuccess("");
     setError("");
 
+    if (!selectedProduct) {
+      console.warn("Aucun produit sélectionné");
+      setError("Erreur : produit non disponible");
+      return;
+    }
+
+    // Vérification que l'email est renseigné
+    if (!email || !email.trim()) {
+      console.warn("Email requis pour la commande");
+      setError("Veuillez renseigner votre email");
+      return;
+    }
+
+    // Récupération du bouton panier dans le Header (via son ID)
+    const panierButton = document.getElementById("panier-button");
+    
+    // Déclenchement de l'animation si le bouton panier est trouvé
+    if (orderButtonRef?.current && panierButton) {
+      flyToCart(orderButtonRef.current, panierButton);
+    }
+
     try {
-      await addDoc(collection(db, "commandes"), {
-        produit: "Dino le dinosaure",
-        email: email,
-        timestamp: new Date()
+      // 1. Ajout du produit dans le panier
+      await addDoc(collection(db, "panier"), {
+        id: selectedProduct.id,
+        slug: selectedProduct.slug,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: selectedProduct.price,
+        image: selectedProduct.image,
+        stripePriceId: selectedProduct.stripePriceId, // Price ID Stripe pour le checkout
+        createdAt: serverTimestamp()
       });
+      console.log("Produit ajouté dans Firestore :", selectedProduct.name);
 
-      await axios.post(
-        "https://api.brevo.com/v3/contacts",
-        {
-          email: email,
-          attributes: { PRODUIT: "Dino le dinosaure" },
-          updateEnabled: true
-        },
-        {
-          headers: {
-            "api-key": process.env.REACT_APP_BREVO_API_KEY,
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      // 2. Enregistrement de l'email dans la collection newsletter
+      await addDoc(collection(db, "newsletter"), {
+        email: email.trim(),
+        createdAt: serverTimestamp(),
+        source: "dinoledinosaure-order"
+      });
+      console.log("Email ajouté dans newsletter :", email);
 
-      await axios.post(
-        "https://api.brevo.com/v3/smtp/email",
-        {
-          sender: {
-            name: "Commande Vertyno",
-            email: "mickaelouis03@gmail.com"
-          },
-          to: [{ email: "mickamickael93@gmail.com" }],
-          subject: "Nouvelle commande Dino",
-          htmlContent: `
-            <h3>Nouvelle commande :</h3>
-            <p><strong>Produit :</strong> Dino le dinosaure</p>
-            <p><strong>Email :</strong> ${email}</p>
-          `
-        },
-        {
-          headers: {
-            "api-key": process.env.REACT_APP_BREVO_API_KEY,
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      // 3. Ajout de l'email dans Brevo (optionnel - ne bloque pas si ça échoue)
+      try {
+        await addEmailToBrevo(email.trim());
+        console.log("Email ajouté dans Brevo :", email);
+      } catch (brevoError) {
+        // On continue même si Brevo échoue (clé API non configurée ou autre erreur)
+        console.warn("Erreur Brevo (non bloquant) :", brevoError);
+      }
 
-      setSuccess("Votre demande a bien été prise en compte !");
-      setEmail("");
+      // 4. Redirection vers la page panier
+      window.location.href = "/Panier";
     } catch (err) {
-      console.error(err);
+      console.error("Erreur lors de la commande :", err);
       setError("Une erreur est survenue. Veuillez réessayer.");
     }
   };
@@ -89,11 +166,22 @@ export default function DinoLedinosaure() {
   return (
     <>
       <div className="dino-page">
+        <ProductComponent
+          slug="dinoledinosaure"
+          onProductReady={(product) => setSelectedProduct(product)}
+        />
         <div className="hero-section">
           <img src={FirstDino} alt="Veilleuse Dino le dinosaure" className="hero-img" />
           <div className="hero-content">
             <h1 className="hero-title">Dino le dinosaure</h1>
-            <a href={" https://www.etsy.com/fr/listing/4346184411/dino-le-dinosaure-veilleuse-bebe?ref=related-3&logging_key=5bb21c3362d4de0790dd0d62b2222587ecfc3fc5%3A4346184411 "} className="hero-button-dino">Commander</a>
+            <button 
+              type="button" 
+              className="hero-button-dino" 
+              ref={heroButtonRef}
+              onClick={() => handleAddToCart(heroButtonRef)}
+            >
+              Commander
+            </button>
           </div>
         </div>
 
@@ -167,7 +255,7 @@ export default function DinoLedinosaure() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <button type="submit">Commander</button>
+                <button type="submit" ref={orderButtonRef}>Commander</button>
                 {error && <p className="erreur-message">{error}</p>}
                 {success && <p className="success-message">{success}</p>}
               </form>
@@ -228,7 +316,14 @@ export default function DinoLedinosaure() {
         <section className="dino-packaging">
           <img src={dinoFive} alt="Boîte Dino le dinosaure" className="packaging-box-img widthimage" />
           <div className="packaging-btns">
-            <button className="white-outline-btn"> <a href={"https://www.etsy.com/fr/listing/4346184411/dino-le-dinosaure-veilleuse-bebe?ref=related-3&logging_key=5bb21c3362d4de0790dd0d62b2222587ecfc3fc5%3A4346184411"}>Commander</a> </button>
+            <button
+              className="white-outline-btn"
+              type="button"
+              ref={packagingButtonRef}
+              onClick={() => handleAddToCart(packagingButtonRef)}
+            >
+              Commander
+            </button>
             <button className="white-outline-btn"><a href={"/Contact"}>Contact</a></button>
           </div>
         </section>

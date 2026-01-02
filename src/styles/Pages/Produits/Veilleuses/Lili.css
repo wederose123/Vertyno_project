@@ -86,7 +86,7 @@ font-weight: 400;
   padding: 55px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 
@@ -147,7 +147,7 @@ justify-content: center;
   background-color: #f3dedd;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -231,8 +231,8 @@ justify-content: center;
 .order-content-lili label {
   display: block;
     margin-bottom: 20px;
-    font-size: 21px;
-    font-weight: 100;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .order-content-lili input {
@@ -308,7 +308,7 @@ justify-content: center;
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .lili-description-text h2 {
@@ -336,7 +336,7 @@ justify-content: center;
 .lili-caracteristiques {
   background-color: #f3dedd;
   padding: 80px 150px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   color: white;
 }
 
@@ -395,7 +395,7 @@ justify-content: center;
 }
 
 .reglage{
-  font-size: 29px;
+  font-size: 23px;
 }
 
 
@@ -476,9 +476,12 @@ justify-content: center;
     font-size: 34px;
   }
 
-  .order-content-lili p,
+  .order-content-lili p {
+    font-size: 18px;
+  }
   .order-content-lili label {
     font-size: 18px;
+    font-weight: 400;
   }
 
   .order-image{
@@ -514,7 +517,7 @@ justify-content: center;
   }
 
   .reglage {
-    font-size: 24px;
+    font-size: 19px;
   }
 
   .white-outline-btn {
@@ -588,10 +591,12 @@ justify-content: center;
     max-width: 300px;
   }
 
-  .page-lili .order-content-lili p,
+  .page-lili .order-content-lili p {
+    font-size: 16px;
+  }
   .order-content-lili label {
     font-size: 16px;
-    
+    font-weight: 400;
   }
 
   .page-lili .advantages-title {
@@ -636,7 +641,7 @@ justify-content: center;
   }
 
   .page-lili .reglage {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   .page-lili .white-outline-btn {
@@ -728,6 +733,7 @@ justify-content: center;
 
   .page-lili .order-content-lili label {
     font-size: 15px;
+    font-weight: 400;
   }
 
   .page-lili .advantages-title {
@@ -769,7 +775,7 @@ justify-content: center;
   }
 
   .page-lili .reglage {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .page-lili .white-outline-btn {
@@ -856,6 +862,7 @@ justify-content: center;
   .page-lili .order-content-lili p,
   .page-lili .order-content-lili label {
     font-size: 14px;
+    font-weight: 400;
     max-width: 260px;
   }
 
@@ -898,7 +905,7 @@ justify-content: center;
   }
 
   .page-lili .reglage {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .page-lili .white-outline-btn {
@@ -982,9 +989,13 @@ justify-content: center;
     font-size: 22px;
   }
 
-  .page-lili .order-content-lili p,
+  .page-lili .order-content-lili p {
+    font-size: 13px;
+    max-width: 240px;
+  }
   .page-lili .order-content-lili label {
     font-size: 13px;
+    font-weight: 400;
     max-width: 240px;
   }
 
@@ -1023,7 +1034,7 @@ justify-content: center;
   }
 
   .page-lili .reglage {
-    font-size: 13px;
+    font-size: 9px;
   }
 
   .page-lili .white-outline-btn {

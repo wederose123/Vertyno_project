@@ -4,7 +4,7 @@
   --accent: #8BC7D2;   /* cohérent avec ta charte */
   --bg-soft: #f7f9fb;
   color: var(--text);
-  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: 'Lexend Giga', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 /* Hero */

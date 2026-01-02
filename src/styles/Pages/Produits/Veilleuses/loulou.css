@@ -77,7 +77,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   position: relative;
 }
 
@@ -129,7 +129,7 @@ justify-content: center;
   background-color: #92C2E6;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -213,8 +213,8 @@ justify-content: center;
 .order-content-loulou label {
   display: block;
     margin-bottom: 20px;
-    font-size: 21px;
-    font-weight: 100;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .order-content-loulou input {
@@ -288,7 +288,7 @@ justify-content: center;
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .loulou-description-text h2 {
@@ -312,7 +312,7 @@ justify-content: center;
 .loulou-caracteristiques {
   background-color: #92C2E6;
   padding: 80px 150px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   color: white;
 }
 
@@ -371,7 +371,7 @@ justify-content: center;
 }
 
 .reglage {
-  font-size: 29px;
+  font-size: 23px;
 }
 
 .confloulou {
@@ -455,9 +455,12 @@ justify-content: center;
     font-size: 34px;
   }
 
-  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou p {
+    font-size: 18px;
+  }
   .loulou-page .order-content-loulou label {
     font-size: 18px;
+    font-weight: 400;
   }
 
   .loulou-page .order-image {
@@ -493,7 +496,7 @@ justify-content: center;
   }
 
   .loulou-page .reglage {
-    font-size: 24px;
+    font-size: 19px;
   }
 
   .loulou-page .white-outline-btn {
@@ -566,9 +569,12 @@ justify-content: center;
     max-width: 300px;
   }
 
-  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou p {
+    font-size: 16px;
+  }
   .loulou-page .order-content-loulou label {
     font-size: 16px;
+    font-weight: 400;
   }
 
   .loulou-page .advantages-title {
@@ -613,7 +619,7 @@ justify-content: center;
   }
 
   .loulou-page .reglage {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   .loulou-page .white-outline-btn {
@@ -709,6 +715,7 @@ justify-content: center;
 
   .loulou-page .order-content-loulou label {
     font-size: 15px;
+    font-weight: 400;
   }
 
   .loulou-page .advantages-title {
@@ -750,7 +757,7 @@ justify-content: center;
   }
 
   .loulou-page .reglage {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .loulou-page .white-outline-btn {
@@ -833,9 +840,13 @@ justify-content: center;
     font-size: 24px;
   }
 
-  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou p {
+    font-size: 14px;
+    max-width: 260px;
+  }
   .loulou-page .order-content-loulou label {
     font-size: 14px;
+    font-weight: 400;
     max-width: 260px;
   }
 
@@ -878,7 +889,7 @@ justify-content: center;
   }
 
   .loulou-page .reglage {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .loulou-page .white-outline-btn {
@@ -960,9 +971,13 @@ justify-content: center;
     font-size: 22px;
   }
 
-  .loulou-page .order-content-loulou p,
+  .loulou-page .order-content-loulou p {
+    font-size: 13px;
+    max-width: 240px;
+  }
   .loulou-page .order-content-loulou label {
     font-size: 13px;
+    font-weight: 400;
     max-width: 240px;
   }
 
@@ -1001,7 +1016,7 @@ justify-content: center;
   }
 
   .loulou-page .reglage {
-    font-size: 13px;
+    font-size: 9px;
   }
 
   .loulou-page .white-outline-btn {

@@ -1,5 +1,8 @@
 import "../../../styles/Pages/Produits/Veilleuses/Lili.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../Firebase/firebase-config";
+import axios from "axios";
 import FirstLili from "../../../assets/Pages/Produits/Veilleuses/Lili/Lilifirst.png";
 import GirlLili from "../../../assets/Pages/Produits/Veilleuses/Lili/Girl-Lili.png";
 import arcenciel from "../../../assets/Pages/Produits/Veilleuses/Lili/arcenciel.png";
@@ -11,13 +14,142 @@ import lilithreeimg from "../../../assets/Pages/Produits/Veilleuses/Lili/lilithr
 import liliquatreimg from "../../../assets/Pages/Produits/Veilleuses/Lili/liliquatreimg.png";
 import lilifiveimg from "../../../assets/Pages/Produits/Veilleuses/Lili/lilifiveimg.png";
 import lilisiximg from "../../../assets/Pages/Produits/Veilleuses/Lili/lilisiximg.png";
+import ProductComponent from "../../../Composants/Product/ProductComponent";
+import { useFlyToCart } from "../../../hooks/useFlyToCart";
+
+// 🔹 Fonction pour ajouter l'email à Brevo
+async function addEmailToBrevo(email) {
+  try {
+    await axios.post(
+      "https://api.brevo.com/v3/contacts",
+      {
+        email: email,
+        updateEnabled: true,
+      },
+      {
+        headers: {
+          "api-key": process.env.REACT_APP_BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Email ajouté à Brevo !");
+  } catch (error) {
+    console.error("Erreur ajout Brevo :", error.response?.data || error);
+    throw error;
+  }
+}
 
 
 
 
 export default function LiliLlaLicorne () {
-
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  // State pour l'email dans la section "order-section"
+  const [orderEmail, setOrderEmail] = useState("");
+  
+  // Refs pour les boutons "Commander" (pour l'animation)
+  const heroButtonRef = useRef(null);
+  const orderButtonRef = useRef(null);
+  const packagingButtonRef = useRef(null);
+  
+  // Hook pour l'animation de vol vers le panier
+  const flyToCart = useFlyToCart();
+
+  const handleAddToCart = async (buttonRef) => {
+    if (!selectedProduct) {
+      console.warn("Aucun produit sélectionné");
+      return;
+    }
+
+    // Récupération du bouton panier dans le Header (via son ID)
+    const panierButton = document.getElementById("panier-button");
+    
+    // Déclenchement de l'animation si les deux boutons sont trouvés
+    if (buttonRef?.current && panierButton) {
+      flyToCart(buttonRef.current, panierButton);
+    }
+
+    // Ajout du produit dans Firestore (l'animation se joue en parallèle)
+    try {
+      await addDoc(collection(db, "panier"), {
+        id: selectedProduct.id,
+        slug: selectedProduct.slug,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: selectedProduct.price,
+        image: selectedProduct.image,
+        stripePriceId: selectedProduct.stripePriceId, // Price ID Stripe pour le checkout
+        createdAt: serverTimestamp()
+      });
+      console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout dans Firestore :", error);
+    }
+  };
+
+  /**
+   * Fonction spécifique pour la section "order-section"
+   * Combine : ajout au panier + enregistrement email dans newsletter + redirection
+   */
+  const handleOrder = async () => {
+    if (!selectedProduct) {
+      console.warn("Aucun produit sélectionné");
+      return;
+    }
+
+    // Vérification que l'email est renseigné
+    if (!orderEmail || !orderEmail.trim()) {
+      console.warn("Email requis pour la commande");
+      return;
+    }
+
+    // Récupération du bouton panier dans le Header (via son ID)
+    const panierButton = document.getElementById("panier-button");
+    
+    // Déclenchement de l'animation si le bouton panier est trouvé
+    if (orderButtonRef?.current && panierButton) {
+      flyToCart(orderButtonRef.current, panierButton);
+    }
+
+    try {
+      // 1. Ajout du produit dans le panier (comportement existant conservé)
+      await addDoc(collection(db, "panier"), {
+        id: selectedProduct.id,
+        slug: selectedProduct.slug,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: selectedProduct.price,
+        image: selectedProduct.image,
+        stripePriceId: selectedProduct.stripePriceId, // Price ID Stripe pour le checkout
+        createdAt: serverTimestamp()
+      });
+      console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+
+      // 2. Enregistrement de l'email dans la collection newsletter
+      await addDoc(collection(db, "newsletter"), {
+        email: orderEmail.trim(),
+        createdAt: serverTimestamp(),
+        source: "lililalicorne-order"
+      });
+      console.log("Email ajouté dans newsletter :", orderEmail);
+
+      // 3. Ajout de l'email dans Brevo (optionnel - ne bloque pas si ça échoue)
+      try {
+        await addEmailToBrevo(orderEmail.trim());
+        console.log("Email ajouté dans Brevo :", orderEmail);
+      } catch (brevoError) {
+        // On continue même si Brevo échoue (clé API non configurée ou autre erreur)
+        console.warn("Erreur Brevo (non bloquant) :", brevoError);
+      }
+
+      // 4. Redirection vers la page panier
+      window.location.href = "/Panier";
+    } catch (error) {
+      console.error("Erreur lors de la commande :", error);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,11 +163,22 @@ export default function LiliLlaLicorne () {
   return (
     <>
     <div className="page-lili">
+      <ProductComponent
+        slug="lililalicorne"
+        onProductReady={(product) => setSelectedProduct(product)}
+      />
        <div className="hero-section">
   <img src={FirstLili} alt="Veilleuse Lili la licorne" className="hero-img" />
   <div className="hero-content">
     <h1 className="hero-title">Lili la licorne</h1>
-    <a href={" https://www.etsy.com/fr/listing/4346151114/lili-la-licorne-veilleuse-enfant?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-1&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253Ae2510d67a2070dcaab67729ab1afbf97bc1567a3&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3Ae2510d67a2070dcaab67729ab1afbf97bc1567a3 "} className="hero-button"> Commander</a>
+    <button 
+      type="button" 
+      className="hero-button" 
+      ref={heroButtonRef}
+      onClick={() => handleAddToCart(heroButtonRef)}
+    >
+      Commander
+    </button>
   </div>
 </div>
 
@@ -111,8 +254,20 @@ export default function LiliLlaLicorne () {
         Renseignez votre adresse e-mail pour recevoir des offres exclusives et être informé des nouveautés !
       </p>
       <label htmlFor="email">adresse email :</label>
-      <input type="email" id="email" placeholder="saisir" />
-      <button>Commander</button>
+      <input 
+        type="email" 
+        id="email" 
+        placeholder="saisir" 
+        value={orderEmail}
+        onChange={(e) => setOrderEmail(e.target.value)}
+      />
+      <button 
+        type="button" 
+        ref={orderButtonRef}
+        onClick={handleOrder}
+      >
+        Commander
+      </button>
     </div>
     <img src={lilithreeimg} alt="Veilleuse Lili" className="order-image" />
   </div>
@@ -177,13 +332,25 @@ export default function LiliLlaLicorne () {
     className="packaging-box-img widthimage"
   />
   <div className="packaging-btns">
-    <button className="white-outline-btn"> <a href={"https://www.etsy.com/fr/listing/4346151114/lili-la-licorne-veilleuse-enfant?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=veilleuse+silicone+licorne&ref=sr_gallery-1-1&nob=1&content_source=2a03c84d-0262-440d-9460-1f001f0ee17b%253Ae2510d67a2070dcaab67729ab1afbf97bc1567a3&organic_search_click=1&logging_key=2a03c84d-0262-440d-9460-1f001f0ee17b%3Ae2510d67a2070dcaab67729ab1afbf97bc1567a3"}>Commander</a></button>
+    <button 
+      className="white-outline-btn" 
+      type="button" 
+      ref={packagingButtonRef}
+      onClick={() => handleAddToCart(packagingButtonRef)}
+    >
+      Commander
+    </button>
     <button className="white-outline-btn"> <a href={"/Contact"}>Contact</a></button>
   </div>
 </section>
+
+
 
     </div>
     </>
   );
 }
+
+
+
 

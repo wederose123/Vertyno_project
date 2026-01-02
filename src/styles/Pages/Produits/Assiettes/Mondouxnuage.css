@@ -71,7 +71,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .vertyno-logo {
@@ -121,7 +121,7 @@
   background-color: #8BC7D2;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -134,7 +134,7 @@
   text-align: center;
   padding: 60px 20px;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   background-color: #8bc6cd; /* même bleu que la capture */
 }
 
@@ -201,7 +201,11 @@
   max-width: 400px;
 }
 
-.order-content-nuage label,
+.order-content-nuage label {
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .order-content-nuage input {
   font-size: 21px;
 }
@@ -248,7 +252,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .nuage-title-text-part {
@@ -268,7 +272,7 @@
 .nuage-caracteristiques {
   background-color: #C2E3DA;
   padding: 80px 150px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   color: white;
 }
 
@@ -323,7 +327,7 @@
 }
 
 .reglage {
-  font-size: 29px;
+  font-size: 23px;
 }
 
 .nuage-packaging {
@@ -370,7 +374,7 @@
   background-color: #8BC7D2;
   padding: 100px 20px;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .nuage-caracteristiques-v2 h2 {

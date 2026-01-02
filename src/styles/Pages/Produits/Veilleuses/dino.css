@@ -69,7 +69,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .vertyno-logo {
@@ -120,7 +120,7 @@
   background-color: #C2E3DA;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -205,7 +205,11 @@
   max-width: 400px;
 }
 
-.order-content-dino label,
+.order-content-dino label {
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .order-content-dino input {
   font-size: 21px;
 }
@@ -257,7 +261,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .dino-magie-text h2 {
@@ -279,7 +283,7 @@
 .dino-caracteristiques {
   background-color: #C2E3DA;
   padding: 80px 150px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   color: white;
 }
 
@@ -334,7 +338,7 @@
 }
 
 .reglage {
-  font-size: 29px;
+  font-size: 23px;
 }
 
 .dino-packaging {
@@ -413,9 +417,12 @@
     font-size: 34px;
   }
 
-  .dino-page .order-content-dino p,
+  .dino-page .order-content-dino p {
+    font-size: 18px;
+  }
   .dino-page .order-content-dino label {
     font-size: 18px;
+    font-weight: 400;
   }
 
   .dino-page .order-image {
@@ -451,7 +458,7 @@
   }
 
   .dino-page .reglage {
-    font-size: 24px;
+    font-size: 19px;
   }
 
   .dino-page .white-outline-btn {
@@ -524,9 +531,12 @@
     max-width: 300px;
   }
 
-  .dino-page .order-content-dino p,
+  .dino-page .order-content-dino p {
+    font-size: 16px;
+  }
   .dino-page .order-content-dino label {
     font-size: 16px;
+    font-weight: 400;
   }
 
   .dino-page .advantages-title {
@@ -566,7 +576,7 @@
   }
 
   .dino-page .reglage {
-    font-size: 17px;
+    font-size: 13px;
   }
 
   .dino-page .white-outline-btn {
@@ -656,6 +666,7 @@
 
   .dino-page .order-content-dino label {
     font-size: 15px;
+    font-weight: 400;
   }
 
   .dino-page .advantages-title {
@@ -693,7 +704,7 @@
   }
 
   .dino-page .reglage {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .dino-page .white-outline-btn {
@@ -787,6 +798,7 @@
 
   .dino-page .order-content-dino label {
     font-size: 14px;
+    font-weight: 400;
   }
 
   .dino-page .advantages-title {
@@ -824,7 +836,7 @@
   }
 
   .dino-page .reglage {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .dino-page .white-outline-btn {
@@ -917,6 +929,7 @@
 
   .dino-page .order-content-dino label {
     font-size: 13px;
+    font-weight: 400;
   }
 
   .dino-page .advantages-title {
@@ -954,7 +967,7 @@
   }
 
   .dino-page .reglage {
-    font-size: 13px;
+    font-size: 9px;
   }
 
   .dino-page .white-outline-btn {

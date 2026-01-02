@@ -70,7 +70,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .vertyno-logo {
@@ -120,7 +120,7 @@
   background-color: #EAD9CE;
   color: white;
   padding: 60px 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -129,7 +129,7 @@
   text-align: center;
   padding: 60px 20px;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
   background-color: #EAD9CE;
 }
 
@@ -191,7 +191,12 @@
   max-width: 400px;
 }
 
-.order-content label,
+.order-content label {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
 .order-content input {
   font-size: 21px;
   margin-bottom: 20px;
@@ -239,7 +244,7 @@
   padding: 100px 20px;
   text-align: center;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .ourson-title-text-part {
@@ -264,7 +269,7 @@
   background-color: #EAD9CE;
   padding: 100px 20px;
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Lexend Giga', sans-serif;
 }
 
 .ourson-caracteristiques-v2 h2 {
