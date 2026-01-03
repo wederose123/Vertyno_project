@@ -508,21 +508,36 @@ export default function Panier() {
       let checkoutSessionId;
 
       // Préparation sécurisée du point relais pour Firestore
-      // Firestore n'accepte pas les valeurs undefined, donc on vérifie que tous les champs sont définis
-      const relayPointData = (shippingMethod === "relay" && relayPoint && 
-        relayPoint.id && relayPoint.name && relayPoint.street && 
-        (relayPoint.postalCode || relayPoint.postal_code) && relayPoint.city)
-        ? {
-            id: relayPoint.id,
-            name: relayPoint.name,
-            street: relayPoint.street,
-            postalCode: relayPoint.postalCode || relayPoint.postal_code || "",
-            postal_code: relayPoint.postalCode || relayPoint.postal_code || "", // Compatibilité backend
-            city: relayPoint.city,
-            country: relayPoint.country || "FR",
-            provider: relayPoint.provider || "boxtal",
-          }
-        : null;
+      // On enregistre dès qu'on a un point relais, même si tous les champs ne sont pas parfaits
+      const relayPointData =
+        shippingMethod === "relay" && relayPoint
+          ? {
+              id:
+                relayPoint.id ||
+                relayPoint.code ||
+                relayPoint.relayCode ||
+                null,
+              name: relayPoint.name || relayPoint.label || "",
+              street:
+                relayPoint.street ||
+                relayPoint.address ||
+                relayPoint.address1 ||
+                "",
+              postalCode:
+                relayPoint.postalCode ||
+                relayPoint.postal_code ||
+                relayPoint.zipcode ||
+                "",
+              postal_code:
+                relayPoint.postalCode ||
+                relayPoint.postal_code ||
+                relayPoint.zipcode ||
+                "",
+              city: relayPoint.city || relayPoint.locality || "",
+              country: relayPoint.country || "FR",
+              provider: relayPoint.provider || "boxtal",
+            }
+          : null;
 
       // Préparation des données de la session
       const checkoutSessionData = {

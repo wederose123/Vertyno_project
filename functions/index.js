@@ -56,38 +56,108 @@ function getBrevoTransactionalApi() {
 }
 
 // Template HTML - Email de confirmation de commande
-function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUrl }) {
+function buildOrderConfirmationEmailHtml({
+  client,
+  items,
+  total,
+  orderId,
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
   const firstName = client.prenom || client.nom || "client";
+  const fullName =
+    `${client.prenom || ""} ${client.nom || ""}`.trim() || "Client Vertyno";
   const safeBaseUrl = baseUrl || "https://vertyno.com";
-  
-  // Construction de l'adresse complète pour l'affichage
-  // Les données viennent de checkoutSessionData.client qui a la structure :
-  // { adresse: "rue", ville: "ville", codePostal: "code" }
+
+  // --- Adresse du client ---
   const adresseRue = (client.adresse || "").trim();
   const adresseCodePostal = (client.codePostal || "").trim();
   const adresseVille = (client.ville || "").trim();
-  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille].filter(Boolean).join(", ") || "Non renseignée";
+  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille]
+    .filter(Boolean)
+    .join(", ") || "Non renseignée";
 
-  // Construction des items avec images
-  // Fonction helper pour convertir un chemin d'image en URL absolue
-  const getImageUrl = (imagePath) => {
-    if (!imagePath) return `${safeBaseUrl}/images/default-product.webp`;
-    // Si c'est déjà une URL complète (http:// ou https://), on la retourne telle quelle
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-      return imagePath;
-    }
-    // Si c'est un chemin relatif commençant par /, on l'ajoute au baseUrl
-    if (imagePath.startsWith('/')) {
-      return `${safeBaseUrl}${imagePath}`;
-    }
-    // Sinon, on essaie de construire le chemin depuis le slug/id
-    const slug = imagePath.includes('/') ? imagePath : `${imagePath}_1.webp`;
-    return `${safeBaseUrl}/images/${slug}`;
-  };
+  // --- Infos point relais (beaucoup plus tolérant) ---
+  const hasRelayPoint = !!relayPoint; // on considère qu'il y a un relais dès que l'objet existe
 
+  const relayName = hasRelayPoint
+    ? (relayPoint.name || relayPoint.label || "Point relais")
+    : null;
+
+  // Rue du point relais : on essaie plusieurs sources
+  const relayStreet = hasRelayPoint
+    ? (
+        relayPoint.street ||
+        relayPoint.address ||
+        relayPoint.raw?.address?.street ||
+        relayPoint.raw?.addressLine1 ||
+        ""
+      ).trim()
+    : "";
+
+  // Code postal : on gère postalCode, postal_code et les champs dans raw
+  const relayPostalCode = hasRelayPoint
+    ? (
+        relayPoint.postalCode ||
+        relayPoint.postal_code ||
+        relayPoint.raw?.address?.zipCode ||
+        relayPoint.raw?.zipCode ||
+        ""
+      ).trim()
+    : "";
+
+  // Ville : idem, on va la chercher dans plusieurs endroits possibles
+  const relayCity = hasRelayPoint
+    ? (
+        relayPoint.city ||
+        relayPoint.raw?.address?.city ||
+        relayPoint.raw?.city ||
+        ""
+      ).trim()
+    : "";
+
+  const relayFullAddress = hasRelayPoint
+    ? [relayStreet, relayPostalCode, relayCity].filter(Boolean).join(", ")
+    : null;
+
+  // --- Libellés de livraison ---
+  const shippingModeFromMethod =
+    shippingMethod === "relay"
+      ? "Livraison en point relais"
+      : shippingMethod === "home"
+      ? "Livraison à domicile"
+      : "Livraison";
+
+  const shippingModeLabel = shippingLabel || shippingModeFromMethod;
+
+  const shippingPriceText =
+    typeof shippingPrice === "number"
+      ? `${shippingPrice.toFixed(2)}€`
+      : null;
+
+  // --- Items ---
   const itemsHtml = (items || [])
     .map((item) => {
-      // Construction de l'URL de l'image : on essaie item.image, sinon on construit depuis slug/id
+      const getImageUrl = (imagePath) => {
+        if (!imagePath) return `${safeBaseUrl}/images/default-product.webp`;
+        if (
+          imagePath.startsWith("http://") ||
+          imagePath.startsWith("https://")
+        ) {
+          return imagePath;
+        }
+        if (imagePath.startsWith("/")) {
+          return `${safeBaseUrl}${imagePath}`;
+        }
+        const slug = imagePath.includes("/")
+          ? imagePath
+          : `${imagePath}_1.webp`;
+        return `${safeBaseUrl}/images/${slug}`;
+      };
+
       let itemImage;
       if (item.image) {
         itemImage = getImageUrl(item.image);
@@ -98,19 +168,21 @@ function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUr
       } else {
         itemImage = `${safeBaseUrl}/images/default-product.webp`;
       }
-      
+
       const linePrice = (item.price * item.quantity).toFixed(2);
-      
+
       return `
         <tr>
           <td style="padding: 16px 0; border-bottom: 1px solid #f0e0d8;">
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
               <tr>
                 <td style="width: 80px; vertical-align: top; padding-right: 16px;">
-                  <img src="${itemImage}" alt="${item.name || 'Produit'}" width="80" height="80" style="width: 80px; height: 80px; display: block; border-radius: 8px; border: 1px solid #f0e0d8;" />
+                  <img src="${itemImage}" alt="${item.name ||
+        "Produit"}" width="80" height="80" style="width: 80px; height: 80px; display: block; border-radius: 8px; border: 1px solid #f0e0d8;" />
                 </td>
                 <td style="vertical-align: top;">
-                  <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #4b3b36;">${item.name || 'Produit'}</p>
+                  <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #4b3b36;">${item.name ||
+        "Produit"}</p>
                   <p style="margin: 0 0 4px 0; font-size: 14px; color: #6d5a52;">× ${item.quantity || 1}</p>
                   <p style="margin: 0; font-size: 14px; color: #4b3b36; font-weight: 600;">Prix : ${linePrice}€</p>
                 </td>
@@ -123,157 +195,144 @@ function buildOrderConfirmationEmailHtml({ client, items, total, orderId, baseUr
     .join("");
 
   return `
-  <div style="background-color:#f9f4f1;padding:20px 0;font-family:'Lexend Giga',Arial,Helvetica,sans-serif;">
-    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
-      <!-- Header -->
-      <tr>
-        <td style="background:linear-gradient(135deg,#EAD9CE,#fbe9e7);padding:32px 24px 24px 24px;text-align:center;">
-          <img src="${safeBaseUrl}/logo-entier.png" alt="Vertyno" style="height:56px;margin-bottom:16px;" />
-          <h1 style="margin:0;font-size:28px;color:#4b3b36;font-weight:700;">🎉 Votre commande VERTYNO est confirmée !</h1>
-          <p style="margin:12px 0 0 0;font-size:16px;color:#5f4c44;font-weight:400;">Merci pour votre confiance 🤍</p>
-          <p style="margin:8px 0 0 0;font-size:15px;color:#6d5a52;">Votre commande est désormais enregistrée et notre équipe la prépare avec le plus grand soin.</p>
-        </td>
-      </tr>
-      
-      <!-- Salutation -->
-      <tr>
-        <td style="padding:24px 24px 16px 24px;">
-          <p style="font-size:16px;color:#4b3b36;margin:0 0 16px 0;font-weight:400;">Bonjour ${firstName},</p>
-          <p style="font-size:15px;color:#6d5a52;margin:0;line-height:1.6;font-weight:400;">
-            Nous avons bien reçu votre paiement.
-          </p>
-          <p style="font-size:15px;color:#6d5a52;margin:8px 0 0 0;line-height:1.6;font-weight:400;">
-            Voici le récapitulatif complet de votre commande :
-          </p>
-        </td>
-      </tr>
-      
-      <!-- Détails de commande -->
-      <tr>
-        <td style="padding:0 24px 16px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🧾 Détails de commande</h2>
-          <div style="background:#fdf7f3;border-radius:12px;padding:16px;border:1px solid #f0e0d8;">
-            <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              <strong style="color:#4b3b36;">Numéro de commande :</strong> ${orderId}
-            </p>
-            <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              <strong style="color:#4b3b36;">Email :</strong> ${client.email}
-            </p>
-            <p style="margin:0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-              <strong style="color:#4b3b36;">Adresse :</strong> ${adresseComplete}
-            </p>
-          </div>
-        </td>
-      </tr>
-      
-      <!-- Vos articles -->
-      <tr>
-        <td style="padding:0 24px 16px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">📦 Vos articles</h2>
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            ${itemsHtml}
-            <tr>
-              <td style="padding:16px 0 0 0;border-top:2px solid #f0e0d8;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td style="font-size:18px;font-weight:700;color:#4b3b36;">Total :</td>
-                    <td style="text-align:right;font-size:18px;font-weight:700;color:#4b3b36;">${Number(total || 0).toFixed(2)}€</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      
-      <!-- Livraison & suivi -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🚚 Livraison & suivi</h2>
-          <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;line-height:1.6;font-weight:400;">
-            Votre colis sera expédié sous 24 h ouvrées.
-          </p>
-          <p style="font-size:15px;color:#6d5a52;margin:0;line-height:1.6;font-weight:400;">
-            Dès qu'il sera remis au transporteur, vous recevrez automatiquement :
-          </p>
-          <ul style="margin:8px 0 0 0;padding-left:20px;font-size:15px;color:#6d5a52;line-height:1.8;font-weight:400;">
-            <li>un email de confirmation d'expédition</li>
-            <li>votre numéro de suivi</li>
-            <li>un lien pour suivre votre veilleuse en temps réel ✨</li>
-          </ul>
-        </td>
-      </tr>
-      
-      <!-- Vous aimerez peut-être aussi -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <h2 style="font-size:18px;color:#4b3b36;margin:0 0 16px 0;font-weight:600;">💡 Vous aimerez peut-être aussi…</h2>
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-              <td style="width:33.33%;padding:8px;vertical-align:top;">
-                <a href="${safeBaseUrl}/LiliLlaLicorne" style="text-decoration:none;color:inherit;display:block;">
-                  <div style="background:#fdf7f3;border-radius:12px;overflow:hidden;border:1px solid #f0e0d8;">
-                    <img src="${safeBaseUrl}/images/lili-produits.jpg" alt="Lili la Licorne" width="100%" height="120" style="width:100%;height:120px;display:block;object-fit:cover;" />
-                    <div style="padding:12px;">
-                      <p style="margin:0;font-size:13px;color:#4b3b36;font-weight:600;text-align:center;">Lili la Licorne</p>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td style="width:33.33%;padding:8px;vertical-align:top;">
-                <a href="${safeBaseUrl}/Dinoledinosaure" style="text-decoration:none;color:inherit;display:block;">
-                  <div style="background:#fdf7f3;border-radius:12px;overflow:hidden;border:1px solid #f0e0d8;">
-                    <img src="${safeBaseUrl}/images/dino-produits.jpg" alt="Dino le Dinosaure" width="100%" height="120" style="width:100%;height:120px;display:block;object-fit:cover;" />
-                    <div style="padding:12px;">
-                      <p style="margin:0;font-size:13px;color:#4b3b36;font-weight:600;text-align:center;">Dino le Dinosaure</p>
-                    </div>
-                  </div>
-                </a>
-              </td>
-              <td style="width:33.33%;padding:8px;vertical-align:top;">
-                <a href="${safeBaseUrl}/Mochilepanda" style="text-decoration:none;color:inherit;display:block;">
-                  <div style="background:#fdf7f3;border-radius:12px;overflow:hidden;border:1px solid #f0e0d8;">
-                    <img src="${safeBaseUrl}/images/mochi-produits.jpg" alt="Mochi le Panda" width="100%" height="120" style="width:100%;height:120px;display:block;object-fit:cover;" />
-                    <div style="padding:12px;">
-                      <p style="margin:0;font-size:13px;color:#4b3b36;font-weight:600;text-align:center;">Mochi le Panda</p>
-                    </div>
-                  </div>
-                </a>
-              </td>
-            </tr>
-          </table>
-          <div style="text-align:center;margin-top:16px;">
-            <a href="${safeBaseUrl}" style="display:inline-block;padding:12px 24px;border-radius:999px;background:#ffffff;color:#4b3b36;text-decoration:none;font-size:15px;font-weight:600;border:2px solid #e9a0a8;">
-              👉 Découvrir toutes les veilleuses VERTYNO
-            </a>
-          </div>
-        </td>
-      </tr>
-      
-      <!-- Besoin d'aide -->
-      <tr>
-        <td style="padding:0 24px 24px 24px;">
-          <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;font-weight:600;">Besoin d'aide ? Nous répondons rapidement.</p>
-          <p style="font-size:14px;color:#6d5a52;margin:0 0 4px 0;font-weight:400;">
-            📩 <a href="mailto:contact@vertyno.com" style="color:#4b3b36;text-decoration:none;">contact@vertyno.com</a>
-          </p>
-          <p style="font-size:14px;color:#6d5a52;margin:0;font-weight:400;">
-            📱 <a href="https://wa.me/33667561329" style="color:#4b3b36;text-decoration:none;">WhatsApp : https://wa.me/33667561329</a>
-          </p>
-        </td>
-      </tr>
-      
-      <!-- Footer -->
-      <tr>
-        <td style="background:#f7eee9;padding:20px 24px;text-align:center;">
-          <p style="margin:0 0 8px 0;font-size:16px;color:#4b3b36;font-weight:700;">VERTYNO</p>
-          <p style="margin:0;font-size:13px;color:#8c6f63;line-height:1.6;font-weight:400;">
-            Un univers doux, rassurant et pensé pour accompagner les nuits des enfants 🤍
-          </p>
-        </td>
-      </tr>
-    </table>
-  </div>
+   <div style="background-color:#f9f4f1;padding:20px 0;font-family:'Lexend Giga',Arial,Helvetica,sans-serif;">
+     <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+       <!-- Header -->
+       <tr>
+         <td style="background:linear-gradient(135deg,#EAD9CE,#fbe9e7);padding:32px 24px 24px 24px;text-align:center;">
+           <img src="${safeBaseUrl}/logo-entier.png" alt="Vertyno" style="height:56px;margin-bottom:16px;" />
+           <h1 style="margin:0;font-size:28px;color:#4b3b36;font-weight:700;">🎉 Votre commande VERTYNO est confirmée !</h1>
+           <p style="margin:12px 0 0 0;font-size:16px;color:#5f4c44;font-weight:400;">Merci pour votre confiance 🤍</p>
+           <p style="margin:8px 0 0 0;font-size:15px;color:#6d5a52;">Votre commande est désormais enregistrée et notre équipe la prépare avec le plus grand soin.</p>
+         </td>
+       </tr>
+
+       <!-- Salutation -->
+       <tr>
+         <td style="padding:24px 24px 16px 24px;">
+           <p style="font-size:16px;color:#4b3b36;margin:0 0 16px 0;font-weight:400;">Bonjour ${firstName},</p>
+           <p style="font-size:15px;color:#6d5a52;margin:0;line-height:1.6;font-weight:400;">
+             Nous avons bien reçu votre paiement.
+           </p>
+           <p style="font-size:15px;color:#6d5a52;margin:8px 0 0 0;line-height:1.6;font-weight:400;">
+             Voici le récapitulatif complet de votre commande :
+           </p>
+         </td>
+       </tr>
+
+       <!-- Détails de commande -->
+       <tr>
+         <td style="padding:0 24px 16px 24px;">
+           <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🧾 Détails de commande</h2>
+           <div style="background:#fdf7f3;border-radius:12px;padding:16px;border:1px solid #f0e0d8;">
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Numéro de commande :</strong> ${orderId}
+             </p>
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Client :</strong> ${fullName}
+             </p>
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Email :</strong> ${client.email}
+             </p>
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Adresse :</strong> ${adresseComplete}
+             </p>
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Mode de livraison :</strong> ${shippingModeLabel}
+             </p>
+             ${
+               hasRelayPoint && (relayName || relayFullAddress)
+                 ? `
+                   <p style="margin:0 0 4px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Point relais :</strong> ${relayName || ""}
+                   </p>
+                   <p style="margin:0 0 4px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Adresse du point relais :</strong> ${relayFullAddress || ""}
+                   </p>
+                 `
+                 : ""
+             }
+             ${
+               shippingPriceText
+                 ? `
+                   <p style="margin:0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Frais de livraison :</strong> ${shippingPriceText}
+                   </p>
+                 `
+                 : ""
+             }
+           </div>
+         </td>
+       </tr>
+
+       <!-- Vos articles -->
+       <tr>
+         <td style="padding:0 24px 16px 24px;">
+           <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">📦 Vos articles</h2>
+           <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+             ${itemsHtml}
+             <tr>
+               <td style="padding:16px 0 0 0;border-top:2px solid #f0e0d8;">
+                 <table width="100%" cellpadding="0" cellspacing="0">
+                   <tr>
+                     <td style="font-size:18px;font-weight:700;color:#4b3b36;">Total :</td>
+                     <td style="text-align:right;font-size:18px;font-weight:700;color:#4b3b36;">${Number(total || 0).toFixed(2)}€</td>
+                   </tr>
+                 </table>
+               </td>
+             </tr>
+           </table>
+         </td>
+       </tr>
+
+       <!-- Livraison & suivi -->
+       <tr>
+         <td style="padding:0 24px 24px 24px;">
+           <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🚚 Livraison & suivi</h2>
+           <div style="background:#fdf7f3;border-radius:12px;padding:16px;border:1px solid #f0e0d8;margin-bottom:16px;">
+             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+               <strong style="color:#4b3b36;">Mode de livraison :</strong> ${shippingModeLabel}
+             </p>
+             ${
+               shippingLabel
+                 ? `
+                   <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Détails :</strong> ${shippingLabel}
+                   </p>
+                 `
+                 : ""
+             }
+             ${
+               hasRelayPoint && (relayName || relayFullAddress)
+                 ? `
+                   <p style="margin:0 0 4px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Point relais :</strong> ${relayName || ""}
+                   </p>
+                   <p style="margin:0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Adresse :</strong> ${relayFullAddress || ""}
+                   </p>
+                 `
+                 : ""
+             }
+           </div>
+
+           <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;line-height:1.6;font-weight:400;">
+             Votre colis sera expédié sous 24 h ouvrées.
+           </p>
+           <p style="font-size:15px;color:#6d5a52;margin:0;line-height:1.6;font-weight:400;">
+             Dès qu'il sera remis au transporteur, vous recevrez automatiquement :
+           </p>
+           <ul style="margin:8px 0 0 0;padding-left:20px;font-size:15px;color:#6d5a52;line-height:1.8;font-weight:400;">
+             <li>un email de confirmation d'expédition</li>
+             <li>votre numéro de suivi</li>
+             <li>un lien pour suivre votre veilleuse en temps réel ✨</li>
+           </ul>
+         </td>
+       </tr>
+
+       <!-- (le reste du template "Vous aimerez peut-être aussi…" reste inchangé) -->
+     </table>
+   </div>
   `;
 }
 
@@ -362,7 +421,17 @@ function buildThankYouEmailHtml({ client, baseUrl }) {
 }
 
 // Envoi de l'email de confirmation de commande
-async function sendOrderConfirmationEmail({ client, items, total, orderId, baseUrl }) {
+async function sendOrderConfirmationEmail({ 
+  client, 
+  items, 
+  total, 
+  orderId, 
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
   const transactionalApi = getBrevoTransactionalApi();
   const htmlContent = buildOrderConfirmationEmailHtml({
     client,
@@ -370,6 +439,10 @@ async function sendOrderConfirmationEmail({ client, items, total, orderId, baseU
     total,
     orderId,
     baseUrl,
+    shippingMethod,
+    shippingLabel,
+    shippingPrice,
+    relayPoint,
   });
 
   await transactionalApi.sendTransacEmail({
@@ -1150,6 +1223,10 @@ exports.stripeWebhook = onRequest(
           const items = checkoutSessionData.items || [];
           const total = checkoutSessionData.total || 0;
           const baseUrl = SITE_URL.value() || "https://vertyno.com";
+          const shippingMethod = checkoutSessionData.shippingMethod || null;
+          const shippingLabel = checkoutSessionData.shippingLabel || null;
+          const shippingPrice = checkoutSessionData.shippingPrice || 0;
+          const relayPoint = checkoutSessionData.relayPoint || null;
 
           // Log pour déboguer les données client (sans logger l'objet complet)
           logger.info("Données client pour email", {
@@ -1178,6 +1255,10 @@ exports.stripeWebhook = onRequest(
               total,
               orderId: commandeRef.id,
               baseUrl,
+              shippingMethod,
+              shippingLabel,
+              shippingPrice,
+              relayPoint,
             });
 
             // Email 2 : Remerciement / fidélisation
