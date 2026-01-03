@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useSearchParams } from "react-router-dom";
@@ -190,19 +190,27 @@ export default function Panier() {
 
         if (!parcelPoint) return;
 
-        // On stocke les infos importantes dans notre state
+        // Structure standardisée du point relais pour Firestore
+        // Compatible avec le backend (functions/index.js)
+        const postalCode = parcelPoint.address?.zipCode || parcelPoint.zipCode || "";
+        const city = parcelPoint.address?.city || parcelPoint.city || "";
+        const street = parcelPoint.address?.street || parcelPoint.street || parcelPoint.addressLine1 || "";
+        
         setRelayPoint({
+          // Identifiants
           id: parcelPoint.id,
           name: parcelPoint.name,
-          street:
-            parcelPoint.address?.street ||
-            parcelPoint.street ||
-            parcelPoint.addressLine1 ||
-            "",
-          postal_code: parcelPoint.address?.zipCode || parcelPoint.zipCode || "",
-          city: parcelPoint.address?.city || parcelPoint.city || "",
+          // Adresse (format standardisé)
+          street: street,
+          postalCode: postalCode, // Format standardisé (camelCase)
+          postal_code: postalCode, // Format legacy pour compatibilité backend
+          city: city,
+          country: "FR", // Toujours FR pour l'instant
+          // Métadonnées
+          provider: "boxtal", // Identifie la source (Boxtal)
           network: parcelPoint.networkCode || parcelPoint.network || "",
-          raw: parcelPoint, // on garde l'objet brut si besoin
+          // Données brutes (pour debug ou usage futur)
+          raw: parcelPoint,
         });
       });
     } catch (err) {
@@ -499,6 +507,23 @@ export default function Panier() {
 
       let checkoutSessionId;
 
+      // Préparation sécurisée du point relais pour Firestore
+      // Firestore n'accepte pas les valeurs undefined, donc on vérifie que tous les champs sont définis
+      const relayPointData = (shippingMethod === "relay" && relayPoint && 
+        relayPoint.id && relayPoint.name && relayPoint.street && 
+        (relayPoint.postalCode || relayPoint.postal_code) && relayPoint.city)
+        ? {
+            id: relayPoint.id,
+            name: relayPoint.name,
+            street: relayPoint.street,
+            postalCode: relayPoint.postalCode || relayPoint.postal_code || "",
+            postal_code: relayPoint.postalCode || relayPoint.postal_code || "", // Compatibilité backend
+            city: relayPoint.city,
+            country: relayPoint.country || "FR",
+            provider: relayPoint.provider || "boxtal",
+          }
+        : null;
+
       // Préparation des données de la session
       const checkoutSessionData = {
         // 🔗 Lien vers le document client
@@ -531,7 +556,9 @@ export default function Panier() {
         shippingMethod: shippingMethod, // "relay" ou "home"
         shippingPrice: shippingPrice, // Frais de livraison
         shippingLabel: shippingLabel, // Libellé de la livraison
-        relayPoint: shippingMethod === "relay" ? relayPoint : null, // Point relais sélectionné (si mode relay)
+        // Point relais sélectionné (si mode relay et tous les champs requis sont présents)
+        // Structure nettoyée pour Firestore : uniquement les champs essentiels, jamais undefined
+        relayPoint: relayPointData,
         status: "pending", // En attente de paiement
         paymentMethod: paymentMethod,
         updatedAt: serverTimestamp(),
@@ -801,7 +828,7 @@ export default function Panier() {
                       <div style={{ marginBottom: "4px" }}>{relayPoint.name}</div>
                       <div style={{ marginBottom: "4px" }}>{relayPoint.street}</div>
                       <div>
-                        {relayPoint.postal_code} {relayPoint.city}
+                        {relayPoint.postalCode || relayPoint.postal_code} {relayPoint.city}
                       </div>
                       {relayPoint.network && (
                         <div style={{ marginTop: "4px", fontSize: "0.8rem", color: "#888" }}>

@@ -575,7 +575,7 @@ exports.getBoxtalRelays = onCall(
         hasAccessKey: !!accessKey,
         hasSecretKey: !!secretKey,
         hasBaseUrl: !!baseUrl,
-        baseUrl: baseUrl,
+        // baseUrl non loggé pour sécurité (peut contenir des infos sensibles)
       });
 
       if (!accessKey || !secretKey || !baseUrl) {
@@ -622,7 +622,9 @@ exports.getBoxtalRelays = onCall(
 
       logger.info("Points extraits", {
         count: points.length,
-        firstPoint: points[0] || null,
+        // Premier point non loggé en entier pour éviter les logs volumineux
+        firstPointId: points[0]?.id || null,
+        firstPointName: points[0]?.name || null,
       });
 
       return { relays: points };
@@ -632,12 +634,13 @@ exports.getBoxtalRelays = onCall(
         stack: error.stack,
         responseStatus: error.response?.status,
         responseStatusText: error.response?.statusText,
-        responseData: error.response?.data,
-        responseHeaders: error.response?.headers,
+        // responseData et responseHeaders non loggés pour éviter les logs volumineux
+        // Seulement les infos essentielles pour le debug
+        errorMessage: error.response?.data?.message || error.response?.data?.error || null,
         config: error.config ? {
           url: error.config.url,
           method: error.config.method,
-          params: error.config.params,
+          // params non loggé (peut contenir des infos sensibles)
         } : null,
       });
 
@@ -693,7 +696,8 @@ exports.getBoxtalMapToken = onCall(
         error: error.message,
         stack: error.stack,
         responseStatus: error.response?.status,
-        responseData: error.response?.data,
+        // responseData non loggé pour éviter les logs volumineux
+        errorMessage: error.response?.data?.message || error.response?.data?.error || null,
       });
 
       throw new functions.https.HttpsError(
@@ -767,8 +771,8 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
             address: {
               street: relayPoint.street,
               city: relayPoint.city,
-              postal_code: relayPoint.postal_code,
-              country: "FR",
+              postal_code: relayPoint.postal_code || relayPoint.postalCode || "",
+              country: relayPoint.country || "FR",
             },
             relay_id: relayPoint.id, // ID du point relais
           }
@@ -815,7 +819,10 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
 
     logger.info("Colis Boxtal créé avec succès", {
       commandeId,
-      shipmentInfo,
+      boxtalOrderId: shipmentInfo.boxtalOrderId,
+      trackingNumber: shipmentInfo.trackingNumber,
+      hasLabelUrl: !!shipmentInfo.labelUrl,
+      // shipmentInfo.raw non loggé pour éviter les logs volumineux
     });
 
     // On enregistre ça sur la commande
@@ -922,12 +929,16 @@ exports.stripeWebhook = onRequest(
 
         const checkoutSessionData = checkoutSessionDoc.data();
 
-        // Log pour déboguer les données récupérées
+        // Log pour déboguer les données récupérées (sans logger l'objet client complet)
         logger.info("Données checkoutSessionData récupérées", {
-          client: checkoutSessionData.client,
-          clientAdresse: checkoutSessionData.client?.adresse,
-          clientVille: checkoutSessionData.client?.ville,
-          clientCodePostal: checkoutSessionData.client?.codePostal,
+          clientEmail: checkoutSessionData.client?.email || null,
+          clientAdresse: checkoutSessionData.client?.adresse || null,
+          clientVille: checkoutSessionData.client?.ville || null,
+          clientCodePostal: checkoutSessionData.client?.codePostal || null,
+          itemsCount: checkoutSessionData.items?.length || 0,
+          total: checkoutSessionData.total || 0,
+          shippingMethod: checkoutSessionData.shippingMethod || null,
+          hasRelayPoint: !!checkoutSessionData.relayPoint,
         });
 
         // Vérification que la session n'a pas déjà été traitée
@@ -959,10 +970,13 @@ exports.stripeWebhook = onRequest(
           items: checkoutSessionData.items,
           total: checkoutSessionData.total,
           paymentMethod: checkoutSessionData.paymentMethod,
-          // Informations de livraison
-          shippingMethod: checkoutSessionData.shippingMethod || null,
-          shippingPrice: checkoutSessionData.shippingPrice || 0,
-          shippingLabel: checkoutSessionData.shippingLabel || null,
+          // Informations de livraison (récupérées depuis checkout_sessions)
+          // Ces champs sont créés côté frontend dans Panier.jsx lors de handleCheckout
+          shippingMethod: checkoutSessionData.shippingMethod || null, // "relay" ou "home"
+          shippingPrice: checkoutSessionData.shippingPrice || 0, // Frais de livraison en euros
+          shippingLabel: checkoutSessionData.shippingLabel || null, // Libellé de la livraison
+          // Point relais sélectionné (si mode relay)
+          // Structure : { id, name, street, postalCode, postal_code, city, country, provider }
           relayPoint: checkoutSessionData.relayPoint || null,
           // Informations de paiement Stripe
           stripeSessionId: stripeSessionId,
@@ -982,6 +996,10 @@ exports.stripeWebhook = onRequest(
           clientId: clientId,
           firestoreCheckoutSessionId: firestoreCheckoutSessionId,
           stripeSessionId: stripeSessionId,
+          shippingMethod: commandeData.shippingMethod,
+          shippingPrice: commandeData.shippingPrice,
+          hasRelayPoint: !!commandeData.relayPoint,
+          relayPointId: commandeData.relayPoint?.id || null,
         });
 
         // ===== ÉTAPE 1.5 : Création du colis Boxtal =====
@@ -1133,13 +1151,14 @@ exports.stripeWebhook = onRequest(
           const total = checkoutSessionData.total || 0;
           const baseUrl = SITE_URL.value() || "https://vertyno.com";
 
-          // Log pour déboguer les données client
+          // Log pour déboguer les données client (sans logger l'objet complet)
           logger.info("Données client pour email", {
-            clientInfo: clientInfo,
-            adresse: clientInfo.adresse,
-            ville: clientInfo.ville,
-            codePostal: clientInfo.codePostal,
-            email: clientInfo.email,
+            email: clientInfo.email || null,
+            adresse: clientInfo.adresse || null,
+            ville: clientInfo.ville || null,
+            codePostal: clientInfo.codePostal || null,
+            itemsCount: items.length,
+            total: total,
           });
 
           // Protection anti double-envoi : on vérifie les flags sur la commande
