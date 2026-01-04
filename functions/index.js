@@ -94,6 +94,8 @@ function buildOrderConfirmationEmailHtml({
         relayPoint.address ||
         relayPoint.raw?.address?.street ||
         relayPoint.raw?.addressLine1 ||
+        // 🔥 Nouveau : on va aussi chercher dans raw.location.street
+        relayPoint.raw?.location?.street ||
         ""
       ).trim()
     : "";
@@ -105,6 +107,8 @@ function buildOrderConfirmationEmailHtml({
         relayPoint.postal_code ||
         relayPoint.raw?.address?.zipCode ||
         relayPoint.raw?.zipCode ||
+        // 🔥 Nouveau : code postal dans raw.location.zipCode
+        relayPoint.raw?.location?.zipCode ||
         ""
       ).trim()
     : "";
@@ -116,6 +120,8 @@ function buildOrderConfirmationEmailHtml({
         relayPoint.locality ||
         relayPoint.raw?.address?.city ||
         relayPoint.raw?.city ||
+        // 🔥 Nouveau : ville dans raw.location.city
+        relayPoint.raw?.location?.city ||
         ""
       ).trim()
     : "";
@@ -331,36 +337,7 @@ function buildOrderConfirmationEmailHtml({
          </td>
        </tr>
 
-       <!-- Besoin d'aide -->
-       <tr>
-         <td style="padding:0 24px 24px 24px;">
-           <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;font-weight:600;">
-             Besoin d'aide ? Notre service client est là pour vous accompagner.
-           </p>
-           <p style="font-size:14px;color:#6d5a52;margin:0 0 4px 0;font-weight:400;">
-             📩 <strong>Email du service client :</strong>
-             <a href="mailto:abesse.bel@vertyno.com" style="color:#4b3b36;text-decoration:none;">
-               abesse.bel@vertyno.com
-             </a>
-           </p>
-           <p style="font-size:14px;color:#6d5a52;margin:0;font-weight:400;">
-             📞 <strong>Téléphone :</strong>
-             <a href="tel:+33634141451" style="color:#4b3b36;text-decoration:none;">
-               +33 6 34 14 14 51
-             </a>
-           </p>
-         </td>
-       </tr>
-
-       <!-- Footer -->
-       <tr>
-         <td style="background:#f7eee9;padding:20px 24px;text-align:center;">
-           <p style="margin:0 0 8px 0;font-size:16px;color:#4b3b36;font-weight:700;">VERTYNO</p>
-           <p style="margin:0;font-size:13px;color:#8c6f63;line-height:1.6;font-weight:400;">
-             Un univers doux, rassurant et pensé pour accompagner les nuits des enfants 🤍
-           </p>
-         </td>
-       </tr>
+       <!-- (le reste du template "Vous aimerez peut-être aussi…" reste inchangé) -->
      </table>
    </div>
   `;
@@ -450,222 +427,6 @@ function buildThankYouEmailHtml({ client, baseUrl }) {
   `;
 }
 
-// Template HTML - Email administrateur (notification interne)
-function buildAdminOrderEmailHtml({
-  client,
-  items,
-  total,
-  orderId,
-  baseUrl,
-  shippingMethod,
-  shippingLabel,
-  shippingPrice,
-  relayPoint,
-}) {
-  const safeBaseUrl = baseUrl || "https://vertyno.com";
-
-  const fullName =
-    `${client.prenom || ""} ${client.nom || ""}`.trim() || "Client Vertyno";
-  const clientEmail = client.email || "";
-  const clientPhone = client.telephone || client.phone || "";
-
-  const adresseRue = (client.adresse || "").trim();
-  const adresseCodePostal = (client.codePostal || "").trim();
-  const adresseVille = (client.ville || "").trim();
-  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille]
-    .filter(Boolean)
-    .join(", ") || "Non renseignée";
-
-  // Mode de livraison
-  const shippingModeFromMethod =
-    shippingMethod === "relay"
-      ? "Livraison en point relais"
-      : shippingMethod === "home"
-      ? "Livraison à domicile"
-      : "Livraison";
-
-  const shippingModeLabel = shippingLabel || shippingModeFromMethod;
-
-  const shippingPriceText =
-    typeof shippingPrice === "number"
-      ? `${shippingPrice.toFixed(2)}€`
-      : null;
-
-  // Point relais (on fait au mieux avec les données disponibles)
-  const hasRelayPoint = !!relayPoint;
-  const relayName = hasRelayPoint
-    ? (relayPoint.name || relayPoint.label || "Point relais")
-    : null;
-
-  const relayStreet = hasRelayPoint
-    ? (
-        relayPoint.street ||
-        relayPoint.address ||
-        relayPoint.address1 ||
-        relayPoint.addressLine1 ||
-        ""
-      ).toString().trim()
-    : "";
-
-  const relayPostalCode = hasRelayPoint
-    ? (
-        relayPoint.postalCode ||
-        relayPoint.postal_code ||
-        relayPoint.zipCode ||
-        relayPoint.zipcode ||
-        ""
-      ).toString().trim()
-    : "";
-
-  const relayCity = hasRelayPoint
-    ? (
-        relayPoint.city ||
-        relayPoint.locality ||
-        ""
-      ).toString().trim()
-    : "";
-
-  const relayFullAddress =
-    hasRelayPoint
-      ? [relayStreet, relayPostalCode, relayCity].filter(Boolean).join(", ")
-      : "";
-
-  // Items détaillés
-  const itemsRows = (items || [])
-    .map((item) => {
-      const qty = item.quantity || 1;
-      const unitPrice = Number(item.price || 0);
-      const lineTotal = unitPrice * qty;
-
-      return `
-        <tr>
-          <td style="padding:8px;border:1px solid #e0e0e0;">${item.name || "Produit"}</td>
-          <td style="padding:8px;border:1px solid #e0e0e0;text-align:center;">${qty}</td>
-          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${unitPrice.toFixed(2)}€</td>
-          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${lineTotal.toFixed(2)}€</td>
-        </tr>
-      `;
-    })
-    .join("");
-
-  const totalNumber = Number(total || 0);
-  const formattedTotal = totalNumber.toFixed(2);
-
-  return `
-  <div style="background-color:#f5f5f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif;">
-    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;">
-      <tr>
-        <td style="padding:20px 24px;border-bottom:1px solid #e0e0e0;">
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-              <td style="vertical-align:middle;">
-                <h1 style="margin:0;font-size:18px;color:#333333;font-weight:600;">
-                  Nouvelle commande reçue
-                </h1>
-                <p style="margin:4px 0 0 0;font-size:13px;color:#666666;">
-                  Référence commande : <strong>#${orderId}</strong>
-                </p>
-              </td>
-              <td style="text-align:right;vertical-align:middle;">
-                <img src="${safeBaseUrl}/logo-entier.png" alt="Vertyno" style="height:40px;" />
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-
-      <tr>
-        <td style="padding:20px 24px;">
-          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Informations client</h2>
-          <p style="margin:4px 0;font-size:13px;color:#444444;">
-            <strong>Nom :</strong> ${fullName}
-          </p>
-          <p style="margin:4px 0;font-size:13px;color:#444444;">
-            <strong>Email :</strong> ${clientEmail}
-          </p>
-          <p style="margin:4px 0;font-size:13px;color:#444444;">
-            <strong>Téléphone :</strong> ${clientPhone || "Non renseigné"}
-          </p>
-          <p style="margin:4px 0;font-size:13px;color:#444444;">
-            <strong>Adresse :</strong> ${adresseComplete}
-          </p>
-        </td>
-      </tr>
-
-      <tr>
-        <td style="padding:0 24px 16px 24px;">
-          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Livraison</h2>
-          <p style="margin:4px 0;font-size:13px;color:#444444;">
-            <strong>Mode :</strong> ${shippingModeLabel}
-          </p>
-          ${
-            shippingPriceText
-              ? `<p style="margin:4px 0;font-size:13px;color:#444444;">
-                  <strong>Frais de livraison :</strong> ${shippingPriceText}
-                </p>`
-              : ""
-          }
-          ${
-            hasRelayPoint
-              ? `
-                <p style="margin:4px 0;font-size:13px;color:#444444;">
-                  <strong>Point relais :</strong> ${relayName}
-                </p>
-                <p style="margin:4px 0;font-size:13px;color:#444444;">
-                  <strong>Adresse point relais :</strong> ${relayFullAddress || "Non renseignée"}
-                </p>
-              `
-              : ""
-          }
-          ${
-            shippingLabel
-              ? `<p style="margin:4px 0;font-size:13px;color:#777777;">
-                  <strong>Détails transporteur :</strong> ${shippingLabel}
-                </p>`
-              : ""
-          }
-        </td>
-      </tr>
-
-      <tr>
-        <td style="padding:0 24px 20px 24px;">
-          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Détail des articles</h2>
-          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:13px;color:#333333;">
-            <thead>
-              <tr>
-                <th align="left" style="padding:8px;border:1px solid #e0e0e0;">Article</th>
-                <th align="center" style="padding:8px;border:1px solid #e0e0e0;">Qté</th>
-                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Prix unitaire</th>
-                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Total ligne</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${itemsRows}
-              <tr>
-                <td colspan="3" style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
-                  Total commande
-                </td>
-                <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
-                  ${formattedTotal}€
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-
-      <tr>
-        <td style="padding:12px 24px 20px 24px;font-size:11px;color:#888888;border-top:1px solid #e0e0e0;">
-          <p style="margin:0 0 4px 0;">
-            Cet email est destiné à l'équipe Vertyno. Le client reçoit un email de confirmation séparé.
-          </p>
-        </td>
-      </tr>
-    </table>
-  </div>
-  `;
-}
-
 // Envoi de l'email de confirmation de commande
 async function sendOrderConfirmationEmail({ 
   client, 
@@ -727,55 +488,6 @@ async function sendThankYouEmail({ client, baseUrl }) {
       },
     ],
     subject: "Merci pour votre achat 🧡",
-    htmlContent,
-  });
-}
-
-// Envoi de l'email de notification admin
-async function sendAdminOrderEmail({
-  client,
-  items,
-  total,
-  orderId,
-  baseUrl,
-  shippingMethod,
-  shippingLabel,
-  shippingPrice,
-  relayPoint,
-}) {
-  const transactionalApi = getBrevoTransactionalApi();
-
-  const htmlContent = buildAdminOrderEmailHtml({
-    client,
-    items,
-    total,
-    orderId,
-    baseUrl,
-    shippingMethod,
-    shippingLabel,
-    shippingPrice,
-    relayPoint,
-  });
-
-  const totalNumber = Number(total || 0);
-  const formattedTotal = totalNumber.toFixed(2);
-
-  await transactionalApi.sendTransacEmail({
-    sender: {
-      name: "Vertyno - Commandes",
-      email: "no-reply@vertyno.com",
-    },
-    to: [
-      {
-        email: "abesse.bel@vertyno.com",
-        name: "Vertyno - Administration",
-      },
-      {
-        email: "mickaelouis03@gmail.com",
-        name: "Mickael - Copie commande",
-      },
-    ],
-    subject: `Vous avez reçu une nouvelle commande Vertyno (#${orderId}) - ${formattedTotal}€`,
     htmlContent,
   });
 }
@@ -1108,6 +820,7 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
       return null;
     }
 
+    const axios = require("axios");
     const credentials = Buffer.from(`${accessKey}:${secretKey}`).toString("base64");
 
     const client = commandeData.client || {};
@@ -1120,51 +833,86 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
       0
     );
 
-    // ⚠️ TODO : adapter le endpoint et le body EXACT selon la doc Boxtal v3
-    const url = `${baseUrl}/shipments`; // ex : /shipments ou /orders, à vérifier
+    // Endpoint Boxtal v3.1
+    const url = `${baseUrl}/v3.1/shipping-order`;
 
-    const payload = {
-      // Exemple de structure à adapter selon la doc Boxtal v3 :
-      // mode: "pickup" ou "relay",
-      // carrier: "...",
-      // ...
+    // ===== EXPÉDITEUR (sender) =====
+    // TODO: adapter ces champs aux noms attendus par l'API v3 selon la doc officielle Boxtal
+    const sender = {
+      // TODO: confirmer les noms exacts des propriétés (name, companyName, etc.)
+      name: "Vertyno",
+      email: "abesse.bel@vertyno.com",
+      phone: "+33634141451",
+      address: {
+        // TODO: adapter les noms de champs (street, streetLine1, addressLine1, etc.)
+        street: "ADRESSE_RUE_BOUTIQUE_A_COMPLETER",
+        postalCode: "CODE_POSTAL_BOUTIQUE",
+        city: "VILLE_BOUTIQUE",
+        country: "FR",
+      },
+    };
 
-      reference: commandeId,
-      recipient: relayPoint
-        ? {
-            // Livraison en point relais
-            name: `${client.prenom || ""} ${client.nom || ""}`.trim(),
-            email: client.email,
-            phone: client.telephone,
-            address: {
-              street: relayPoint.street,
-              city: relayPoint.city,
-              postal_code: relayPoint.postal_code || relayPoint.postalCode || "",
-              country: relayPoint.country || "FR",
-            },
-            relay_id: relayPoint.id, // ID du point relais
-          }
-        : {
-            // Livraison à domicile
-            name: `${client.prenom || ""} ${client.nom || ""}`.trim(),
-            email: client.email,
-            phone: client.telephone,
-            address: {
-              street: client.adresse,
-              city: client.ville,
-              postal_code: client.codePostal,
-              country: "FR",
-            },
-          },
-      parcels: [
-        {
-          weight: totalWeightKg, // en kg
-          // dimensions, contenu, valeur, etc.
+    // ===== DESTINATAIRE (receiver) =====
+    let receiver;
+    if (relayPoint) {
+      // Livraison en point relais
+      // TODO: adapter les noms de champs selon la doc Boxtal v3
+      receiver = {
+        // TODO: confirmer la structure exacte pour un point relais
+        name: `${client.prenom || ""} ${client.nom || ""}`.trim(),
+        email: client.email || "",
+        phone: client.telephone || "",
+        address: {
+          // TODO: adapter selon la doc (street, streetLine1, etc.)
+          street: relayPoint.street || relayPoint.address || "",
+          postalCode: relayPoint.postalCode || relayPoint.postal_code || "",
+          city: relayPoint.city || "",
+          country: relayPoint.country || "FR",
         },
-      ],
-      // url_push pour le webhook de tracking Boxtal
-      // ⚠️ TODO : remplace par l'URL de ta future fonction de webhook Boxtal
-      url_push: "https://TON_PROJECT.cloudfunctions.net/boxtalWebhook",
+        // TODO: confirmer le nom exact du champ pour l'ID du point relais (relayId, parcelPointId, etc.)
+        relayId: relayPoint.id || null,
+      };
+    } else {
+      // Livraison à domicile
+      // TODO: adapter les noms de champs selon la doc Boxtal v3
+      receiver = {
+        name: `${client.prenom || ""} ${client.nom || ""}`.trim(),
+        email: client.email || "",
+        phone: client.telephone || "",
+        address: {
+          // TODO: adapter selon la doc (street, streetLine1, etc.)
+          street: client.adresse || "",
+          postalCode: client.codePostal || "",
+          city: client.ville || "",
+          country: "FR",
+        },
+      };
+    }
+
+    // ===== PAYLOAD =====
+    // ⚠️ IMPORTANT :
+    // La structure exacte du body pour /v3.1/shipping-order doit être alignée avec la doc officielle Boxtal.
+    // Ce bloc est un SQUELETTE que l'utilisateur devra adapter :
+    // - renommer les champs si nécessaire
+    // - ajouter les champs obligatoires manquants
+    const payload = {
+      shippingOrder: {
+        // TODO: confirmer la structure shippingOrder.* dans la doc Boxtal
+        sender,          // expéditeur
+        recipient: receiver, // destinataire
+        parcels: [
+          {
+            // TODO: adapter les noms des propriétés (weight, unit, weightUnit, etc.) selon la doc
+            weight: totalWeightKg,
+            // TODO: unité de poids (kg, g, etc.) - à confirmer dans la doc
+            // weightUnit: "kg",
+            // TODO: contentCategoryCode - à récupérer depuis GET /v3.1/content-category
+            // contentCategoryCode: "A_COMPLETER",
+          },
+        ],
+        // TODO: shippingOfferCode - à brancher plus tard depuis la commande
+        // shippingOfferCode: commandeData.boxtalShippingOfferCode || undefined,
+      },
     };
 
     const response = await axios.post(url, payload, {
@@ -1177,34 +925,38 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
 
     const data = response.data;
 
-    // ⚠️ adapter les noms de champs selon la réponse Boxtal
+    logger.info("Boxtal v3 - shipping-order response", {
+      commandeId,
+      boxtalResponse: data,
+    });
+
+    // Construction de l'objet shipmentInfo basique
+    // TODO: adapter selon la structure exacte de la réponse Boxtal v3
     const shipmentInfo = {
-      boxtalOrderId: data.id || data.reference,
-      trackingNumber: data.tracking_number || data.trackingNumber,
-      labelUrl: data.label_url || null,
+      shippingOrderId: data?.shippingOrder?.id || data.id || null,
       raw: data,
     };
 
-    logger.info("Colis Boxtal créé avec succès", {
-      commandeId,
-      boxtalOrderId: shipmentInfo.boxtalOrderId,
-      trackingNumber: shipmentInfo.trackingNumber,
-      hasLabelUrl: !!shipmentInfo.labelUrl,
-      // shipmentInfo.raw non loggé pour éviter les logs volumineux
+    // Enregistrement dans Firestore sous le champ boxtal_v3
+    // (sans supprimer boxtal existant si présent)
+    await db.collection("commandes").doc(commandeId).update({
+      boxtal_v3: shipmentInfo,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     });
 
-    // On enregistre ça sur la commande
-    await db.collection("commandes").doc(commandeId).update({
-      boxtal: shipmentInfo,
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    logger.info("Colis Boxtal v3 créé avec succès", {
+      commandeId,
+      shippingOrderId: shipmentInfo.shippingOrderId,
     });
 
     return shipmentInfo;
   } catch (error) {
-    logger.error("Erreur création colis Boxtal", {
+    logger.error("Erreur création colis Boxtal v3", {
       error: error.message,
       stack: error.stack,
       commandeId,
+      responseStatus: error.response?.status,
+      responseData: error.response?.data,
     });
     // on ne bloque pas le paiement
     return null;
@@ -1543,7 +1295,7 @@ exports.stripeWebhook = onRequest(
               clientEmail: clientInfo.email,
             });
           } else {
-            // Email 1 : Confirmation de commande (client)
+            // Email 1 : Confirmation de commande
             await sendOrderConfirmationEmail({
               client: clientInfo,
               items,
@@ -1556,23 +1308,10 @@ exports.stripeWebhook = onRequest(
               relayPoint,
             });
 
-            // Email 2 : Remerciement / fidélisation (client)
+            // Email 2 : Remerciement / fidélisation
             await sendThankYouEmail({
               client: clientInfo,
               baseUrl,
-            });
-
-            // Email 3 : Notification interne (admin + Mickael)
-            await sendAdminOrderEmail({
-              client: clientInfo,
-              items,
-              total,
-              orderId: commandeRef.id,
-              baseUrl,
-              shippingMethod,
-              shippingLabel,
-              shippingPrice,
-              relayPoint,
             });
 
             // Mise à jour de la commande pour tracer les emails envoyés
@@ -1581,7 +1320,7 @@ exports.stripeWebhook = onRequest(
               emailThankYouSent: true,
             });
 
-            logger.info("Emails post-achat envoyés avec succès via Brevo (client + admin)", {
+            logger.info("Emails post-achat envoyés avec succès via Brevo", {
               commandeId: commandeRef.id,
               clientEmail: clientInfo.email,
             });

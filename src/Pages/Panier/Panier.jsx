@@ -192,9 +192,24 @@ export default function Panier() {
 
         // Structure standardisée du point relais pour Firestore
         // Compatible avec le backend (functions/index.js)
-        const postalCode = parcelPoint.address?.zipCode || parcelPoint.zipCode || "";
-        const city = parcelPoint.address?.city || parcelPoint.city || "";
-        const street = parcelPoint.address?.street || parcelPoint.street || parcelPoint.addressLine1 || "";
+        const postalCode =
+          parcelPoint.address?.zipCode ||
+          parcelPoint.zipCode ||
+          parcelPoint.location?.zipCode ||
+          "";
+
+        const city =
+          parcelPoint.address?.city ||
+          parcelPoint.city ||
+          parcelPoint.location?.city ||
+          "";
+
+        const street =
+          parcelPoint.address?.street ||
+          parcelPoint.street ||
+          parcelPoint.addressLine1 ||
+          parcelPoint.location?.street ||
+          "";
         
         setRelayPoint({
           // Identifiants
