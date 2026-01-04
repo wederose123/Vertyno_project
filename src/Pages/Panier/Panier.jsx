@@ -536,6 +536,8 @@ export default function Panier() {
               city: relayPoint.city || relayPoint.locality || "",
               country: relayPoint.country || "FR",
               provider: relayPoint.provider || "boxtal",
+              // Sauvegarde des données brutes pour l'email (si disponibles)
+              raw: relayPoint.raw || null,
             }
           : null;
 

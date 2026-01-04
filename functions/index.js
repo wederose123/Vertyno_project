@@ -113,6 +113,7 @@ function buildOrderConfirmationEmailHtml({
   const relayCity = hasRelayPoint
     ? (
         relayPoint.city ||
+        relayPoint.locality ||
         relayPoint.raw?.address?.city ||
         relayPoint.raw?.city ||
         ""
@@ -330,7 +331,36 @@ function buildOrderConfirmationEmailHtml({
          </td>
        </tr>
 
-       <!-- (le reste du template "Vous aimerez peut-être aussi…" reste inchangé) -->
+       <!-- Besoin d'aide -->
+       <tr>
+         <td style="padding:0 24px 24px 24px;">
+           <p style="font-size:15px;color:#6d5a52;margin:0 0 12px 0;font-weight:600;">
+             Besoin d'aide ? Notre service client est là pour vous accompagner.
+           </p>
+           <p style="font-size:14px;color:#6d5a52;margin:0 0 4px 0;font-weight:400;">
+             📩 <strong>Email du service client :</strong>
+             <a href="mailto:abesse.bel@vertyno.com" style="color:#4b3b36;text-decoration:none;">
+               abesse.bel@vertyno.com
+             </a>
+           </p>
+           <p style="font-size:14px;color:#6d5a52;margin:0;font-weight:400;">
+             📞 <strong>Téléphone :</strong>
+             <a href="tel:+33634141451" style="color:#4b3b36;text-decoration:none;">
+               +33 6 34 14 14 51
+             </a>
+           </p>
+         </td>
+       </tr>
+
+       <!-- Footer -->
+       <tr>
+         <td style="background:#f7eee9;padding:20px 24px;text-align:center;">
+           <p style="margin:0 0 8px 0;font-size:16px;color:#4b3b36;font-weight:700;">VERTYNO</p>
+           <p style="margin:0;font-size:13px;color:#8c6f63;line-height:1.6;font-weight:400;">
+             Un univers doux, rassurant et pensé pour accompagner les nuits des enfants 🤍
+           </p>
+         </td>
+       </tr>
      </table>
    </div>
   `;
@@ -420,6 +450,222 @@ function buildThankYouEmailHtml({ client, baseUrl }) {
   `;
 }
 
+// Template HTML - Email administrateur (notification interne)
+function buildAdminOrderEmailHtml({
+  client,
+  items,
+  total,
+  orderId,
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
+  const safeBaseUrl = baseUrl || "https://vertyno.com";
+
+  const fullName =
+    `${client.prenom || ""} ${client.nom || ""}`.trim() || "Client Vertyno";
+  const clientEmail = client.email || "";
+  const clientPhone = client.telephone || client.phone || "";
+
+  const adresseRue = (client.adresse || "").trim();
+  const adresseCodePostal = (client.codePostal || "").trim();
+  const adresseVille = (client.ville || "").trim();
+  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille]
+    .filter(Boolean)
+    .join(", ") || "Non renseignée";
+
+  // Mode de livraison
+  const shippingModeFromMethod =
+    shippingMethod === "relay"
+      ? "Livraison en point relais"
+      : shippingMethod === "home"
+      ? "Livraison à domicile"
+      : "Livraison";
+
+  const shippingModeLabel = shippingLabel || shippingModeFromMethod;
+
+  const shippingPriceText =
+    typeof shippingPrice === "number"
+      ? `${shippingPrice.toFixed(2)}€`
+      : null;
+
+  // Point relais (on fait au mieux avec les données disponibles)
+  const hasRelayPoint = !!relayPoint;
+  const relayName = hasRelayPoint
+    ? (relayPoint.name || relayPoint.label || "Point relais")
+    : null;
+
+  const relayStreet = hasRelayPoint
+    ? (
+        relayPoint.street ||
+        relayPoint.address ||
+        relayPoint.address1 ||
+        relayPoint.addressLine1 ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayPostalCode = hasRelayPoint
+    ? (
+        relayPoint.postalCode ||
+        relayPoint.postal_code ||
+        relayPoint.zipCode ||
+        relayPoint.zipcode ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayCity = hasRelayPoint
+    ? (
+        relayPoint.city ||
+        relayPoint.locality ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayFullAddress =
+    hasRelayPoint
+      ? [relayStreet, relayPostalCode, relayCity].filter(Boolean).join(", ")
+      : "";
+
+  // Items détaillés
+  const itemsRows = (items || [])
+    .map((item) => {
+      const qty = item.quantity || 1;
+      const unitPrice = Number(item.price || 0);
+      const lineTotal = unitPrice * qty;
+
+      return `
+        <tr>
+          <td style="padding:8px;border:1px solid #e0e0e0;">${item.name || "Produit"}</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:center;">${qty}</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${unitPrice.toFixed(2)}€</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${lineTotal.toFixed(2)}€</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const totalNumber = Number(total || 0);
+  const formattedTotal = totalNumber.toFixed(2);
+
+  return `
+  <div style="background-color:#f5f5f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;">
+      <tr>
+        <td style="padding:20px 24px;border-bottom:1px solid #e0e0e0;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="vertical-align:middle;">
+                <h1 style="margin:0;font-size:18px;color:#333333;font-weight:600;">
+                  Nouvelle commande reçue
+                </h1>
+                <p style="margin:4px 0 0 0;font-size:13px;color:#666666;">
+                  Référence commande : <strong>#${orderId}</strong>
+                </p>
+              </td>
+              <td style="text-align:right;vertical-align:middle;">
+                <img src="${safeBaseUrl}/logo-entier.png" alt="Vertyno" style="height:40px;" />
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:20px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Informations client</h2>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Nom :</strong> ${fullName}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Email :</strong> ${clientEmail}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Téléphone :</strong> ${clientPhone || "Non renseigné"}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Adresse :</strong> ${adresseComplete}
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 24px 16px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Livraison</h2>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Mode :</strong> ${shippingModeLabel}
+          </p>
+          ${
+            shippingPriceText
+              ? `<p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Frais de livraison :</strong> ${shippingPriceText}
+                </p>`
+              : ""
+          }
+          ${
+            hasRelayPoint
+              ? `
+                <p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Point relais :</strong> ${relayName}
+                </p>
+                <p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Adresse point relais :</strong> ${relayFullAddress || "Non renseignée"}
+                </p>
+              `
+              : ""
+          }
+          ${
+            shippingLabel
+              ? `<p style="margin:4px 0;font-size:13px;color:#777777;">
+                  <strong>Détails transporteur :</strong> ${shippingLabel}
+                </p>`
+              : ""
+          }
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 24px 20px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Détail des articles</h2>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:13px;color:#333333;">
+            <thead>
+              <tr>
+                <th align="left" style="padding:8px;border:1px solid #e0e0e0;">Article</th>
+                <th align="center" style="padding:8px;border:1px solid #e0e0e0;">Qté</th>
+                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Prix unitaire</th>
+                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Total ligne</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsRows}
+              <tr>
+                <td colspan="3" style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
+                  Total commande
+                </td>
+                <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
+                  ${formattedTotal}€
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:12px 24px 20px 24px;font-size:11px;color:#888888;border-top:1px solid #e0e0e0;">
+          <p style="margin:0 0 4px 0;">
+            Cet email est destiné à l'équipe Vertyno. Le client reçoit un email de confirmation séparé.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  `;
+}
+
 // Envoi de l'email de confirmation de commande
 async function sendOrderConfirmationEmail({ 
   client, 
@@ -481,6 +727,55 @@ async function sendThankYouEmail({ client, baseUrl }) {
       },
     ],
     subject: "Merci pour votre achat 🧡",
+    htmlContent,
+  });
+}
+
+// Envoi de l'email de notification admin
+async function sendAdminOrderEmail({
+  client,
+  items,
+  total,
+  orderId,
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
+  const transactionalApi = getBrevoTransactionalApi();
+
+  const htmlContent = buildAdminOrderEmailHtml({
+    client,
+    items,
+    total,
+    orderId,
+    baseUrl,
+    shippingMethod,
+    shippingLabel,
+    shippingPrice,
+    relayPoint,
+  });
+
+  const totalNumber = Number(total || 0);
+  const formattedTotal = totalNumber.toFixed(2);
+
+  await transactionalApi.sendTransacEmail({
+    sender: {
+      name: "Vertyno - Commandes",
+      email: "no-reply@vertyno.com",
+    },
+    to: [
+      {
+        email: "abesse.bel@vertyno.com",
+        name: "Vertyno - Administration",
+      },
+      {
+        email: "mickaelouis03@gmail.com",
+        name: "Mickael - Copie commande",
+      },
+    ],
+    subject: `Vous avez reçu une nouvelle commande Vertyno (#${orderId}) - ${formattedTotal}€`,
     htmlContent,
   });
 }
@@ -1248,7 +1543,7 @@ exports.stripeWebhook = onRequest(
               clientEmail: clientInfo.email,
             });
           } else {
-            // Email 1 : Confirmation de commande
+            // Email 1 : Confirmation de commande (client)
             await sendOrderConfirmationEmail({
               client: clientInfo,
               items,
@@ -1261,10 +1556,23 @@ exports.stripeWebhook = onRequest(
               relayPoint,
             });
 
-            // Email 2 : Remerciement / fidélisation
+            // Email 2 : Remerciement / fidélisation (client)
             await sendThankYouEmail({
               client: clientInfo,
               baseUrl,
+            });
+
+            // Email 3 : Notification interne (admin + Mickael)
+            await sendAdminOrderEmail({
+              client: clientInfo,
+              items,
+              total,
+              orderId: commandeRef.id,
+              baseUrl,
+              shippingMethod,
+              shippingLabel,
+              shippingPrice,
+              relayPoint,
             });
 
             // Mise à jour de la commande pour tracer les emails envoyés
@@ -1273,7 +1581,7 @@ exports.stripeWebhook = onRequest(
               emailThankYouSent: true,
             });
 
-            logger.info("Emails post-achat envoyés avec succès via Brevo", {
+            logger.info("Emails post-achat envoyés avec succès via Brevo (client + admin)", {
               commandeId: commandeRef.id,
               clientEmail: clientInfo.email,
             });
