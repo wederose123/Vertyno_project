@@ -41,6 +41,7 @@ const BOXTAL_ACCESS_KEY   = defineSecret("BOXTAL_ACCESS_KEY");
 const BOXTAL_SECRET_KEY   = defineSecret("BOXTAL_SECRET_KEY");
 const BOXTAL_MAP_ACCESS_KEY = defineSecret("BOXTAL_MAP_ACCESS_KEY");
 const BOXTAL_MAP_SECRET_KEY = defineSecret("BOXTAL_MAP_SECRET_KEY");
+const BOXTAL_WEBHOOK_SECRET = defineSecret("BOXTAL_WEBHOOK_SECRET");
 
 // ===== Helpers Brevo (Sendinblue) pour les emails transactionnels =====
 
@@ -427,6 +428,227 @@ function buildThankYouEmailHtml({ client, baseUrl }) {
   `;
 }
 
+// Template HTML - Email administrateur (notification interne)
+function buildAdminOrderEmailHtml({
+  client,
+  items,
+  total,
+  orderId,
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
+  const safeBaseUrl = baseUrl || "https://vertyno.com";
+
+  const fullName =
+    `${client.prenom || ""} ${client.nom || ""}`.trim() || "Client Vertyno";
+  const clientEmail = client.email || "";
+  const clientPhone = client.telephone || client.phone || "";
+
+  const adresseRue = (client.adresse || "").trim();
+  const adresseCodePostal = (client.codePostal || "").trim();
+  const adresseVille = (client.ville || "").trim();
+  const adresseComplete = [adresseRue, adresseCodePostal, adresseVille]
+    .filter(Boolean)
+    .join(", ") || "Non renseignée";
+
+  // --- Livraison ---
+  const shippingModeFromMethod =
+    shippingMethod === "relay"
+      ? "Livraison en point relais"
+      : shippingMethod === "home"
+      ? "Livraison à domicile"
+      : "Livraison";
+
+  const shippingModeLabel = shippingLabel || shippingModeFromMethod;
+
+  const shippingPriceText =
+    typeof shippingPrice === "number"
+      ? `${shippingPrice.toFixed(2)}€`
+      : null;
+
+  // --- Point relais (on récupère au mieux les infos) ---
+  const hasRelayPoint = !!relayPoint;
+
+  const relayName = hasRelayPoint
+    ? (relayPoint.name || relayPoint.raw?.name || "Point relais")
+    : null;
+
+  const relayStreet = hasRelayPoint
+    ? (
+        relayPoint.street ||
+        relayPoint.address ||
+        relayPoint.raw?.address?.street ||
+        relayPoint.raw?.addressLine1 ||
+        relayPoint.raw?.location?.street ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayPostalCode = hasRelayPoint
+    ? (
+        relayPoint.postalCode ||
+        relayPoint.postal_code ||
+        relayPoint.raw?.address?.zipCode ||
+        relayPoint.raw?.zipCode ||
+        relayPoint.raw?.location?.zipCode ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayCity = hasRelayPoint
+    ? (
+        relayPoint.city ||
+        relayPoint.locality ||
+        relayPoint.raw?.address?.city ||
+        relayPoint.raw?.city ||
+        relayPoint.raw?.location?.city ||
+        ""
+      ).toString().trim()
+    : "";
+
+  const relayFullAddress = hasRelayPoint
+    ? [relayStreet, relayPostalCode, relayCity].filter(Boolean).join(", ")
+    : "";
+
+  // --- Articles ---
+  const itemsRows = (items || [])
+    .map((item) => {
+      const qty = item.quantity || 1;
+      const unitPrice = Number(item.price || 0);
+      const lineTotal = unitPrice * qty;
+
+      return `
+        <tr>
+          <td style="padding:8px;border:1px solid #e0e0e0;">${item.name || "Produit"}</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:center;">${qty}</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${unitPrice.toFixed(2)}€</td>
+          <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;">${lineTotal.toFixed(2)}€</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const totalNumber = Number(total || 0);
+  const formattedTotal = totalNumber.toFixed(2);
+
+  return `
+  <div style="background-color:#f5f5f5;padding:20px 0;font-family:Arial,Helvetica,sans-serif;">
+    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e0e0e0;">
+      <tr>
+        <td style="padding:20px 24px;border-bottom:1px solid #e0e0e0;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
+              <td style="vertical-align:middle;">
+                <h1 style="margin:0;font-size:18px;color:#333333;font-weight:600;">
+                  Nouvelle commande reçue
+                </h1>
+                <p style="margin:4px 0 0 0;font-size:13px;color:#666666;">
+                  Référence commande : <strong>#${orderId}</strong>
+                </p>
+              </td>
+              <td style="text-align:right;vertical-align:middle;">
+                <img src="${safeBaseUrl}/logo-entier.png" alt="Vertyno" style="height:40px;" />
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:20px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Informations client</h2>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Nom :</strong> ${fullName}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Email :</strong> ${clientEmail}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Téléphone :</strong> ${clientPhone || "Non renseigné"}
+          </p>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Adresse :</strong> ${adresseComplete}
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 24px 16px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Livraison</h2>
+          <p style="margin:4px 0;font-size:13px;color:#444444;">
+            <strong>Mode :</strong> ${shippingModeLabel}
+          </p>
+          ${
+            shippingPriceText
+              ? `<p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Frais de livraison :</strong> ${shippingPriceText}
+                </p>`
+              : ""
+          }
+          ${
+            hasRelayPoint
+              ? `
+                <p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Point relais :</strong> ${relayName}
+                </p>
+                <p style="margin:4px 0;font-size:13px;color:#444444;">
+                  <strong>Adresse point relais :</strong> ${relayFullAddress || "Non renseignée"}
+                </p>
+              `
+              : ""
+          }
+          ${
+            shippingLabel
+              ? `<p style="margin:4px 0;font-size:13px;color:#777777;">
+                  <strong>Détails transporteur :</strong> ${shippingLabel}
+                </p>`
+              : ""
+          }
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 24px 20px 24px;">
+          <h2 style="margin:0 0 8px 0;font-size:15px;color:#333333;">Détail des articles</h2>
+          <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:13px;color:#333333;">
+            <thead>
+              <tr>
+                <th align="left" style="padding:8px;border:1px solid #e0e0e0;">Article</th>
+                <th align="center" style="padding:8px;border:1px solid #e0e0e0;">Qté</th>
+                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Prix unitaire</th>
+                <th align="right" style="padding:8px;border:1px solid #e0e0e0;">Total ligne</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsRows}
+              <tr>
+                <td colspan="3" style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
+                  Total commande
+                </td>
+                <td style="padding:8px;border:1px solid #e0e0e0;text-align:right;font-weight:600;">
+                  ${formattedTotal}€
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:12px 24px 20px 24px;font-size:11px;color:#888888;border-top:1px solid #e0e0e0;">
+          <p style="margin:0 0 4px 0;">
+            Cet email est destiné à l'équipe Vertyno. Le client reçoit une confirmation séparée.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  `;
+}
+
 // Envoi de l'email de confirmation de commande
 async function sendOrderConfirmationEmail({ 
   client, 
@@ -488,6 +710,54 @@ async function sendThankYouEmail({ client, baseUrl }) {
       },
     ],
     subject: "Merci pour votre achat 🧡",
+    htmlContent,
+  });
+}
+
+// Envoi de l'email de notification administrateur
+async function sendAdminOrderEmail({
+  client,
+  items,
+  total,
+  orderId,
+  baseUrl,
+  shippingMethod,
+  shippingLabel,
+  shippingPrice,
+  relayPoint,
+}) {
+  const transactionalApi = getBrevoTransactionalApi();
+  const htmlContent = buildAdminOrderEmailHtml({
+    client,
+    items,
+    total,
+    orderId,
+    baseUrl,
+    shippingMethod,
+    shippingLabel,
+    shippingPrice,
+    relayPoint,
+  });
+
+  const totalNumber = Number(total || 0);
+  const formattedTotal = totalNumber.toFixed(2);
+
+  await transactionalApi.sendTransacEmail({
+    sender: {
+      name: "Vertyno - Commandes",
+      email: "no-reply@vertyno.com",
+    },
+    to: [
+      {
+        email: "abesse.bel@vertyno.com",
+        name: "Vertyno - Administration",
+      },
+      {
+        email: "mickaelouis03@gmail.com",
+        name: "Mickael - Copie commande",
+      },
+    ],
+    subject: `Nouvelle commande Vertyno reçue (#${orderId}) - ${formattedTotal}€`,
     htmlContent,
   });
 }
@@ -1295,7 +1565,7 @@ exports.stripeWebhook = onRequest(
               clientEmail: clientInfo.email,
             });
           } else {
-            // Email 1 : Confirmation de commande
+            // Email 1 : Confirmation de commande (client)
             await sendOrderConfirmationEmail({
               client: clientInfo,
               items,
@@ -1308,10 +1578,23 @@ exports.stripeWebhook = onRequest(
               relayPoint,
             });
 
-            // Email 2 : Remerciement / fidélisation
+            // Email 2 : Remerciement / fidélisation (client)
             await sendThankYouEmail({
               client: clientInfo,
               baseUrl,
+            });
+
+            // Email 3 : Notification interne (admins)
+            await sendAdminOrderEmail({
+              client: clientInfo,
+              items,
+              total,
+              orderId: commandeRef.id,
+              baseUrl,
+              shippingMethod,
+              shippingLabel,
+              shippingPrice,
+              relayPoint,
             });
 
             // Mise à jour de la commande pour tracer les emails envoyés
@@ -1320,7 +1603,7 @@ exports.stripeWebhook = onRequest(
               emailThankYouSent: true,
             });
 
-            logger.info("Emails post-achat envoyés avec succès via Brevo", {
+            logger.info("Emails post-achat envoyés avec succès via Brevo (client + admin)", {
               commandeId: commandeRef.id,
               clientEmail: clientInfo.email,
             });
@@ -1480,6 +1763,172 @@ exports.cleanupCheckoutSessions = onSchedule(
         stack: error.stack,
       });
       throw error;
+    }
+  }
+);
+
+/**
+ * Webhook Boxtal v3 pour recevoir les événements de suivi et documents
+ * Reçoit les événements DOCUMENT_CREATED et TRACKING_CHANGED de Boxtal
+ * et met à jour les commandes Firestore avec les informations de tracking et documents
+ * 
+ * IMPORTANT : Pour configurer le webhook dans Boxtal Dashboard :
+ * 1. Allez dans votre compte Boxtal > Webhooks
+ * 2. Ajoutez l'URL de votre fonction : https://[region]-[project-id].cloudfunctions.net/boxtalWebhookV3
+ * 3. Sélectionnez les événements : DOCUMENT_CREATED, TRACKING_CHANGED
+ * 4. Copiez le "Webhook Secret" et configurez-le avec : firebase functions:secrets:set BOXTAL_WEBHOOK_SECRET
+ * 
+ * NOTE : La signature est vérifiée via HMAC SHA256 avec le header x-bxt-signature
+ */
+exports.boxtalWebhookV3 = onRequest(
+  {
+    secrets: [BOXTAL_WEBHOOK_SECRET],
+    cors: true,
+  },
+  async (req, res) => {
+    try {
+      const secret = BOXTAL_WEBHOOK_SECRET.value();
+
+      if (!secret) {
+        logger.error("BOXTAL_WEBHOOK_SECRET non configuré");
+        return res.status(500).send("Boxtal webhook secret non configuré");
+      }
+
+      const signature = req.headers["x-bxt-signature"];
+      if (!signature) {
+        logger.error("Signature Boxtal manquante (x-bxt-signature)");
+        return res.status(401).send("Missing x-bxt-signature");
+      }
+
+      const rawBody = req.rawBody;
+      if (!rawBody) {
+        logger.error("rawBody manquant pour le webhook Boxtal");
+        return res.status(400).send("Missing raw body");
+      }
+
+      const crypto = require("crypto");
+      const computed = crypto
+        .createHmac("sha256", secret)
+        .update(rawBody)
+        .digest("hex");
+
+      if (computed !== signature) {
+        logger.error("Signature Boxtal invalide", {
+          signature,
+          computed,
+        });
+        return res.status(401).send("Invalid signature");
+      }
+
+      // À ce stade la signature est valide : on peut parser le JSON
+      let payload;
+      try {
+        payload = JSON.parse(rawBody.toString("utf8"));
+      } catch (parseError) {
+        logger.error("Impossible de parser le JSON du webhook Boxtal", {
+          error: parseError.message,
+        });
+        return res.status(400).send("Invalid JSON payload");
+      }
+
+      // Extraction du type d'événement (le nom exact dépend de la doc Boxtal)
+      // ⚠️ TODO : adapter selon le schéma exact (eventType, type, event, etc.)
+      const eventType =
+        payload.eventType ||
+        payload.type ||
+        payload.event ||
+        null;
+
+      // Extraction de l'id de shipping order Boxtal
+      // ⚠️ TODO : adapter selon le schéma exact (shippingOrder.id, data.shippingOrder.id, etc.)
+      const shippingOrderId =
+        payload?.shippingOrder?.id ||
+        payload?.shippingOrderId ||
+        payload?.data?.shippingOrder?.id ||
+        null;
+
+      if (!shippingOrderId) {
+        logger.warn("shippingOrderId introuvable dans le webhook Boxtal", {
+          payload,
+        });
+        return res.status(200).send("OK");
+      }
+
+      logger.info("Webhook Boxtal v3 reçu", {
+        eventType,
+        shippingOrderId,
+      });
+
+      // On recherche la commande qui contient ce shippingOrderId dans boxtal_v3.shippingOrderId
+      const commandesSnap = await db
+        .collection("commandes")
+        .where("boxtal_v3.shippingOrderId", "==", shippingOrderId)
+        .limit(1)
+        .get();
+
+      if (commandesSnap.empty) {
+        logger.warn("Aucune commande trouvée pour ce shippingOrderId", {
+          shippingOrderId,
+        });
+        return res.status(200).send("OK");
+      }
+
+      const commandeDoc = commandesSnap.docs[0];
+      const commandeRef = commandeDoc.ref;
+
+      // Préparation des mises à jour
+      const updates = {
+        "boxtal_v3.lastWebhookAt": admin.firestore.FieldValue.serverTimestamp(),
+        "boxtal_v3.lastWebhookPayload": payload,
+      };
+
+      // Détection des types d'événements Boxtal
+      const upperType = (eventType || "").toString().toUpperCase();
+      const isDocumentEvent = upperType.includes("DOCUMENT");
+      const isTrackingEvent = upperType.includes("TRACK");
+
+      // Mise à jour des documents d'expédition si présents
+      if (isDocumentEvent) {
+        // ⚠️ TODO : adapter les noms en fonction de la vraie structure envoyée par Boxtal
+        updates["boxtal_v3.documents"] =
+          payload.documents ||
+          payload.data?.documents ||
+          null;
+      }
+
+      // Mise à jour du tracking si présent
+      if (isTrackingEvent) {
+        // ⚠️ TODO : adapter les noms (trackingNumber, trackingUrl, status, etc.)
+        if (payload.trackingNumber || payload.data?.trackingNumber) {
+          updates["boxtal_v3.trackingNumber"] =
+            payload.trackingNumber || payload.data?.trackingNumber;
+        }
+        if (payload.trackingUrl || payload.data?.trackingUrl) {
+          updates["boxtal_v3.trackingUrl"] =
+            payload.trackingUrl || payload.data?.trackingUrl;
+        }
+        if (payload.status || payload.data?.status) {
+          updates["boxtal_v3.trackingStatus"] =
+            payload.status || payload.data?.status;
+        }
+      }
+
+      await commandeRef.update(updates);
+
+      logger.info("Commande mise à jour depuis webhook Boxtal v3", {
+        commandeId: commandeRef.id,
+        shippingOrderId,
+        eventType,
+      });
+
+      return res.status(200).send("OK");
+    } catch (error) {
+      logger.error("Erreur lors du traitement du webhook Boxtal v3", {
+        error: error.message,
+        stack: error.stack,
+      });
+      // On retourne quand même 200 pour éviter les retries infinis si l'erreur est côté notre code
+      return res.status(200).send("OK");
     }
   }
 );
