@@ -5,6 +5,7 @@ import { db } from "../../../Firebase/firebase-config";
 import axios from "axios";
 import ProductComponent from "../../../Composants/Product/ProductComponent";
 import { useFlyToCart } from "../../../hooks/useFlyToCart";
+import { useToast } from "../../../context/ToastContext";
 import liliProduit from "../../../assets/Produits/lili-produits.jpg";
 
 // 🔹 Fonction pour ajouter l'email à Brevo
@@ -40,6 +41,7 @@ export default function LiliLlaLicorneExemple() {
   const ctaButtonRef = useRef(null);
   
   const flyToCart = useFlyToCart();
+  const { showToast } = useToast();
 
   const productImages = [
     liliProduit,
@@ -71,6 +73,7 @@ export default function LiliLlaLicorneExemple() {
         createdAt: serverTimestamp()
       });
       console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+      showToast("Produit ajouté au panier");
     } catch (error) {
       console.error("Erreur lors de l'ajout dans Firestore :", error);
     }
@@ -120,6 +123,7 @@ export default function LiliLlaLicorneExemple() {
         console.warn("Erreur Brevo (non bloquant) :", brevoError);
       }
 
+      showToast("Produit ajouté au panier");
       window.location.href = "/Panier";
     } catch (error) {
       console.error("Erreur lors de la commande :", error);

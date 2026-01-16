@@ -16,6 +16,7 @@ import lilifiveimg from "../../../assets/Pages/Produits/Veilleuses/Lili/lilifive
 import lilisiximg from "../../../assets/Pages/Produits/Veilleuses/Lili/lilisiximg.png";
 import ProductComponent from "../../../Composants/Product/ProductComponent";
 import { useFlyToCart } from "../../../hooks/useFlyToCart";
+import { useToast } from "../../../context/ToastContext";
 
 // 🔹 Fonction pour ajouter l'email à Brevo
 async function addEmailToBrevo(email) {
@@ -56,6 +57,7 @@ export default function LiliLlaLicorne () {
   
   // Hook pour l'animation de vol vers le panier
   const flyToCart = useFlyToCart();
+  const { showToast } = useToast();
 
   const handleAddToCart = async (buttonRef) => {
     if (!selectedProduct) {
@@ -84,6 +86,7 @@ export default function LiliLlaLicorne () {
         createdAt: serverTimestamp()
       });
       console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+      showToast("Produit ajouté au panier");
     } catch (error) {
       console.error("Erreur lors de l'ajout dans Firestore :", error);
     }
@@ -145,6 +148,7 @@ export default function LiliLlaLicorne () {
       }
 
       // 4. Redirection vers la page panier
+      showToast("Produit ajouté au panier");
       window.location.href = "/Panier";
     } catch (error) {
       console.error("Erreur lors de la commande :", error);

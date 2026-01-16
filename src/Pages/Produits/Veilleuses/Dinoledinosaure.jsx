@@ -5,6 +5,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import axios from "axios";
 import ProductComponent from "../../../Composants/Product/ProductComponent";
 import { useFlyToCart } from "../../../hooks/useFlyToCart";
+import { useToast } from "../../../context/ToastContext";
 import FirstDino from "../../../assets/Pages/Produits/Veilleuses/Dino/FirstDino.png";
 import DinoGirl from "../../../assets/Pages/Produits/Veilleuses/Dino/DinoGirl.png";
 import vertynoLogo from "../../../assets/Pages/Produits/Veilleuses/Dino/vertynoLogo.png";
@@ -54,6 +55,7 @@ export default function DinoLedinosaure() {
   
   // Hook pour l'animation de vol vers le panier
   const flyToCart = useFlyToCart();
+  const { showToast } = useToast();
 
   const handleAddToCart = async (buttonRef) => {
     if (!selectedProduct) {
@@ -82,6 +84,7 @@ export default function DinoLedinosaure() {
         createdAt: serverTimestamp()
       });
       console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+      showToast("Produit ajouté au panier");
     } catch (error) {
       console.error("Erreur lors de l'ajout dans Firestore :", error);
     }
@@ -156,6 +159,7 @@ export default function DinoLedinosaure() {
       }
 
       // 4. Redirection vers la page panier
+      showToast("Produit ajouté au panier");
       window.location.href = "/Panier";
     } catch (err) {
       console.error("Erreur lors de la commande :", err);

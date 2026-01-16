@@ -6,6 +6,7 @@ import axios from "axios";
 import FirstLoulou from "../../../assets/Pages/Produits/Veilleuses/Loulou/Louloufirst.png"; 
 import ProductComponent from "../../../Composants/Product/ProductComponent";
 import { useFlyToCart } from "../../../hooks/useFlyToCart";
+import { useToast } from "../../../context/ToastContext";
 import LoulouTable from "../../../assets/Pages/Produits/Veilleuses/Loulou/Loulou-table.png";
 import vertynoLogo from "../../../assets/Pages/Produits/Veilleuses/Loulou/vertynoLogo.png";
 import loulouback from "../../../assets/Pages/Produits/Veilleuses/Loulou/loulouback.png";
@@ -57,6 +58,7 @@ const [orderEmail, setOrderEmail] = useState("");
   
   // Hook pour l'animation de vol vers le panier
   const flyToCart = useFlyToCart();
+  const { showToast } = useToast();
 
   const handleAddToCart = async (buttonRef) => {
     if (!selectedProduct) {
@@ -85,6 +87,7 @@ const [orderEmail, setOrderEmail] = useState("");
         createdAt: serverTimestamp()
       });
       console.log("Produit ajouté dans Firestore :", selectedProduct.name);
+      showToast("Produit ajouté au panier");
     } catch (error) {
       console.error("Erreur lors de l'ajout dans Firestore :", error);
     }
@@ -153,6 +156,7 @@ const [orderEmail, setOrderEmail] = useState("");
       }
 
       // 4. Redirection vers la page panier
+      showToast("Produit ajouté au panier");
       window.location.href = "/Panier";
     } catch (error) {
       console.error("Erreur lors de la commande :", error);

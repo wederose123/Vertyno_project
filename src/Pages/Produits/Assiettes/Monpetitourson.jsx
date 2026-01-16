@@ -1,4 +1,5 @@
 import "../../../styles/Pages/Produits/Assiettes/Monpetitourson.css";
+import { useToast } from "../../../context/ToastContext";
 import FirstOurson from "../../../assets/Pages/Produits/Assiettes/Monpetitourson/FirstOurson.png";
 import OursonTable from "../../../assets/Pages/Produits/Assiettes/Monpetitourson/OursonTable.png";
 import vertynoLogo from "../../../assets/Pages/Produits/Assiettes/Monpetitourson/vertynoLogo.png";
@@ -16,6 +17,12 @@ import iconSponge from "../../../assets/Pages/Produits/Assiettes/Monpetitourson/
 import iconSuction from "../../../assets/Pages/Produits/Assiettes/Monpetitourson/iconSuction.png";
 
 export default function Monpetitourson() {
+  const { showToast } = useToast();
+
+  const handleCommander = () => {
+    showToast("Produit ajouté au panier");
+  };
+
   return (
     <>
       <div className="ourson-page">
@@ -23,7 +30,7 @@ export default function Monpetitourson() {
           <img src={FirstOurson} alt="Assiette Mon petit ourson" className="hero-img" />
           <div className="hero-content">
             <h1 className="hero-title-ourson">Mon petit ourson</h1>
-            <button className="hero-button-ourson">Commander</button>
+            <button className="hero-button-ourson" onClick={handleCommander}>Commander</button>
           </div>
         </div>
 
@@ -80,7 +87,7 @@ export default function Monpetitourson() {
               </p>
               <label htmlFor="email">adresse email :</label>
               <input type="email" id="email" placeholder="saisir" />
-              <button>Commander</button>
+              <button onClick={handleCommander}>Commander</button>
             </div>
             <img src={oursonGround} alt="Assiette Mon petit ourson" className="order-image" />
           </div>
@@ -154,7 +161,7 @@ export default function Monpetitourson() {
             className="packaging-box-img widthimage"
           />
           <div className="packaging-btns">
-            <button className="white-outline-btn">Commander</button>
+            <button className="white-outline-btn" onClick={handleCommander}>Commander</button>
             <button className="white-outline-btn">Contact</button>
           </div>
         </section>

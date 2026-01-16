@@ -1,4 +1,5 @@
 import "../../../styles/Pages/Produits/Assiettes/Mondouxnuage.css";
+import { useToast } from "../../../context/ToastContext";
 import FirstNuage from "../../../assets/Pages/Produits/Assiettes/Mondouxnuage/FirstNuage.png";
 import NuageTable from "../../../assets/Pages/Produits/Assiettes/Mondouxnuage/NuageTable.png";
 import vertynoLogo from "../../../assets/Pages/Produits/Assiettes/Mondouxnuage/vertynoLogo.png";
@@ -16,7 +17,11 @@ import iconSponge from "../../../assets/Pages/Produits/Assiettes/Mondouxnuage/ic
 import iconSuction from "../../../assets/Pages/Produits/Assiettes/Mondouxnuage/iconSuction.png";
 
 export default function Mondouxnuage() {
- 
+  const { showToast } = useToast();
+
+  const handleCommander = () => {
+    showToast("Produit ajouté au panier");
+  };
 
   return (
     <>
@@ -25,7 +30,7 @@ export default function Mondouxnuage() {
           <img src={FirstNuage} alt="Veilleuse Mon doux nuage" className="hero-img" />
           <div className="hero-content">
             <h1 className="hero-title-nuage">Mon doux nuage</h1>
-            <button className="hero-button-nuage">Commander</button>
+            <button className="hero-button-nuage" onClick={handleCommander}>Commander</button>
           </div>
         </div>
 
@@ -87,7 +92,7 @@ export default function Mondouxnuage() {
               </p>
               <label htmlFor="email">adresse email :</label>
               <input type="email" id="email" placeholder="saisir" />
-              <button>Commander</button>
+              <button onClick={handleCommander}>Commander</button>
             </div>
             <img src={nuageGround} alt="Veilleuse Mon doux nuage" className="order-image" />
           </div>
@@ -159,7 +164,7 @@ export default function Mondouxnuage() {
             className="packaging-box-img widthimage"
           />
           <div className="packaging-btns">
-            <button className="white-outline-btn">Commander</button>
+            <button className="white-outline-btn" onClick={handleCommander}>Commander</button>
             <button className="white-outline-btn">Contact</button>
           </div>
         </section>
