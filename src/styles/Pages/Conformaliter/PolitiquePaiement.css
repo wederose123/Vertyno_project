@@ -1,32 +1,31 @@
-.mentions-page {
+.payment-policy-page {
   --text: #333;
   --muted: #666;
-  --accent: #92C2E6;   /* adapte à ta charte si besoin */
+  --accent: #92C2E6;
   --bg-soft: #f7f9fb;
   color: var(--text);
   font-family: 'Lexend Giga', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
-/* Hero */
-.mentions-hero {
+.payment-policy-hero {
   padding: 48px 20px 24px;
   text-align: center;
   background: var(--bg-soft);
 }
-.mentions-hero h1 {
+
+.payment-policy-hero h1 {
   margin: 30px 0 8px;
   font-size: 36px;
-  letter-spacing: .3px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
-.mentions-update {
+
+.payment-policy-update {
   margin: 0;
   color: var(--muted);
   font-size: 14px;
 }
 
-/* Sommaire */
-.mentions-toc {
+.payment-policy-toc {
   max-width: 960px;
   margin: 24px auto 12px;
   padding: 12px 16px;
@@ -34,7 +33,8 @@
   border: 1px solid #e9eef3;
   border-radius: 10px;
 }
-.mentions-toc ul {
+
+.payment-policy-toc ul {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 18px;
@@ -42,78 +42,93 @@
   padding: 0;
   list-style: none;
 }
-.mentions-toc a {
+
+.payment-policy-toc a {
   text-decoration: none;
   color: var(--accent);
   font-weight: 600;
 }
-.mentions-toc a:hover { text-decoration: underline; }
 
-/* Contenu */
-.mentions-content {
+.payment-policy-toc a:hover {
+  text-decoration: underline;
+}
+
+.payment-policy-content {
   max-width: 960px;
   margin: 16px auto 60px;
   padding: 0 20px;
 }
-.mentions-block {
+
+.payment-policy-block {
   background: #fff;
   border: 1px solid #e9eef3;
   border-radius: 12px;
-  padding: 22px;
+  padding: 22px 22px;
   margin: 16px 0;
 }
-.mentions-block h2 {
+
+.payment-policy-intro {
+  background: linear-gradient(135deg, #f7f9fb, #e9eef3);
+  border: 2px solid var(--accent);
+}
+
+.payment-policy-block h2 {
   margin: 0 0 10px;
   font-size: 22px;
 }
-.mentions-block p {
+
+.payment-policy-block p {
   margin: 0 0 12px;
   line-height: 1.65;
   font-size: 16px;
 }
 
-.mentions-block p:last-child {
+.payment-policy-block p:last-child {
   margin-bottom: 0;
 }
 
-.mentions-block ul {
+.payment-policy-block ul {
   margin: 8px 0 12px 20px;
   padding: 0;
   line-height: 1.65;
   font-size: 16px;
 }
 
-.mentions-block li {
+.payment-policy-block li {
   margin: 4px 0;
 }
 
-.mentions-link {
+.payment-policy-link {
   color: var(--accent);
   font-weight: 600;
   text-decoration: none;
 }
-.mentions-link:hover { text-decoration: underline; }
 
-.mentions-contact-inline { margin-top: 8px; }
+.payment-policy-link:hover {
+  text-decoration: underline;
+}
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .mentions-hero h1 { font-size: 32px; }
+  .payment-policy-hero h1 { font-size: 32px; }
 }
+
 @media (max-width: 768px) {
-  .mentions-hero { padding: 40px 16px 20px; }
-  .mentions-toc { padding: 10px 14px; }
-  .mentions-block { padding: 18px; }
+  .payment-policy-hero { padding: 40px 16px 20px; }
+  .payment-policy-toc { padding: 10px 14px; }
+  .payment-policy-block { padding: 18px; }
 }
+
 @media (max-width: 600px) {
-  .mentions-hero h1 { font-size: 28px; }
-  .mentions-toc ul { gap: 8px 14px; }
-  .mentions-block h2 { font-size: 20px; }
-  .mentions-block p { font-size: 15px; }
-  .mentions-block ul { font-size: 15px; }
+  .payment-policy-hero h1 { font-size: 28px; }
+  .payment-policy-toc ul { gap: 8px 14px; }
+  .payment-policy-block h2 { font-size: 20px; }
+  .payment-policy-block p { font-size: 15px; }
+  .payment-policy-block ul { font-size: 15px; }
 }
+
 @media (max-width: 400px) {
-  .mentions-hero h1 { font-size: 24px; }
-  .mentions-update { font-size: 13px; }
-  .mentions-block { padding: 16px; }
+  .payment-policy-hero h1 { font-size: 24px; }
+  .payment-policy-update { font-size: 13px; }
+  .payment-policy-block { padding: 16px; }
 }

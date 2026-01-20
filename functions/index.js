@@ -67,6 +67,7 @@ function buildOrderConfirmationEmailHtml({
   orderId,
   baseUrl,
   shippingMethod,
+  shippingCarrier,
   shippingLabel,
   shippingPrice,
   relayPoint,
@@ -144,10 +145,38 @@ function buildOrderConfirmationEmailHtml({
 
   const shippingModeLabel = shippingLabel || shippingModeFromMethod;
 
+  // Prix de livraison : on ne l'affiche que pour la livraison à domicile
   const shippingPriceText =
-    typeof shippingPrice === "number"
+    shippingMethod === "home" && typeof shippingPrice === "number"
       ? `${shippingPrice.toFixed(2)}€`
       : null;
+
+  // Délai estimé en fonction du mode
+  const deliveryDelayText =
+    shippingMethod === "relay"
+      ? "1 à 2 jours ouvrés en point relais."
+      : shippingMethod === "home"
+      ? "3 à 5 jours ouvrés à domicile."
+      : null;
+
+  // Transporteur + logo en fonction de shippingCarrier
+  let carrierLabel = null;
+  let carrierLogoUrl = null;
+
+  if (shippingMethod === "relay") {
+    if (shippingCarrier === "chronopost_2shop") {
+      carrierLabel = "Chronopost – Shop2Shop (relais)";
+      carrierLogoUrl = `${safeBaseUrl}/email-assets/logo-chronopost.png`;
+    } else {
+      // défaut : Mondial Relay
+      carrierLabel = "Mondial Relay – Point Relais";
+      carrierLogoUrl = `${safeBaseUrl}/email-assets/logo-mondial-relay.png`;
+    }
+  } else if (shippingMethod === "home") {
+    // Pour l'instant on considère la livraison à domicile via Chronopost
+    carrierLabel = "Chronopost – Livraison à domicile";
+    carrierLogoUrl = `${safeBaseUrl}/email-assets/logo-chronopost.png`;
+  }
 
   // --- Items ---
   const itemsHtml = (items || [])
@@ -301,26 +330,48 @@ function buildOrderConfirmationEmailHtml({
          <td style="padding:0 24px 24px 24px;">
            <h2 style="font-size:18px;color:#4b3b36;margin:0 0 12px 0;font-weight:600;">🚚 Livraison & suivi</h2>
            <div style="background:#fdf7f3;border-radius:12px;padding:16px;border:1px solid #f0e0d8;margin-bottom:16px;">
-             <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
+             <p style="margin:0 0 6px 0;font-size:14px;color:#6d5a52;line-height:1.6;">
                <strong style="color:#4b3b36;">Mode de livraison :</strong> ${shippingModeLabel}
              </p>
              ${
-               shippingLabel
-                 ? `
-                   <p style="margin:0 0 8px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-                     <strong style="color:#4b3b36;">Détails :</strong> ${shippingLabel}
-                   </p>
-                 `
+               deliveryDelayText
+                 ? `<p style="margin:0 0 6px 0;font-size:14px;color:#6d5a52;line-height:1.6;">
+                      <strong style="color:#4b3b36;">Délai estimé :</strong> ${deliveryDelayText}
+                    </p>`
+                 : ""
+             }
+             ${
+               shippingPriceText
+                 ? `<p style="margin:0 0 6px 0;font-size:14px;color:#6d5a52;line-height:1.6;">
+                      <strong style="color:#4b3b36;">Frais de transport :</strong> ${shippingPriceText}
+                    </p>`
+                 : ""
+             }
+             ${
+               carrierLabel
+                 ? `<p style="margin:0 0 6px 0;font-size:14px;color:#6d5a52;line-height:1.6;">
+                      <strong style="color:#4b3b36;">Transporteur :</strong> ${carrierLabel}
+                    </p>`
+                 : ""
+             }
+             ${
+               carrierLogoUrl
+                 ? `<p style="margin:4px 0 0 0;">
+                      <img src="${carrierLogoUrl}"
+                           alt="${carrierLabel || "Transporteur"}"
+                           style="height:32px;display:block;" />
+                    </p>`
                  : ""
              }
              ${
                hasRelayPoint && (relayName || relayFullAddress)
                  ? `
-                   <p style="margin:0 0 4px 0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-                     <strong style="color:#4b3b36;">Point relais :</strong> ${relayName || ""}
+                   <hr style="border:none;border-top:1px solid #f0e0d8;margin:12px 0;" />
+                   <p style="margin:0 0 4px 0;font-size:14px;color:#6d5a52;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Point relais :</strong> ${relayName || "Point relais sélectionné"}
                    </p>
-                   <p style="margin:0;font-size:14px;color:#7b5a4a;line-height:1.6;">
-                     <strong style="color:#4b3b36;">Adresse :</strong> ${relayFullAddress || ""}
+                   <p style="margin:0;font-size:14px;color:#6d5a52;line-height:1.6;">
+                     <strong style="color:#4b3b36;">Adresse du point relais :</strong> ${relayFullAddress || ""}
                    </p>
                  `
                  : ""
@@ -690,6 +741,7 @@ async function sendOrderConfirmationEmail({
   orderId, 
   baseUrl,
   shippingMethod,
+  shippingCarrier,
   shippingLabel,
   shippingPrice,
   relayPoint,
@@ -702,6 +754,7 @@ async function sendOrderConfirmationEmail({
     orderId,
     baseUrl,
     shippingMethod,
+    shippingCarrier,
     shippingLabel,
     shippingPrice,
     relayPoint,
@@ -1207,7 +1260,7 @@ exports.getBoxtalMapToken = onCall(
  * Appelé depuis stripeWebhook quand la commande est payée.
  * 
  * ⚠️ TODO FUTUR : Migrer vers l'API v3 Boxtal
- * - URL base test : https://api.boxtal.build/shipping
+ * - URL base production : https://api.boxtal.com/shipping
  * - Endpoint : POST /v3.1/shipping-order
  * - Auth : avec les clés v3 (c'est une autre appli côté Boxtal)
  * - Stocker dans Firestore :
@@ -1229,7 +1282,7 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
   const BOXTAL_ACCESS_KEY = process.env.BOXTAL_ACCESS_KEY;
   const BOXTAL_SECRET_KEY = process.env.BOXTAL_SECRET_KEY;
   const BOXTAL_API_BASE_URL =
-    process.env.BOXTAL_API_BASE_URL || "https://api.boxtal.build/shipping";
+    process.env.BOXTAL_API_BASE_URL || "https://api.boxtal.com/shipping";
   const SHIPPING_OFFER_CODE =
     process.env.BOXTAL_SHIPPING_OFFER_CODE || "MONR-CpourToi";
   const DROPOFF_POINT_CODE = process.env.BOXTAL_DROPOFF_POINT_CODE || null;
@@ -1306,6 +1359,30 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
       return;
     }
 
+    // Détermination du shippingOfferCode en fonction du réseau du point relais
+    const relayNetwork = relayPoint?.network || relayPoint?.raw?.network || null;
+    let shippingOfferCode = SHIPPING_OFFER_CODE; // Par défaut : MONR-CpourToi
+
+    if (relayNetwork === "CHRP_NETWORK" && shippingMethod === "relay") {
+      shippingOfferCode = "CHRP-Chrono2ShopDirect";
+      logger.info("Boxtal v3 – Utilisation de Chrono 2Shop Direct pour Chronopost", {
+        commandeId,
+        relayNetwork,
+      });
+    } else if (relayNetwork === "MONR_NETWORK" && shippingMethod === "relay") {
+      shippingOfferCode = "MONR-CpourToi";
+      logger.info("Boxtal v3 – Utilisation de Mondial Relay", {
+        commandeId,
+        relayNetwork,
+      });
+    } else if (relayNetwork && shippingMethod === "relay") {
+      logger.warn("Boxtal v3 – Réseau de point relais non reconnu, utilisation du code par défaut", {
+        commandeId,
+        relayNetwork,
+        shippingOfferCode,
+      });
+    }
+
     // Construction des adresses Boxtal
     const fromAddress = {
       type: "BUSINESS",
@@ -1373,7 +1450,7 @@ async function createBoxtalShipmentForOrder(commandeId, commandeData) {
     const payload = {
       insured: false,
       labelType: "PDF_A4",
-      shippingOfferCode: SHIPPING_OFFER_CODE,
+      shippingOfferCode: shippingOfferCode,
       shipment: {
         fromAddress,
         toAddress,
@@ -1619,6 +1696,7 @@ exports.stripeWebhook = onRequest(
           // Informations de livraison (récupérées depuis checkout_sessions)
           // Ces champs sont créés côté frontend dans Panier.jsx lors de handleCheckout
           shippingMethod: checkoutSessionData.shippingMethod || null, // "relay" ou "home"
+          shippingCarrier: checkoutSessionData.shippingCarrier || null, // "mondial_relay" | "chronopost_2shop" | null
           shippingPrice: checkoutSessionData.shippingPrice || 0, // Frais de livraison en euros
           shippingLabel: checkoutSessionData.shippingLabel || null, // Libellé de la livraison
           // Point relais sélectionné (si mode relay)
@@ -1797,6 +1875,7 @@ exports.stripeWebhook = onRequest(
           const total = checkoutSessionData.total || 0;
           const baseUrl = SITE_URL.value() || "https://vertyno.com";
           const shippingMethod = checkoutSessionData.shippingMethod || null;
+          const shippingCarrier = checkoutSessionData.shippingCarrier || null;
           const shippingLabel = checkoutSessionData.shippingLabel || null;
           const shippingPrice = checkoutSessionData.shippingPrice || 0;
           const relayPoint = checkoutSessionData.relayPoint || null;
@@ -1829,6 +1908,7 @@ exports.stripeWebhook = onRequest(
               orderId: commandeRef.id,
               baseUrl,
               shippingMethod,
+              shippingCarrier: shippingCarrier || null,
               shippingLabel,
               shippingPrice,
               relayPoint,

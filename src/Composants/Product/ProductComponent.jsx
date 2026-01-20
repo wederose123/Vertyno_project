@@ -12,7 +12,7 @@ export const productsData = [
     category: "Veilleuse",
     price: 24.9,
     image: LiliImage,
-    stripePriceId: "price_1SY3UzErrcOQOQOZtnsHYfMq" 
+    stripePriceId: "price_1SYCJMEaVgZDRC7yfIkjc6RY" 
   },
   {
     id: "louloulechien",
@@ -21,7 +21,7 @@ export const productsData = [
     category: "Veilleuse",
     price: 24.9,
     image: LoulouImage,
-    stripePriceId: "price_XXXXXXXXXXXXX" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
+    stripePriceId: "price_1SYCKxEaVgZDRC7yybp3gO7D" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
   },
   {
     id: "mochilepanda",
@@ -30,7 +30,7 @@ export const productsData = [
     category: "Veilleuse",
     price: 24.9,
     image: MochiImage,
-    stripePriceId: "price_XXXXXXXXXXXXX" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
+    stripePriceId: "price_1SYCeIEaVgZDRC7y7d1wreG6" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
   },
   {
     id: "dinoledinosaure",
@@ -39,7 +39,7 @@ export const productsData = [
     category: "Veilleuse",
     price: 24.9,
     image: DinoImage,
-    stripePriceId: "price_XXXXXXXXXXXXX" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
+    stripePriceId: "price_1SYChSEaVgZDRC7y4HcWO8nH" // ⚠️ À remplacer par le Price ID Stripe depuis votre Dashboard
   }
 ];
 

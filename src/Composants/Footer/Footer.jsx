@@ -127,12 +127,19 @@ export default function Footer() {
                 <li className="li-footer"> <a href={"/MentionLegal"}>Mention Légales</a></li>
                 <li className="li-footer"><a href={"/CGV"}>Condition Générales De Vente</a></li>
                 <li className="li-footer"><a href={"/PolitiqueConfidentialite"}>Politique De Confidentialité</a></li>
+                <li className="li-footer"><a href={"/PolitiqueRGPD"}>Politique RGPD</a></li>
+                <li className="li-footer"><a href={"/NePasVendreDonnees"}>NE PAS VENDRE OU PARTAGER MES DONNÉES</a></li>
+                <li className="li-footer"><a href={"/PolitiqueRetoursRemboursements"}>Politique de retours et de remboursements</a></li>
+                <li className="li-footer"><a href={"/PolitiqueLivraison"}>Politique de livraison</a></li>
+                <li className="li-footer"><a href={"/PolitiquePaiement"}>Politique de paiement</a></li>
+                <li className="li-footer"><a href={"/ConditionsUtilisation"}>Conditions d'utilisation</a></li>
+                <li className="li-footer"><a href={"/ConditionsVentes"}>Conditions de ventes</a></li>
               </ul>
             </div>
           </div>
 
           <div className="footer-newsletter">
-            <h4>Restez Informez</h4>
+            <h4>Restez Informé</h4>
             <p>Recevez nos nouveautés et offres exclusives !</p>
             <form onSubmit={handleNewsletterSubmit}>
               <div className="container-input">

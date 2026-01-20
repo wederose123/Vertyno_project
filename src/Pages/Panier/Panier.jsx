@@ -4,10 +4,15 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { useSearchParams } from "react-router-dom";
 import "../../styles/Pages/Panier/Panier.css";
 import { db, app } from "../../Firebase/firebase-config";
+import mondialRelayLogo from "../../assets/Panier/mondial-relay-logo.png";
+import chronopostLogo from "../../assets/Panier/chronopost-logo.png";
+import visaLogo from "../../assets/Panier/visa.png";
+import klarnaLogo from "../../assets/Panier/klarna.png";
+import mastercardLogo from "../../assets/Panier/mastercard.png";
 
 const currencyFormatter = new Intl.NumberFormat("fr-FR", {
   style: "currency",
-  currency: "EUR"
+  currency: "EUR",
 });
 
 const CartItem = ({ item, onToggle, onQuantityChange, onRemove }) => (
@@ -60,6 +65,7 @@ export default function Panier() {
 
   // État pour le mode de livraison et les frais
   const [shippingMethod, setShippingMethod] = useState("relay"); // "relay" | "home"
+  const [shippingCarrier, setShippingCarrier] = useState("mondial_relay"); // "mondial_relay" | "chronopost_2shop"
   const [shippingPrice, setShippingPrice] = useState(0);
   const [shippingLabel, setShippingLabel] = useState("Livraison en point relais (gratuite)");
   const [boxtalMap, setBoxtalMap] = useState(null);
@@ -211,6 +217,8 @@ export default function Panier() {
           parcelPoint.location?.street ||
           "";
         
+        const network = parcelPoint.networkCode || parcelPoint.network || "";
+        
         setRelayPoint({
           // Identifiants
           id: parcelPoint.id,
@@ -223,10 +231,17 @@ export default function Panier() {
           country: "FR", // Toujours FR pour l'instant
           // Métadonnées
           provider: "boxtal", // Identifie la source (Boxtal)
-          network: parcelPoint.networkCode || parcelPoint.network || "",
+          network: network,
           // Données brutes (pour debug ou usage futur)
           raw: parcelPoint,
         });
+        
+        // Mise à jour automatique du transporteur selon le réseau du point relais sélectionné
+        if (network === "CHRP_NETWORK") {
+          setShippingCarrier("chronopost_2shop");
+        } else if (network === "MONR_NETWORK") {
+          setShippingCarrier("mondial_relay");
+        }
       });
     } catch (err) {
       console.error("Erreur Boxtal searchParcelPoints :", err);
@@ -350,29 +365,20 @@ export default function Panier() {
     return productsTotal + shippingPrice;
   }, [productsTotal, shippingPrice]);
 
-  // Calcul automatique des frais de livraison (logique locale simple)
+  // Calcul automatique des frais de livraison : 2 options fixes
   useEffect(() => {
-    // Règle 1 : si total >= 45€ → livraison gratuite pour TOUT
-    if (productsTotal >= 45) {
-      setShippingPrice(0);
-      setShippingLabel("Livraison gratuite (commande ≥ 45 €)");
-      return;
-    }
-
-    // Règle 2 : point relais toujours gratuit
     if (shippingMethod === "relay") {
       setShippingPrice(0);
-      setShippingLabel("Livraison en point relais (gratuite)");
+      setShippingLabel("Livraison en point relais");
       return;
     }
 
-    // Règle 3 : livraison à domicile < 45€ → frais fixes 4.90€
     if (shippingMethod === "home") {
-      setShippingPrice(4.9);
+      setShippingPrice(2.9);
       setShippingLabel("Livraison à domicile");
       return;
     }
-  }, [productsTotal, shippingMethod]);
+  }, [shippingMethod]);
 
   /**
    * Validation du formulaire
@@ -551,6 +557,7 @@ export default function Panier() {
               city: relayPoint.city || relayPoint.locality || "",
               country: relayPoint.country || "FR",
               provider: relayPoint.provider || "boxtal",
+              network: relayPoint.network || null, // Réseau du point relais (MONR_NETWORK ou CHRP_NETWORK)
               // Sauvegarde des données brutes pour l'email (si disponibles)
               raw: relayPoint.raw || null,
             }
@@ -586,6 +593,7 @@ export default function Panier() {
         total: orderTotal, // Total incluant les frais de livraison
         productsTotal: productsTotal, // Sous-total produits uniquement
         shippingMethod: shippingMethod, // "relay" ou "home"
+        shippingCarrier: shippingMethod === "relay" ? shippingCarrier : null, // "mondial_relay" | "chronopost_2shop" | null
         shippingPrice: shippingPrice, // Frais de livraison
         shippingLabel: shippingLabel, // Libellé de la livraison
         // Point relais sélectionné (si mode relay et tous les champs requis sont présents)
@@ -668,7 +676,7 @@ export default function Panier() {
     <section className="panier-page">
       <div className="panier-header">
         <h1>Mon panier</h1>
-        <p>Retrouvez vos produits Vertyno et finalisez votre commande.</p>
+        <p>Retrouvez vos produits VERTYNO et finalisez votre commande.</p>
       </div>
 
       {/* Messages de succès/annulation */}
@@ -727,11 +735,7 @@ export default function Panier() {
             <div className="summary-row">
               <span>Livraison</span>
               <span className="summary-muted">
-                {shippingPrice === 0 ? (
-                  "Gratuite"
-                ) : (
-                  currencyFormatter.format(shippingPrice)
-                )}
+                {currencyFormatter.format(shippingPrice)}
               </span>
             </div>
             <div className="summary-row total">
@@ -747,55 +751,93 @@ export default function Panier() {
               className={paymentMethod === "card" ? "active" : ""}
               onClick={() => setPaymentMethod("card")}
             >
-              Card
-            </button>
-            <button
-              className={paymentMethod === "paypal" ? "active" : ""}
-              onClick={() => setPaymentMethod("paypal")}
-            >
-              Paypal
+              CB
+              <img src={visaLogo} alt="Visa" className="payment-logo" />
+              <img src={klarnaLogo} alt="Klarna" className="payment-logo" />
+              <img src={mastercardLogo} alt="Mastercard" className="payment-logo" />
             </button>
           </div>
 
           {paymentMethod === "card" ? (
             <form className="card-form" onSubmit={handleCheckout}>
               <h3 style={{ marginBottom: "20px" }}>Mode de livraison</h3>
-              
-              <div className="shipping-methods" style={{ marginBottom: "24px" }}>
-                <label style={{ display: "flex", alignItems: "center", gap: "8px", padding: "12px", border: "1px solid #e6e6e6", borderRadius: "8px", cursor: "pointer", marginBottom: "8px" }}>
+
+              <div className="shipping-options" style={{ marginBottom: "24px" }}>
+                {/* Option 1 : Point relais (livraison gratuite) */}
+                <div
+                  className={`shipping-option-card ${
+                    shippingMethod === "relay" ? "selected" : ""
+                  }`}
+                  onClick={() => {
+                    setShippingMethod("relay");
+                    setShippingCarrier("mondial_relay");
+                  }}
+                >
                   <input
                     type="radio"
-                    name="shippingMethod"
+                    name="shipping_method"
                     value="relay"
                     checked={shippingMethod === "relay"}
-                    onChange={() => setShippingMethod("relay")}
-                    style={{ cursor: "pointer" }}
+                    onChange={() => {
+                      setShippingMethod("relay");
+                      setShippingCarrier("mondial_relay");
+                    }}
                   />
-                  <div style={{ flex: 1 }}>
-                    <strong>Point relais</strong>
-                    <span style={{ display: "block", fontSize: "0.9rem", color: "#666", marginTop: "4px" }}>
-                      Livraison gratuite
-                    </span>
+                  <div className="shipping-option-content">
+                    <div className="shipping-option-text">
+                      <span className="shipping-option-title">Point relais</span>
+                      <span className="shipping-option-subtitle">
+                        Livraison gratuite
+                      </span>
+                      <span className="shipping-option-delivery-time">
+                        1 à 2 jours
+                      </span>
+                    </div>
+                    <img
+                      src={chronopostLogo}
+                      alt="Chronopost Shop2Shop"
+                      className="shipping-option-logo"
+                    />
                   </div>
-                </label>
-                <label style={{ display: "flex", alignItems: "center", gap: "8px", padding: "12px", border: "1px solid #e6e6e6", borderRadius: "8px", cursor: "pointer" }}>
+                </div>
+
+                {/* Option 2 : Livraison à domicile (2,90 €) */}
+                <div
+                  className={`shipping-option-card ${
+                    shippingMethod === "home" ? "selected" : ""
+                  }`}
+                  onClick={() => {
+                    setShippingMethod("home");
+                  }}
+                >
                   <input
                     type="radio"
-                    name="shippingMethod"
+                    name="shipping_method"
                     value="home"
                     checked={shippingMethod === "home"}
-                    onChange={() => setShippingMethod("home")}
-                    style={{ cursor: "pointer" }}
+                    onChange={() => {
+                      setShippingMethod("home");
+                    }}
                   />
-                  <div style={{ flex: 1 }}>
-                    <strong>Livraison à domicile</strong>
-                    <span style={{ display: "block", fontSize: "0.9rem", color: "#666", marginTop: "4px" }}>
-                      {productsTotal >= 45
-                        ? "Gratuite (commande ≥ 45€)"
-                        : `${shippingPrice.toFixed(2).replace(".", ",")} €`}
-                    </span>
+                  <div className="shipping-option-content">
+                    <div className="shipping-option-text">
+                      <span className="shipping-option-title">
+                        Livraison à domicile
+                      </span>
+                      <span className="shipping-option-subtitle">
+                        {currencyFormatter.format(2.9)}
+                      </span>
+                      <span className="shipping-option-delivery-time">
+                        3 à 5 jours
+                      </span>
+                    </div>
+                    <img
+                      src={mondialRelayLogo}
+                      alt="Mondial Relay"
+                      className="shipping-option-logo"
+                    />
                   </div>
-                </label>
+                </div>
               </div>
 
               {/* Sélection du point relais si mode relay */}
